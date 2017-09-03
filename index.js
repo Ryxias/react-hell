@@ -5,40 +5,27 @@
 //
 'use strict';
 
-const http = require('http');
+// include packages
+const express = require('express');
+const app = express();
 const port = 80;
 
-const requestHandler = (request, response) => {
-  // Log information about the request
-  console.log('----');
-  console.log(request.connection.remoteAddress);
-  console.log('  ' + request.method + ' ' + request.url);
-  console.log('----');
+//
+// Build routes
+//
+require('./routes/base')(app);
 
-  if (isBlacklisted(request)) {
-    response.end('Hello, I am a Node.js Server!'); // Show them a dead site
-  } else {
-    response.end('Hello, I am a Node.js Server, welcome!');  // For non-blacklisted users, show them everything
-  }
+const runServer = () => {
+  const port = 80;
+
+  // We only listen to port 80
+  //   On AWS, the application is fronted by a load balancer which terminates all inbound connections
+  //   and forwards them to the webservers on port 80.
+  require('http').createServer(app).listen(port, () => {
+    console.log('Server started, listening on port ' + port + '...');
+  });
 };
 
-const isBlacklisted = (request) => {
-  let ipblacklist = [
-    '::ffff:84.198.14.161', // Some scanner
+runServer();
 
-    //'::ffff:76.218.105.69', // Tiffany's ip address, only use for testing
-  ];
-
-  return ipblacklist.includes(request.connection.remoteAddress);
-};
-
-const server = http.createServer(requestHandler);
-
-server.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err)
-  }
-
-  console.log(`server is listening on ${port}`)
-});
 

@@ -1,0 +1,19 @@
+{
+  "name": "react-hell",
+  "version": "0.0.1",
+  "description": "Me learning the hell hole that is react",
+  "main": "index.js",
+  "scripts": {
+    "start": "bin/run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Ryxias/react-hell.git"
+  },
+  "license": "MIT",
+  "author": "Derek Wang",
+  "homepage": "https://chuuni.me",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
