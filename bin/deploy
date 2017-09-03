@@ -8,4 +8,4 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Use rsync to bring all files from this project
-rsync -avr --progress ~/repos/react-hell/. ec2-user@chuuni.me:~/repos/react-hell --exclude .git --exclude .idea
+rsync -avr --progress ~/repos/react-hell/. ec2-user@machine.chuuni.me:~/repos/react-hell --exclude .git --exclude .idea
