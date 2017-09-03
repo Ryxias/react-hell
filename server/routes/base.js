@@ -1,19 +1,15 @@
-'use strict';
+module.exports = app => {
 
-const router = require('express').Router();
+  // Welcome page
+  app.get('/', (req, res, next) => {
+    // return res.render('home', {
+    //   header: true,
+    //   footer: true,
+    //   title: 'CSPA - Computer Science Proficiency Assessment',
+    //   css: ['home.css'],
+    //   selected_about: true,
+    // })
 
-// Welcome page
-router.get('/', (req, res, next) => {
-  return res.render('index',
-    {
-      header: true,
-      footer: true,
-      title: 'Hello!',
-      css: ['index.css'],
-
-      message: 'Home of the Chuuni',
-    }
-  )
-});
-
-module.exports = router;
+    return res.send("Hello!");
+  });
+};
