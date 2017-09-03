@@ -7,8 +7,32 @@
 
 // include packages
 const express = require('express');
+const Sequelize = require('sequelize');
+
+// Initialize the express app
 const app = express();
-const port = 80;
+
+app.set('view engine', 'pug');
+
+// Sequelize
+//   Yep those are the credentials in plaintext, luckily the instance
+//   is not accessible from the internet :)
+global.db = new Sequelize(
+  'chuuni',
+  'web',
+  'mss_x[48UejfpaNb',
+  {
+    host: 'rds.chuuni.me',
+    dialect: 'mysql',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000,
+    },
+    logging: false
+  }
+);
+
 
 //
 // Build routes
@@ -27,5 +51,3 @@ const runServer = () => {
 };
 
 runServer();
-
-
