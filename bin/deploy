@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# This script rsyncs code on local machines to the webserver
+#
+set -e
+
+# Get to project root
+cd "$(dirname "$0")/.."
+
+# Use rsync to bring all files from this project
+rsync -avr --progress ~/repos/react-hell/. ec2-user@chuuni.me:~/repos/react-hell --exclude .git --exclude .idea

@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# This script runs the server
+#
+set -e
+
+# Get to project root
+cd "$(dirname "$0")/.."
+
+# Yep
+sudo node index.js
