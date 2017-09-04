@@ -9,20 +9,24 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 
+// Load configs
+global.config = require('../configuration_loader');
+
 // Initialize the express app
 const app = express();
 
+// View Engine
 app.set('view engine', 'pug');
 
 // Sequelize
 //   Yep those are the credentials in plaintext, luckily the instance
 //   is not accessible from the internet :)
 global.db = new Sequelize(
-  'chuuni',
-  'web',
-  'mss_x[48UejfpaNb',
+  config.db.db,
+  config.db.user,
+  config.db.password,
   {
-    host: 'rds.chuuni.me',
+    host: config.db.host,
     dialect: 'mysql',
     pool: {
       max: 5,
