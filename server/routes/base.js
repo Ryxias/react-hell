@@ -12,35 +12,31 @@ module.exports = app => {
 
   // Love Live Gacha crap
   app.get('/sif/random', (req, res, next) => {
+    const LoveLiveClient = require('../../lib/love_live_client');
+    const ll_client = new LoveLiveClient();
 
-    const http = require('http');
+    ll_client.getRandomCard().then((card) => {
+      return res.render('sif',
+        {
+          card_name: card.getName(),
+          card_image_url: card.getImageUrl(),
+        }
+      );
+    });
+  });
 
-    const MAX_CARD_ID = 1234;
-    let card_id = Math.floor(Math.random() * MAX_CARD_ID);
-    http.get(
-      {
-        hostname: 'schoolido.lu',
-        port: 80,
-        path: '/api/cards/' + card_id + '/',
-      },
-      (result) => {
-        let data = '';
-        result.on('data', (chunk) => {
-          data += chunk;
-        });
-        result.on('end', () => {
-          let card_data = JSON.parse(data);
-          let card_name = card_data['idol']['name'];
-          let card_image_url = 'http:' + card_data['card_image'];
+  // Test endpoint
+  app.get('/sif/test', (req, res) => {
+    const LoveLiveClient = require('../../lib/love_live_client');
+    const ll_client = new LoveLiveClient();
 
-          return res.render('sif',
-            {
-              card_name: card_name,
-              card_image_url: card_image_url,
-            }
-          );
-        });
-      }
-    );
+    ll_client.gachaRCard().then((card) => {
+      return res.render('sif',
+        {
+          card_name: card.getName(),
+          card_image_url: card.getImageUrl(),
+        }
+      );
+    });
   });
 };
