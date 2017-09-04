@@ -1,0 +1,9 @@
+/* 
+    ./.babelrc
+    Configuration for allowing the use of ES6 on the .js and .jsx files
+*/  
+{
+  "presets":[
+      "es2015", "react"
+  ]
+}

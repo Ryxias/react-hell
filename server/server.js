@@ -1,5 +1,5 @@
 //
-// index.js
+// server.js (renamed from index.js)
 //
 //   Global front controller for this project!
 //

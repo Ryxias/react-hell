@@ -14,6 +14,13 @@
   "author": "Derek Wang",
   "homepage": "https://chuuni.me",
   "dependencies": {
-    "express": "^4.15.4"
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.15.4",
+    "path": "^0.12.7",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
   }
 }
