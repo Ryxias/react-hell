@@ -39,6 +39,14 @@ global.db = new Sequelize(
 //
 require('./routes/base')(app);
 
+//
+// Error handlers
+//
+app.use(function (req, res, next) {
+  res.status(404).send("Whoops! I can't seem to find what you're looking for!")
+});
+
+
 const runServer = () => {
   const port = 80;
 
