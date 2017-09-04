@@ -46,6 +46,10 @@ app.use(function (req, res, next) {
   res.status(404).send("Whoops! I can't seem to find what you're looking for!")
 });
 
+// Connect Chuubot and provide an example of how to create a listener
+//
+const chuu = require('../lib/slackbot_framework');
+chuu.on(/chuu/, (message) => { return 'baaaaaaaaaa'; });
 
 const runServer = () => {
   const port = 80;
