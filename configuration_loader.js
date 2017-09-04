@@ -15,11 +15,21 @@ if ('object' !== typeof config) {
 }
 
 // Validates it for db credentials
+//
+// db:
+//   host:
+//   db:
+//   user:
+//   password:
 if (null === config.db) {
   throw new Error('Invalid configuration at "db"');
 }
 
 // Validates it for slack credentials
+//
+// slack:
+//   bot_user_id:
+//   bot_token:
 if (null === config.slack) {
   throw new Error('Invalid configuration at "slack_bot_token"');
 }
