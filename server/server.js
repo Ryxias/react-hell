@@ -19,8 +19,6 @@ const app = express();
 app.set('view engine', 'pug');
 
 // Sequelize
-//   Yep those are the credentials in plaintext, luckily the instance
-//   is not accessible from the internet :)
 global.db = new Sequelize(
   config.db.db,
   config.db.user,
