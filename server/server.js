@@ -47,6 +47,49 @@ app.use(function (req, res, next) {
 });
 
 
+// Install Slackbot Hook
+let RtmClient = require('@slack/client').RtmClient;
+let CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+
+const SLACK_BOT_TOKEN = 'xoxb-235188197473-o4GOUJ31DVDjLMHIr6NWDreW';
+let rtm = new RtmClient(SLACK_BOT_TOKEN);
+
+// The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload if you want to cache it
+let channel;
+rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
+  for (const c of rtmStartData.channels) {
+    if (c.is_member && c.name ==='gamedev') {
+      channel = c.id
+    }
+  }
+  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
+});
+
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
+  console.log('Chuubot connection established');
+});
+
+const RTM_EVENTS = require('@slack/client').RTM_EVENTS;
+rtm.on(RTM_EVENTS.MESSAGE, (message) => {
+  console.log('[BOT] Received Message:', message);
+
+  // Messages look like:
+  // { type: 'message',
+  //   channel: 'C12Q4F3JA',
+  //   user: 'U12NYUYQK',
+  //   text: 'test',
+  //   ts: '1504492662.000048',
+  //   source_team: 'T12NWKTEF',
+  //   team: 'T12NWKTEF' }
+
+  let message_text = message.text;
+  if (message_text.toUpperCase() === '<@U6X5J5TDX> ARE YOU THERE?') {
+    rtm.sendMessage("Hello <@" + message.user + ">, I am here!", message.channel);
+  }
+});
+
+rtm.start();
+
 const runServer = () => {
   const port = 80;
 
