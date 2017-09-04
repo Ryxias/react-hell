@@ -53,8 +53,8 @@ chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
 chuu.on(/!gacha/, (message, send) => {
   const LoveLiveClient = require('../lib/love_live_client');
   let ll_client = new LoveLiveClient();
-  ll_client.getRandomCard().then((card) => {
-    send('[' + card.getName() + '] ' + card.getImageUrl());
+  ll_client.gachaRCard().then((card) => {
+    send('[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl());
   });
 });
 

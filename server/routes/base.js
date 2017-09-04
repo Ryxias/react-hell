@@ -30,8 +30,13 @@ module.exports = app => {
     const LoveLiveClient = require('../../lib/love_live_client');
     const ll_client = new LoveLiveClient();
 
-    ll_client.getEnCardList().then((list) => {
-      res.send(JSON.stringify(list));
+    ll_client.gachaRCard().then((card) => {
+      return res.render('sif',
+        {
+          card_name: card.getName(),
+          card_image_url: card.getImageUrl(),
+        }
+      );
     });
   });
 };
