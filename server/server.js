@@ -50,6 +50,13 @@ app.use(function (req, res, next) {
 //
 const chuu = require('../lib/slackbot_framework');
 chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
+chuu.on(/!gacha/, (message, send) => {
+  const LoveLiveClient = require('../lib/love_live_client');
+  let ll_client = new LoveLiveClient();
+  ll_client.getRandomCard().then((card) => {
+    send('[' + card.getName() + '] ' + card.getImageUrl());
+  });
+});
 
 const runServer = () => {
   const port = 80;
