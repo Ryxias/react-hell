@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
 // Connect Chuubot and provide an example of how to create a listener
 //
 const chuu = require('../lib/slackbot_framework');
-chuu.on(/chuu/, (message) => { return 'baaaaaaaaaa'; });
+chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
 
 const runServer = () => {
   const port = 80;
