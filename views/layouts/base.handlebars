@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"/>
+
+  <link rel="stylesheet" type="text/css" href="/statics/css/main.css">
+  {{#each css}}
+    <link rel="stylesheet" type="text/css" href="/statics/css/{{this}}">
+  {{/each}}
+  {{#each css-ext}}
+    <link rel="stylesheet" type="text/css" href="{{this}}">
+  {{/each}}
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {{#each js-ext}}
+    <script src="{{this}}"></script>
+  {{/each}}
+  <script src="/statics/js/main.js"></script>
+  {{#each js}}
+    <script src="/statics/js/{{this}}"></script>
+  {{/each}}
+
+  <title>{{#if title}}{{title}}{{/if}}</title>
+
+</head>
+<body style="margin:0;padding:0;">
+  {{#if header}}
+    {{>header}}
+  {{/if}}
+  {{{ body }}}
+  {{#if footer}}
+    {{>footer}}
+  {{/if}}
+<div id="message-container" class="message-container">
+  <span class="message"></span>
+</div>
+
+</body>
+</html>
