@@ -20,9 +20,10 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.10",
     "mysql2": "^1.4.2",
     "path": "^0.12.7",
-    "pug": "^2.0.0-rc.3",
     "sequelize": "^4.8.0",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"

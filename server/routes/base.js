@@ -4,6 +4,8 @@ module.exports = app => {
   app.get('/', (req, res, next) => {
     return res.render('index',
       {
+        header: true,
+        footer: true,
         title: 'Hello!',
         message: 'Home of the Chuuni'
       }
@@ -18,7 +20,9 @@ module.exports = app => {
     ll_client.getRandomCard().then((card) => {
       return res.render('sif',
         {
-          card_name: card.getName(),
+          header: true,
+          footer: true,
+          title: card.getName(),
           card_image_url: card.getImageUrl(),
         }
       );
@@ -26,14 +30,16 @@ module.exports = app => {
   });
 
   // Test endpoint
-  app.get('/sif/test', (req, res) => {
+  app.get('/sif/gacha', (req, res) => {
     const LoveLiveClient = require('../../lib/love_live_client');
     const ll_client = new LoveLiveClient();
 
     ll_client.gachaRCard().then((card) => {
       return res.render('sif',
         {
-          card_name: card.getName(),
+          header: true,
+          footer: true,
+          title: card.getName(),
           card_image_url: card.getImageUrl(),
         }
       );

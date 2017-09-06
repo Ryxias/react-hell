@@ -8,6 +8,8 @@
 // include packages
 const express = require('express');
 const Sequelize = require('sequelize');
+const express_handlebars = require('express-handlebars');
+const path = require('path');
 
 // Load configs
 global.config = require('../configuration_loader');
@@ -16,7 +18,8 @@ global.config = require('../configuration_loader');
 const app = express();
 
 // View Engine
-app.set('view engine', 'pug');
+app.engine('handlebars', express_handlebars({defaultLayout: 'base'}));
+app.set('view engine', 'handlebars');
 
 // Sequelize
 global.db = new Sequelize(
@@ -54,6 +57,9 @@ app.use((req, res, next) => {
   }
   res.redirect('https://' + req.hostname + req.originalUrl);
 });
+
+// Express to serve static files easily without nginx
+app.use('/statics', express.static(path.join(__dirname, '..', 'public')));
 
 
 //
