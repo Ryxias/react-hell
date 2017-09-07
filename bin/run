@@ -8,4 +8,4 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Yep
-sudo node server/server.js
+sudo nodemon server/server.js
