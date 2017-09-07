@@ -1,2 +1,18 @@
-<img src="{{card_image_url}}"/>
+<div class="gacha-container">
+  <div class="envelope-image-container">
+    <img class="envelope-image envelope-closed" src="/statics/i/{{envelope_image_closed}}" />
+    <img class="envelope-image envelope-open hide" src="/statics/i/{{envelope_image_open}}" />
+  </div>
+
+  <div class="opened-card-container hide">
+    <span class="aidoru-name">
+    <a href="{{card_ext_link}}">{{card_title}}</a>
+  </span>
+    <img class="aidoru-image" src="{{card_image_url}}"/>
+  </div>
+  <div class="data"
+       data-open-sound-url="/statics/sound/{{open_sound}}"></div>
+</div>
+
+
 

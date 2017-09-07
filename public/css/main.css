@@ -1,1 +1,38 @@
 /* Main CSS File */
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  background-color: black;
+  color: pink;
+}
+
+#header, #footer {
+  /* BRAND COLORS BABY */
+  background-color: #22243a;
+  padding: 5px;
+}
+
+#header {
+  top: 0;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+}
+
+#header .header-links {
+
+}
+
+#body {
+  min-height: 750px;
+  padding: 50px 100px;
+}
+
+#footer {
+  height: 60px;
+}
+
+#footer .right-thing {
+  float: right;
+  font-size: 2px;
+}
+
