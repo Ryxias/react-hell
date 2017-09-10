@@ -7,84 +7,36 @@
 
 // include packages
 const express = require('express');
-const Sequelize = require('sequelize');
-const express_handlebars = require('express-handlebars');
-const path = require('path');
 
 // Load configs
-global.config = require('../configuration_loader');
+const app_config = require('../configuration_loader');
+global.PROJECT_ROOT = __dirname + '/../';
+
+// Setup middleware
+const { redirect_http_to_https } = require(PROJECT_ROOT + 'init/custom_app_redirects');
+const { not_found_handler } = require(PROJECT_ROOT + 'init/error_handlers');
+const statics_middleware = express.static(PROJECT_ROOT + 'public'); // Express to serve static files easily without nginx
+const app_routes = require('./routes');
+const chuubot = require(PROJECT_ROOT + 'init/chuubot')(app_config);
 
 // Initialize the express app
 const app = express();
 
 // View Engine
-app.engine('handlebars', express_handlebars({defaultLayout: 'base'}));
+app.engine('handlebars', require('express-handlebars')({defaultLayout: 'base'}));
 app.set('view engine', 'handlebars');
 
-// Sequelize
-global.db = new Sequelize(
-  config.db.db,
-  config.db.user,
-  config.db.password,
-  {
-    host: config.db.host,
-    dialect: 'mysql',
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000,
-    },
-    logging: false
-  }
-);
+// Sequelize (we don't even use it right now
+//const sequelize = require(PROJECT_ROOT + 'init/sequelize')(app_config.db);
 
-// Add a listener that redirects incoming HTTP requests to HTTPS
-app.use((req, res, next) => {
-  // As it turns out this is extremely not-trivial since the environments upon which this
-  // application operates are behind TLS-terminating devices, which forward the request
-  // as HTTP.
-  //
-  // Instead, we rely on a specific headers that the services provide.  AWS ELB provides
-  // a header called X-FORWARDED-PROTO
-  // @see https://www.allcloud.io/how-to/how-to-force-https-behind-aws-elb/
-  //
-  // The caveat here is that `req.protocol` is permanently broken :(
-  if (req.header('x-https-protocol') // Sometimes Nginx
-    || req.header('x-forwarded-proto') === 'https' // AWS ELB
-  ) {
-    next();
-    return;
-  }
-  res.redirect('https://' + req.hostname + req.originalUrl);
-});
+// Attach middleware
+app.use(redirect_http_to_https);
+app.use('/statics', statics_middleware);
+app.use(app_routes);
+app.use(not_found_handler);
 
-// Express to serve static files easily without nginx
-app.use('/statics', express.static(path.join(__dirname, '..', 'public')));
-
-
-//
-// Build routes
-//
-require('./routes/base')(app);
-
-//
-// Error handlers
-//
-app.use(function (req, res, next) {
-  res.status(404).send("Whoops! I can't seem to find what you're looking for!")
-});
-
-// Connect Chuubot and provide an example of how to create a listener
-//
-const chuu = require('../lib/slackbot_framework');
-chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
-chuu.on(/!gacha/, (message, send) => {
-  const LoveLiveClient = require('../lib/love_live_client');
-  let ll_client = new LoveLiveClient();
-  ll_client.gachaRCard().then((card) => {
-    send('[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl());
-  });
-});
+// Connect chuubot
+chuubot.connect();
 
 const runServer = () => {
   const port = 80;
