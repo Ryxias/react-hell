@@ -1,8 +1,6 @@
 /* Main CSS File */
 * {
   font-family: 'Josefin Sans', sans-serif;
-  background-color: black;
-  color: pink;
 }
 
 #header, #footer {
@@ -12,19 +10,37 @@
 }
 
 #header {
-  top: 0;
-  height: 60px;
+  background-color: #22344f;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  position: relative;
 }
 
-#header .header-links {
+#header .logo-container {
+  min-width: 200px;
+  padding: 15px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: #E71695;
+}
 
+#header .header-link-container {
+  margin-left: 20px;
+}
+
+#header .header-link-container .header-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #E71695;
 }
 
 #body {
   min-height: 750px;
   padding: 50px 100px;
+  background-color: black;
+  color: #E71695;
 }
 
 #footer {

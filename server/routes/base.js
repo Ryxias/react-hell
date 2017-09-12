@@ -8,12 +8,24 @@ router.get('/', (req, res, next) => {
     {
       header: true,
       footer: true,
-      title: 'Hello!',
+      title: 'Chuuni.me - Home of the Chuuni',
       css: ['index.css'],
 
-      message: 'Home of the Chuuni',
+      message: 'What even is CSS',
     }
-  )
+  );
+});
+
+// Blog
+router.get('/blog', (req, res, next) => {
+  return res.render('blog',
+    {
+      header: true,
+      footer: true,
+      title: 'A Blahg of Learning',
+      css: ['blog.css'],
+    }
+  );
 });
 
 module.exports = router;
