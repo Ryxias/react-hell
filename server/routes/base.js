@@ -8,12 +8,23 @@ router.get('/', (req, res, next) => {
     {
       header: true,
       footer: true,
-      title: 'Hello!',
+      title: 'Chuuni.me - Home of the Chuuni',
       css: ['index.css'],
 
-      message: 'Home of the Chuuni',
+      message: 'What even is CSS',
     }
-  )
+  );
+});
+
+
+// Anime crap
+router.get('/animu', (req, res, next) => {
+  res.redirect('/');
+});
+
+// D&D resources
+router.get('/dnd', (req, res, next) => {
+  res.redirect('/');
 });
 
 module.exports = router;
