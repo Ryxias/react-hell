@@ -1,50 +1,71 @@
 'use strict';
 
 const router = require('express').Router();
+const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
+const ll_client = new LoveLiveClient();
 
-// Love Live Gacha crap
 router.get('/random', (req, res, next) => {
-  const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
-  const ll_client = new LoveLiveClient();
-
   ll_client.getRandomCard().then((card) => {
-    return res.render('sif',
-      {
-        header: true,
-        footer: true,
-        title: card.getName(),
-        card_image_url: card.getImageUrl(),
-      }
-    );
+    return renderSifView(card, res);
   });
 });
 
-// Test endpoint
 router.get('/gacha', (req, res) => {
-  const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
-  const ll_client = new LoveLiveClient();
-
   ll_client.gachaRCard().then((card) => {
-    let { envelope_image_closed, envelope_image_open, open_sound } = mapRarityToAssets(card.getRarity());
-    return res.render('sif',
-      {
-        header: true,
-        footer: true,
-        title: "School Idol Festival Gacha",
-        js: ["sif.js"],
-        css: ["sif.css"],
-
-        card_title: "[" + card.getId() + "] " + card.getName(),
-        card_ext_link: card.getWebsiteUrl(),
-        card_image_url: card.getImageUrl(),
-        rarity: card.getRarity(),
-        envelope_image_closed: envelope_image_closed,
-        envelope_image_open: envelope_image_open,
-        open_sound: open_sound,
-      }
-    );
+    return renderSifView(card, res);
   });
 });
+
+router.get('/gacha/aqours', (req, res) => {
+  ll_client.gachaRCard('aqours').then((card) => {
+    return renderSifView(card, res);
+  });
+});
+
+router.get('/gacha/mus', (req, res) => {
+  ll_client.gachaRCard('mu').then((card) => {
+    return renderSifView(card, res);
+  });
+});
+
+router.get('/gachasr', (req, res) => {
+  ll_client.gachaSRCard().then((card) => {
+    return renderSifView(card, res);
+  });
+});
+
+router.get('/gachasr/mus', (req, res) => {
+  ll_client.gachaSRCard('mu').then((card) => {
+    return renderSifView(card, res);
+  });
+});
+
+router.get('/gachasr/aqours', (req, res) => {
+  ll_client.gachaSRCard('aqours').then((card) => {
+    return renderSifView(card, res);
+  });
+});
+
+const renderSifView = (card, res) => {
+  let { envelope_image_closed, envelope_image_open, open_sound } = mapRarityToAssets(card.getRarity());
+  return res.render('sif',
+    {
+      header: true,
+      footer: true,
+      title: "School Idol Festival Gacha",
+      js: ["sif.js"],
+      css: ["sif.css"],
+
+      card_title: "[" + card.getId() + "] " + card.getName(),
+      card_ext_link: card.getWebsiteUrl(),
+      card_image_url: card.getImageUrl(),
+      rarity: card.getRarity(),
+      envelope_image_closed: envelope_image_closed,
+      envelope_image_open: envelope_image_open,
+      open_sound: open_sound,
+    }
+  );
+};
 
 const mapRarityToAssets = (rarity) => {
   let envelope_image_closed;
@@ -73,6 +94,12 @@ const mapRarityToAssets = (rarity) => {
       open_sound = "r_open.mp3";
       break;
   }
+
+  return {
+    envelope_image_open,
+    envelope_image_closed,
+    open_sound,
+  };
 };
 
 module.exports = router;

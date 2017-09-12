@@ -4,12 +4,10 @@ const router = require('express').Router();
 const showdown  = require('showdown');
 const mdconverter = new showdown.Converter();
 const fs = require('fs');
+Promise.promisifyAll(fs);
 
 router.get('/', (req, res, next) => {
-  fs.readFile(PROJECT_ROOT + '/blog/2017-09-10.md', 'utf8', function (err,data) {
-    if (err) {
-      throw new Error("???");
-    }
+  fs.readFileAsync(PROJECT_ROOT + '/blog/2017-09-10.md', 'utf8').then((data) => {
     let html = mdconverter.makeHtml(data);
     return res.render('blog',
       {
@@ -20,6 +18,9 @@ router.get('/', (req, res, next) => {
         entry: html
       }
     );
+  }).catch((err) => {
+    console.log(err);
+    throw err;
   });
 });
 
@@ -30,10 +31,7 @@ router.get('/:date', (req, res, next) => {
     return res.redirect('/blog');
   }
 
-  fs.readFile(PROJECT_ROOT + '/blog/'+date+'.md', 'utf8', function (err,data) {
-    if (err) {
-      return res.redirect('/blog');
-    }
+  fs.readFileAsync(PROJECT_ROOT + '/blog/'+date+'.md', 'utf8').then((data) => {
     let html = mdconverter.makeHtml(data);
     return res.render('blog',
       {
@@ -44,6 +42,9 @@ router.get('/:date', (req, res, next) => {
         entry: html
       }
     );
+  }).catch((err) => {
+    console.log(err);
+    return res.redirect("/blog");
   });
 });
 
