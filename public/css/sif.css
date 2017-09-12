@@ -12,6 +12,11 @@
   transform: rotate(7deg);
 }
 
+.aidoru-name a {
+  text-decoration: none;
+  color: #E71695;
+}
+
 .opened-card-container {
   text-align: center;
 }
