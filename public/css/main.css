@@ -18,7 +18,8 @@
 }
 
 #header .logo-container {
-  min-width: 200px;
+  min-width: 100px;
+  margin-right: 100px;
   padding: 15px;
   font-weight: 500;
   letter-spacing: 2px;
@@ -34,6 +35,7 @@
   display: inline-block;
   text-decoration: none;
   color: #E71695;
+  margin: 0 20px;
 }
 
 #body {

@@ -8,5 +8,6 @@ const router = require('express').Router();
 
 router.use('/', require('./base'));
 router.use('/sif', require('./sif'));
+router.use('/blog', require('./blog'));
 
 module.exports = router;

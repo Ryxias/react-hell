@@ -1,5 +1,7 @@
 .yt-video-container {
   text-align: center;
+  height: 500px;
+  overflow: hidden;
 }
 
 .yt-video-container .video {

@@ -16,16 +16,15 @@ router.get('/', (req, res, next) => {
   );
 });
 
-// Blog
-router.get('/blog', (req, res, next) => {
-  return res.render('blog',
-    {
-      header: true,
-      footer: true,
-      title: 'A Blahg of Learning',
-      css: ['blog.css'],
-    }
-  );
+
+// Anime crap
+router.get('/animu', (req, res, next) => {
+  res.redirect('/');
+});
+
+// D&D resources
+router.get('/dnd', (req, res, next) => {
+  res.redirect('/');
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 // Love Live Gacha crap
 router.get('/random', (req, res, next) => {
-  const LoveLiveClient = require(PROJECT_ROOT + 'lib/love_live_client');
+  const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
   const ll_client = new LoveLiveClient();
 
   ll_client.getRandomCard().then((card) => {
@@ -21,7 +21,7 @@ router.get('/random', (req, res, next) => {
 
 // Test endpoint
 router.get('/gacha', (req, res) => {
-  const LoveLiveClient = require(PROJECT_ROOT + 'lib/love_live_client');
+  const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
   const ll_client = new LoveLiveClient();
 
   ll_client.gachaRCard().then((card) => {
