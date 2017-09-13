@@ -19,6 +19,7 @@ global.Promise = require('bluebird'); // Replace native promise with bluebird be
 const { redirect_http_to_https } = require(PROJECT_ROOT + '/init/custom_app_redirects');
 const { not_found_handler, default_error_handler } = require(PROJECT_ROOT + '/init/error_handlers');
 const statics_middleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
+const react_middleware = express.static(PROJECT_ROOT + '/public_react'); // Express to serve static files easily without nginx
 const app_routes = require('./routes');
 const chuubot = require(PROJECT_ROOT + '/init/chuubot')(app_config);
 
@@ -35,6 +36,7 @@ app.set('view engine', 'handlebars');
 // Attach middleware
 app.use(redirect_http_to_https);
 app.use('/statics', statics_middleware);
+app.use('/react_statics', react_middleware);
 app.use(app_routes);
 app.use(not_found_handler);
 app.use(default_error_handler);

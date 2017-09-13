@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   entry: "./client/index.js", // should be the main index.js of the client
   output: {
-    path: path.join(__dirname, "public/assets/bundles"), 
+    path: path.join(__dirname, "public_react/dist"),
     filename: "bundle.js" // bundles all the files together into a single file
   },
   module: {
