@@ -1,5 +1,9 @@
 'use strict';
 
+//
+// This initialization script sets up the sequelize object that manages database connections
+//
+
 const Sequelize = require('sequelize');
 
 module.exports = sequelize_config => {

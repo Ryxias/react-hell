@@ -1,8 +1,12 @@
 'use strict';
 
-const fs = require('fs');
+//
+// Scans through the model/ directory and reads all files, loading them to the global
+// symbol table for convenient use.  Returns a JS object mapping the model class names
+// to references to the class prototypes.
+//
 
-// Load all models.  Filename must be camelcase and must end with ".js"
+const fs = require('fs');
 const loadModels = function loadModels(sequelize) {
   let models = {};
   fs.readdirSync(PROJECT_ROOT + '/model')

@@ -1,12 +1,15 @@
+'use strict';
 
-// Setup Globals
+//
+// Synchronizes the database schema with the models that have been loaded
+//
+
 const app_config = require('../configuration_loader');
 global.PROJECT_ROOT = __dirname + '/..';
 global.Promise = require('bluebird'); // Replace native promise with bluebird because it's better
 
 const sequelize = require(PROJECT_ROOT + '/init/sequelize')(app_config.db);
 const models = require(PROJECT_ROOT + '/init/load_models')(sequelize);
-
 const model_synch_promises = [];
 
 // http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-sync
