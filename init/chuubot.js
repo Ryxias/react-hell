@@ -2,6 +2,9 @@
 //
 // Connect Chuubot and provide an example of how to create a listener
 //
+
+const TwentyOneGame = require(PROJECT_ROOT + '/lib/TwentyOneGame');
+
 module.exports = (config) => {
   const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
   const ll_client = new LoveLiveClient();
@@ -31,6 +34,13 @@ module.exports = (config) => {
     promise.then((card) => {
       send('[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl());
     });
+  });
+
+  // 21 game
+  chuu.on(/!21/, (message, send) => {
+    let channel_id = message.channel;
+    let game = new TwentyOneGame(channel_id);
+    game.loadGameState().then(send('Something Happened?'));
   });
 
   return chuu;

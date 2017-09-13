@@ -23,6 +23,8 @@ module.exports = sequelize => {
     },
   }, {
     tableName: 'generic_game_states',
+    createdAt: 'created',
+    updatedAt: 'modified',
     indexes: [
       { fields: ['name'] },
     ],

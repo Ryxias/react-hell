@@ -1,6 +1,6 @@
 'use strict';
 
-const { STRING, TEXT, DATE } = require('sequelize');
+const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 
 module.exports = sequelize => {
 
@@ -9,6 +9,11 @@ module.exports = sequelize => {
    * You can store things by name and look them up later.  You can also set an expiration.
    */
   return sequelize.define('document', {
+    id: {
+      type: BIGINT.UNSIGNED,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
       type: STRING(255),
       allowNull: false,
@@ -20,11 +25,13 @@ module.exports = sequelize => {
     expiry: {
       type: DATE,
       allowNull: false,
-    }
+    },
   }, {
     tableName: 'documents',
+    createdAt: 'created',
+    updatedAt: 'modified',
     indexes: [
-      { fields: ['name'] },
+      { fields: ['name'], unique: true },
     ],
     hooks: {},
     instanceMethods: {},
