@@ -4,7 +4,8 @@
   "description": "Me learning the hell hole that is react",
   "main": "index.js",
   "scripts": {
-    "start": "bin/run"
+    "start": "bin/run",
+    "sync_models": "node bin/sync_models.js"
   },
   "repository": {
     "type": "git",
