@@ -26,7 +26,7 @@ class ExpressApplication extends require('./BaseApplication') {
     const { redirectHttpToHttps } = require(PROJECT_ROOT + '/init/custom_app_redirects');
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
-    const appRouter = require(PROJECT_ROOT + './routes');
+    const appRouter = require(PROJECT_ROOT + '/server/routes');
     const chuubot = require(PROJECT_ROOT + '/init/chuubot')(this.getConfig());
 
     // Initialize the express app

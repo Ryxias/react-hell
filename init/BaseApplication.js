@@ -66,22 +66,16 @@ class BaseApplication {
       this.warmPackage(package_name);
     });
 
+    // Step 1.5, set up some relatively safe globals
+    global.PROJECT_ROOT = this.loadPackage('fs').realpathSync(__dirname + '/..');
+    global.Promise = this.loadPackage('bluebird');
+
+    // Load configurations
     this.config = require(PROJECT_ROOT + '/configuration_loader');
     this.sequelize = require(PROJECT_ROOT + '/init/sequelize')(this.getConfig().db);
     this.sequelize_models = require(PROJECT_ROOT + '/init/load_models')(this.getSequelizeConnection());
 
-
-    // Step 1.5, set up some relatively safe globals
-    global.PROJECT_ROOT = this.loadPackage('fs').realpathSync(__dirname + '/..');
-
-    // Step 1.55, replace native Promises
-    global.Promise = this.loadPackage('bluebird');
-
-
-    // Step 2, do common boot operations
-
-
-    // Step 3, do custom boot operations
+    // Do Application-specific custom boots
     this.appBoot();
   }
 }
