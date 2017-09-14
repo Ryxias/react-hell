@@ -21,6 +21,8 @@ const { not_found_handler, default_error_handler } = require(PROJECT_ROOT + '/in
 const statics_middleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
 const app_routes = require('./routes');
 const chuubot = require(PROJECT_ROOT + '/init/chuubot')(app_config);
+const sequelize = require(PROJECT_ROOT + '/init/sequelize')(app_config.db);
+const models = require(PROJECT_ROOT + '/init/load_models')(sequelize);
 
 // Initialize the express app
 const app = express();
@@ -29,8 +31,6 @@ const app = express();
 app.engine('handlebars', require('express-handlebars')({defaultLayout: 'base'}));
 app.set('view engine', 'handlebars');
 
-// Sequelize (we don't even use it right now
-//const sequelize = require(PROJECT_ROOT + '/init/sequelize')(app_config.db);
 
 // Attach middleware
 app.use(redirect_http_to_https);
