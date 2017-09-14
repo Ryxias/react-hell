@@ -25,6 +25,8 @@
     "handlebars": "^4.0.10",
     "mysql2": "^1.4.2",
     "path": "^0.12.7",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "sequelize": "^4.8.0",
     "showdown": "^1.7.4",
     "webpack": "^3.5.5",
