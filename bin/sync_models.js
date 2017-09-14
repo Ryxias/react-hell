@@ -4,12 +4,12 @@
 // Synchronizes the database schema with the models that have been loaded
 //
 
-const app_config = require('../configuration_loader');
-global.PROJECT_ROOT = __dirname + '/..';
-global.Promise = require('bluebird'); // Replace native promise with bluebird because it's better
+const CommandLineApplication = require('../init/CommandLineApplication');
+global.APP = new CommandLineApplication();
+APP.boot();
 
-const sequelize = require(PROJECT_ROOT + '/init/sequelize')(app_config.db);
-const models = require(PROJECT_ROOT + '/init/load_models')(sequelize);
+const sequelize = APP.getSequelizeConnection();
+
 const model_synch_promises = [];
 
 // http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-sync
@@ -34,5 +34,11 @@ Object.keys(models).forEach((model_name) => {
   }
 });
 
-console.log('Models synchronization queued...');
+// Wait until all sync promises resolve then exit
+Promise.all(model_sync_promises)
+  .then(() => sequelize.close())
+  .then(() => {
+    console.log('Models synchronization completed');
+    process.exit(0);
+  });
 
