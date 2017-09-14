@@ -36,7 +36,7 @@ app.set('view engine', 'handlebars');
 // Attach middleware
 app.use(redirect_http_to_https);
 app.use('/statics', statics_middleware);
-app.use('/react_statics', react_middleware);
+app.use('/public_react', react_middleware);
 app.use(app_routes);
 app.use(not_found_handler);
 app.use(default_error_handler);
