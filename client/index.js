@@ -7,5 +7,9 @@ import 'babel-polyfill';  // To simulate a full ES2015 environment and full supp
 import React from 'react';  // Main React library
 import ReactDOM from 'react-dom';  // Used to render virtual DOM
 import App from './components/App.jsx';  // Main App (root) component
+import { BrowserRouter } from 'react-router-dom';  // React Router v4
 
-ReactDOM.render(<App/>, document.getElementById('app'));  // Renders the root component to <div>
+ReactDOM.render((
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>), document.getElementById('app'));  // Renders the root component to <div>

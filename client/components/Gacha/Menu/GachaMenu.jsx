@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const GachaMenu = () => {
   return (
     <div>
-      <h1>Gacha Roll!</h1>
+      <h3>Welcome to Gacha Roll!</h3>
       <nav>
-        <NavLink to="/home">Home</NavLink>
+        <Link to="/react">Go Home</Link>
       </nav>
     </div>
   );

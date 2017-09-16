@@ -8,7 +8,7 @@ class Gacha extends Component {
   render() {
     return (
       <div>
-        Welcome to the gacha placeholder page of Chuuni.me!
+        Sorry, no contents in Gacha Page yet!
       </div>
     );
   }

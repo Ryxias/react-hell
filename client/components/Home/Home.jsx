@@ -8,7 +8,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        Welcome to the home page of Chuuni.me!
+        Sorry, no contents in Home Page yet!
       </div>
     );
   }
