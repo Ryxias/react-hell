@@ -10,6 +10,17 @@ module.exports = (config) => {
   const ll_client = new LoveLiveClient();
   const chuu = require(PROJECT_ROOT + '/lib/slackbot_framework')(config.slack);
 
+  chuu.on(/.*/, (message, send) => {
+    SlackMessage.create(
+      {
+        type:     message.type || 'unknown',
+        channel:  message.channel || 'unknown',
+        user:     message.user || 'unknown',
+        text:     message.text || '',
+      }
+    );
+  });
+
   // Add dumb listener for baachuu
   chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
 

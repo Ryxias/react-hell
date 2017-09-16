@@ -9,8 +9,9 @@ global.APP = new CommandLineApplication();
 APP.boot();
 
 const sequelize = APP.getSequelizeConnection();
+const models = APP.getSequelizeModels();
 
-const model_synch_promises = [];
+const model_sync_promises = [];
 
 // http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-sync
 const sync_options = {
@@ -22,7 +23,7 @@ const sync_options = {
 Object.keys(models).forEach((model_name) => {
   let model_class = models[model_name];
   if (model_class.sync) {
-    model_synch_promises.push(
+    model_sync_promises.push(
       model_class.sync(sync_options)
         .then(() => {
           console.log('Completed synchronizing ' + model_name);
