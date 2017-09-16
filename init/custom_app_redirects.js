@@ -1,5 +1,5 @@
 // Add a listener that redirects incoming HTTP requests to HTTPS
-const redirect_http_to_https = (req, res, next) => {
+const redirectHttpToHttps = (req, res, next) => {
   // As it turns out this is extremely not-trivial since the environments upon which this
   // application operates are behind TLS-terminating devices, which forward the request
   // as HTTP.
@@ -20,5 +20,5 @@ const redirect_http_to_https = (req, res, next) => {
 
 
 module.exports = {
-  redirect_http_to_https
+  redirectHttpToHttps
 };
