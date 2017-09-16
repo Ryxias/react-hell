@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import Home from './Home/Home.jsx';
-import HomeMenu from './Home/Menu/HomeMenu.jsx';
 import Gacha from './Gacha/Gacha.jsx';
-import GachaMenu from './Gacha/Menu/GachaMenu.jsx';
 import NavTop from './NavTop/NavTop.jsx';
 
 
 class App extends Component {  // i.e extends React.Component
   constructor(props) {
-    super(props);  // Receives access to props from higher-level components (might not be necessary here until Redux?)
+    super(props);
 
     this.state = {
       pageTitle: "Home"
@@ -20,8 +18,8 @@ class App extends Component {  // i.e extends React.Component
   }
 
   changePageTitle(pageTitle) {
-    console.log('Changing Page Title to', pageTitle);
-    if (typeof pageTitle === String) {
+    console.log('Changing page title to', pageTitle);
+    if (typeof pageTitle === 'string') {
       this.setState({
         pageTitle: pageTitle
       });
@@ -31,11 +29,7 @@ class App extends Component {  // i.e extends React.Component
   render() {
     return (
       <div>
-        {/*<header>*/}
-          {/*<Route path="/react" exact component={HomeMenu} />*/}
-          {/*<Route path="/react/sif" component={GachaMenu} />*/}
-        {/*</header>*/}
-        <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle}/>
+        <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle} />
         <div>
           <b>Welcome to the {this.state.pageTitle} page of Chuuni.me!!!</b>
           <Route path="/react" exact component={Home} />
