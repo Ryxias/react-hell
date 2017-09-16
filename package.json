@@ -6,7 +6,7 @@
   "scripts": {
     "start": "bin/run",
     "sync_models": "node bin/sync_models.js",
-    "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d"
+    "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch"
   },
   "repository": {
     "type": "git",
