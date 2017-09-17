@@ -1,0 +1,26 @@
+.hide {
+  display: none;
+}
+
+.envelope-image-container {
+  text-align: center;
+}
+
+.envelope-image {
+  -ms-transform: rotate(7deg); /* IE 9 */
+  -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
+  transform: rotate(7deg);
+}
+
+.aidoru-name a {
+  text-decoration: none;
+  color: #E71695;
+}
+
+.opened-card-container {
+  text-align: center;
+}
+
+.aidoru-name {
+  display: block;
+}
