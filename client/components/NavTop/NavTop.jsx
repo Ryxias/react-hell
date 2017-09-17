@@ -9,8 +9,8 @@ class NavTop extends Component {
     this.changeToHomeTitle = this.changeToHomeTitle.bind(this);
 
     this.LINK_STATES = {
-      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Go to Gacha Roll</Link>],
-      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Go Home</Link>]
+      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>],
+      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>]
     };
   }
 
@@ -42,12 +42,12 @@ class NavTop extends Component {
         <div className="navbar-header">
           <button className="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-items"
                   aria-expanded="false">
-            <span className="sr-only">Toggle navigation</span>
+            <span className="sr-only"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <Link to="/react" className="navbar-brand" onClick={this.changeToHomeTitle}>Chuuni</Link>
+          <Link to="/react" className="navbar-brand" onClick={this.changeToHomeTitle}>Chuuni.me</Link>
         </div>
 
         {/* Collapsible content */}

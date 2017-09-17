@@ -8,7 +8,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        Sorry, no contents in Home Page yet!
+        Sorry, no contents in the Home Page yet!
       </div>
     );
   }

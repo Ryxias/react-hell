@@ -30,8 +30,8 @@ class App extends Component {  // i.e extends React.Component
     return (
       <div>
         <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle} />
-        <div>
-          <b>Welcome to the {this.state.pageTitle} page of Chuuni.me!!!</b>
+        <div className="container-fluid">
+          <h1>Welcome to the {this.state.pageTitle} page of Chuuni.me!!!</h1>
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
         </div>
