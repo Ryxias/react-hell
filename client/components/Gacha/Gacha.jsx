@@ -20,7 +20,7 @@ class Gacha extends Component {
   }
 
   getGacha() {
-    axios.get("/react/sif/roll")
+    axios.get("/api/sif/roll")
       .then((received) => {
       console.log('Received data:', received.data);
       this.setState({

@@ -6,7 +6,9 @@
 //
 const router = require('express').Router();
 
-router.use('/react', require('./react-base'));
+// The API router needs to be registered before base, due to the /* matcher
+router.use('/api', require('./api'));
+
 router.use('/', require('./base'));
 router.use('/sif', require('./sif'));
 router.use('/blog', require('./blog'));

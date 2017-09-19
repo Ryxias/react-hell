@@ -2,29 +2,23 @@
 
 const router = require('express').Router();
 
-// Welcome page
-router.get('/', (req, res, next) => {
-  return res.render('index',
-    {
-      header: true,
-      footer: true,
-      title: 'Chuuni.me - Home of the Chuuni',
-      css: ['index.css'],
 
-      message: 'What even is CSS',
+/**
+ * The universal react root, sending the react index file
+ */
+router.get('/', (req, res, next) => {
+  return res.sendFile(
+    'index.html',
+    {
+      root: `${PROJECT_ROOT}/public`
     }
   );
 });
 
 
-// Anime crap
-router.get('/animu', (req, res, next) => {
-  res.redirect('/');
+router.get('/*', (req, res, next) => {
+  return res.redirect('/');
 });
 
-// D&D resources
-router.get('/dnd', (req, res, next) => {
-  res.redirect('/');
-});
 
 module.exports = router;

@@ -1,22 +1,17 @@
 'use strict';
 
+/**
+ * SIF API
+ */
+
 const router = require('express').Router();
 const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
 const ll_client = new LoveLiveClient();
 
-// Welcome page
-router.get('/', (req, res, next) => {
-  res.sendFile('index.html', { root: `${PROJECT_ROOT}/public` })
-});
-
-router.get('/sif/roll', (req, res) => {
+router.get('/roll', (req, res) => {
   ll_client.gachaRCard().then((card) => {
     renderJSON(card, res);
   });
-});
-
-router.get('/*', (req, res, next) => {
-  res.redirect('/react');
 });
 
 const renderJSON = (card, res) => {
@@ -70,3 +65,4 @@ const mapRarityToAssets = (rarity) => {
 };
 
 module.exports = router;
+

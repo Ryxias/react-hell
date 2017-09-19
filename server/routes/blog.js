@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * These express routes are deprecated by the react app
+ */
+
 const router = require('express').Router();
 const showdown  = require('showdown');
 const mdconverter = new showdown.Converter();
