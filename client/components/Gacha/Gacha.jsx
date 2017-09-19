@@ -12,10 +12,11 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "envelope_r1.png",
       envelope_image_open: "envelope_r2.png",
-      open_sound: ""
+      open_sound: "r_open.mp3"
     };
 
     this.getGacha = this.getGacha.bind(this);
+    this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
   }
 
   getGacha() {
@@ -34,8 +35,45 @@ class Gacha extends Component {
     });
   }
 
+  // Put an onclick listener on the close envelope that replaces it
+  // with the open envelope, which then animates itself to grow fat as fuck
+  // before exploding in disappointment for all you gacha fools
+
+  enableGachaAnimation() {
+    const $closed_envelope = $(".envelope-closed");
+    const $open_envelope = $(".envelope-open");
+    const $data_blob = $(".data");
+    const audio = new Audio($data_blob.data("open-sound-url"));
+
+    const animateOpeningBox = () => {
+      // Replace the closed envelope with the open one
+      $closed_envelope.addClass("hide");
+      $open_envelope.removeClass("hide");
+
+      // Do some stupid ass animation of the open envelope
+      $open_envelope.animate({width:'275px'}, 450, () => {
+        //do stuff after animation
+        $(".envelope-image-container").remove();
+        let $container = $(".opened-card-container");
+        $container.css("display", "none").removeClass("hide");
+        $container.fadeIn("slow");
+      });
+    };
+
+    $closed_envelope.on("click", () => {
+      // Play kinky music
+      //   Putting the animation crap in here ensures the audio begins to play before
+      //   the animations, making the UI "feel" more snappy.
+      audio.play().then(animateOpeningBox);
+    });
+  }
+
   componentWillMount() {
     this.getGacha();
+  }
+
+  componentDidUpdate() {
+    this.enableGachaAnimation();
   }
 
   render() {
