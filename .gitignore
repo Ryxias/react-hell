@@ -62,6 +62,7 @@ typings/
 
 # Compiled bundles
 public/assets/bundles/
+public/dist/
 
 # Config files - i.e. keys
 config/config.js

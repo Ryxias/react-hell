@@ -26,7 +26,6 @@ class ExpressApplication extends require('./BaseApplication') {
     const { redirectHttpToHttps } = require(PROJECT_ROOT + '/init/custom_app_redirects');
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
-    const react_middleware = express.static(PROJECT_ROOT + '/public_react'); // Express to serve static files easily without nginx
     const appRouter = require(PROJECT_ROOT + '/server/routes');
     const chuubot = require(PROJECT_ROOT + '/init/chuubot')(this.getConfig());
 
@@ -40,7 +39,6 @@ class ExpressApplication extends require('./BaseApplication') {
     // Attach middleware
     app.use(redirectHttpToHttps);
     app.use('/statics', staticsMiddleware);
-    app.use('/public_react', react_middleware);
     app.use(appRouter);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);

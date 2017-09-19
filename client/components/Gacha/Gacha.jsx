@@ -80,8 +80,8 @@ class Gacha extends Component {
     return (
       <div className="gacha-container">
         <div className="envelope-image-container">
-          <img className="envelope-image envelope-closed" src={"/public_react/assets/i/" + this.state.envelope_image_closed} />
-          <img className="envelope-image envelope-open hide" src={"/public_react/assets/i/" + this.state.envelope_image_open} />
+          <img className="envelope-image envelope-closed" src={"/statics/i/" + this.state.envelope_image_closed} />
+          <img className="envelope-image envelope-open hide" src={"/statics/i/" + this.state.envelope_image_open} />
         </div>
         <div className="opened-card-container hide">
         <span className="aidoru-name">
@@ -89,7 +89,7 @@ class Gacha extends Component {
           </span>
           <img className="aidoru-image" src={this.state.card_image_url}/>
         </div>
-        <div className="data" data-open-sound-url={"/public_react/assets/sound/" + this.state.open_sound}></div>
+        <div className="data" data-open-sound-url={"/statics/sound/" + this.state.open_sound}></div>
       </div>
     );
   }

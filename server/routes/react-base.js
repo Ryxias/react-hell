@@ -6,7 +6,7 @@ const ll_client = new LoveLiveClient();
 
 // Welcome page
 router.get('/', (req, res, next) => {
-  res.sendFile('index.html', { root: `${__dirname}/../../public_react` })
+  res.sendFile('index.html', { root: `${PROJECT_ROOT}/public` })
 });
 
 router.get('/sif/roll', (req, res) => {
