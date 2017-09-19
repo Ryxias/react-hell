@@ -4,7 +4,7 @@
   "description": "Me learning the hell hole that is react",
   "main": "index.js",
   "scripts": {
-    "start": "bin/run",
+    "start": "sudo nodemon server/server.js",
     "sync_models": "node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch"
   },
@@ -36,5 +36,8 @@
     "showdown": "^1.7.4",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.3"
   }
 }
