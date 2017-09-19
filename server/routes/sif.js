@@ -4,6 +4,10 @@ const router = require('express').Router();
 const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
 const ll_client = new LoveLiveClient();
 
+/**
+ * These routes are deprecated by the React app
+ */
+
 router.get('/random', (req, res, next) => {
   ll_client.getRandomCard().then((card) => {
     return renderSifView(card, res);

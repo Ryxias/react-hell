@@ -12,4 +12,6 @@ import { BrowserRouter } from 'react-router-dom';  // React Router v4
 ReactDOM.render((
   <BrowserRouter>
     <App/>
-  </BrowserRouter>), document.getElementById('app'));  // Renders the root component to <div>
+  </BrowserRouter>
+),
+document.getElementById('app'));  // Renders the root component to <div>
