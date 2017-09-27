@@ -6,15 +6,39 @@ class Blog extends Component {
     super(props);
 
     this.state = {
-      testText: 'HELLO WORLD!!!'
+      testText: 'HELLO WORLD!!!',
+      testEntries: [
+        {
+          'date': '~8000 BC',
+          'title': 'Geronimo!',
+          'text': 'I didn\'t exist yet.'
+        },
+        {
+          'date': '9-26-17',
+          'title': 'Well...',
+          'text': 'I am working on this blog!'
+        }
+      ]
     };
   }
 
   render() {
+
+    let testText = this.state.testText;
+
     return (
       <div>
         Testing the blog section.
-        <BlogEntry testText={this.state.testText}/>
+        {
+          this.state.testEntries.map(function(blogPost, index) {
+            return (
+                    <div className="row" key={index}>
+                        <hr></hr>
+                        <BlogEntry testText={testText} blogPost={blogPost} />
+                    </div>
+                   );
+          })
+        }
       </div>
     );
   }
