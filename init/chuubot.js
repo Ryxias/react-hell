@@ -6,7 +6,7 @@
 const TwentyOneGame = require(PROJECT_ROOT + '/lib/TwentyOneGame');
 
 module.exports = (config) => {
-  const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
+  const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
   const ll_client = new LoveLiveClient();
   const chuu = require(PROJECT_ROOT + '/lib/slackbot_framework')(config.slack);
 

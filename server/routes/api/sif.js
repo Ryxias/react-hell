@@ -5,7 +5,7 @@
  */
 
 const router = require('express').Router();
-const LoveLiveClient = require(PROJECT_ROOT + '/lib/love_live_client');
+const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
 const ll_client = new LoveLiveClient();
 
 router.get('/roll', (req, res) => {

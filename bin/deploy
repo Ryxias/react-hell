@@ -5,9 +5,6 @@
 #
 set -e
 
-# Get to project root
-cd "$(dirname "$0")/.."
-
 # Config
 REMOTEUSER=ryxias
 
