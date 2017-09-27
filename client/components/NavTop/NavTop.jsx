@@ -7,10 +7,15 @@ class NavTop extends Component {
 
     this.changeToGachaTitle = this.changeToGachaTitle.bind(this);
     this.changeToHomeTitle = this.changeToHomeTitle.bind(this);
+    this.changeToBlogTitle = this.changeToBlogTitle.bind(this);
 
     this.LINK_STATES = {
-      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>],
-      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>]
+      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>,
+             <Link to="/react/blog" className="menu-item" onClick={this.changeToBlogTitle}>Blog</Link>],
+      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>,
+              <Link to="/react/blog" className="menu-item" onClick={this.changeToBlogTitle}>Blog</Link>],
+      Blog: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>,
+             <Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>]
     };
   }
 
@@ -20,6 +25,10 @@ class NavTop extends Component {
 
   changeToHomeTitle() {
     this.props.changePageTitle("Home");
+  }
+
+  changeToBlogTitle() {
+    this.props.changePageTitle("Blog");
   }
 
   componentDidMount() {
