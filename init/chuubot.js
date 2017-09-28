@@ -3,7 +3,7 @@
 // Connect Chuubot and provide an example of how to create a listener
 //
 
-const TwentyOneGame = require(PROJECT_ROOT + '/lib/TwentyOneGame');
+const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/SlackConnector');
 
 module.exports = (config) => {
   const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
@@ -48,11 +48,69 @@ module.exports = (config) => {
   });
 
   // 21 game
-  chuu.on(/!21/, (message, send) => {
-    let channel_id = message.channel;
-    let game = new TwentyOneGame(channel_id);
-    game.loadGameState().then(send('Something Happened?'));
+  chuu.on(/^!21 help$/, (message, send) => {
+    send(
+`
+-- TwentyOneGame --
+
+Usage:
+* !21 join
+* !21 leave
+* !21 whos-turn
+* !21 start
+`
+    );
   });
+
+  chuu.on(/^!21 join/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.addPlayer(player_id);
+  });
+
+  chuu.on(/^!21 start/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.getPlayer(player_id).then(player => {
+      return player.startGame();
+    });
+  });
+
+  chuu.on(/^!21 whoami/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.getPlayer(player_id).then(player => {
+      return player.whoami();
+    });
+  });
+
+  chuu.on(/^!21 whos-turn$/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.getPlayer(player_id).then(player => {
+      return player.whosTurn();
+    });
+  });
+
+  // 21 game
+  chuu.on(/^!21 leave/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.getPlayer(player_id).then(player => {
+      return player.leaveGame();
+    });
+  });
+
 
   return chuu;
 };
