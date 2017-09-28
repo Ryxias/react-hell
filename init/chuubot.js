@@ -100,6 +100,16 @@ Usage:
     });
   });
 
+  chuu.on(/^!21 whos-playing$/, (message, send) => {
+    let channel_id = message.channel;
+    let player_id = message.user;
+
+    let game = TwentyOneSlackConnector.connect(channel_id, send);
+    game.getPlayer(player_id).then(player => {
+      return player.whosPlaying();
+    });
+  });
+
   // 21 game
   chuu.on(/^!21 leave/, (message, send) => {
     let channel_id = message.channel;

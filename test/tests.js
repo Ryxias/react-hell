@@ -75,8 +75,8 @@ describe('21 Game', function() {
 
     return game.getPlayer('adslfahw').then(player => {
       return player.whoami();
-    }).then(() => {
-      assert.equal('adf??', value);
+    }).catch(err => {
+      assert.equal('You are not part of this game! The players are: [1,abc2] [0007JPWQJD]', value);
     });
   });
 
