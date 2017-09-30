@@ -23,6 +23,12 @@ module.exports = sequelize => {
       type: TEXT,
       allowNull: false,
     },
+    tableName: 'blogposts',
+    createdAt: 'created',
+    updatedAt: 'modified',
+    indexes: [
+      { fields: ['createdAt'] },
+    ],
     hooks: {},
     instanceMethods: {},
   });
