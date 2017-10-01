@@ -2,7 +2,7 @@
 
 ## Source
 
-Firstly, you can find all of the framework code [here](../lib/slackbot_framework.js).
+Firstly, you can find all of the framework code [here](../lib/SlackbotFramework.js).
 
 ## Listeners
 

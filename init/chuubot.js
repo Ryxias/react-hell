@@ -3,12 +3,12 @@
 // Connect Chuubot and provide an example of how to create a listener
 //
 
-const TwentyOneGame = require(PROJECT_ROOT + '/lib/TwentyOneGame');
+const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/SlackConnector');
 
 module.exports = (config) => {
   const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
   const ll_client = new LoveLiveClient();
-  const chuu = require(PROJECT_ROOT + '/lib/slackbot_framework')(config.slack);
+  const chuu = require(PROJECT_ROOT + '/lib/SlackbotFramework')(config.slack);
 
   chuu.on(/.*/, (message, send) => {
     SlackMessage.create(
@@ -22,7 +22,7 @@ module.exports = (config) => {
   });
 
   // Add dumb listener for baachuu
-  chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
+  chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
 
   // gacha
   //   Provide `!gacha`
@@ -47,11 +47,29 @@ module.exports = (config) => {
     });
   });
 
-  // 21 game
-  chuu.on(/!21/, (message, send) => {
-    let channel_id = message.channel;
-    let game = new TwentyOneGame(channel_id);
-    game.loadGameState().then(send('Something Happened?'));
+  // This attaches all !21 listeners to chuu
+  TwentyOneSlackConnector.connectChuubot(chuu);
+
+  // Setting up Chuu to recognize your private channel
+  chuu.on(/^!chuuconfig private$/, (message, send) => {
+    let private_channel_id = message.channel;
+    let user_id = message.user;
+
+    chuu.registerPrivateChannelMapping(user_id, private_channel_id)
+      .then(() => {
+        send(`Understood!  I will now message this channel, ${private_channel_id}, when private messaging you!`);
+      });
+  });
+  chuu.on(/^!private$/, (message, send) => {
+    let user_id = message.user;
+    chuu.getPrivateMessageChannel(user_id)
+      .then(private_channel_id => {
+        if (private_channel_id === undefined) {
+          send(`You don't seem to have private messaging configured!  Please send me a *_private message_* with the command: \`!chuuconfig private\``);
+        }
+        send('Psst!  Over here!', private_channel_id);
+      })
+      .catch(err => send(`Whoops, something went wrong: ${err.message} [0035HQPWCLA]`));
   });
 
   return chuu;

@@ -1,18 +1,7 @@
 'use strict';
 
-const MochaApplication = require('../init/MochaApplication');
-const app = new MochaApplication();
-app.boot();
-
+require('./init');
 const assert = require('assert');
-
-describe('Base Case', function() {
-
-  it('should be able to run mocha', function() {
-    return assert(true);
-  });
-
-});
 
 describe('Love Live Client', function() {
   const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
