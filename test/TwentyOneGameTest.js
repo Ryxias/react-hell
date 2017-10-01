@@ -18,13 +18,13 @@ describe('21 Game Setup', function() {
 
     return game.addPlayer('abc1')
       .then(() => {
-        assert.equal('Player abc1 joined!', value);
+        assert.equal('Player <@abc1> joined!', value);
       })
       .then(() => {
         return game.addPlayer('xyz2');
       })
       .then(() => {
-        assert.equal('Player xyz2 joined!', value);
+        assert.equal('Player <@xyz2> joined!', value);
       });
   });
 
@@ -43,7 +43,7 @@ describe('21 Game Setup', function() {
         return player.whoami();
       })
       .then(() => {
-        assert.equal(`You're player abc!`, value);
+        assert.equal(`You're player abc, <@abc>!`, value);
       });
   });
 
@@ -74,7 +74,7 @@ describe('21 Game Setup', function() {
       })
       // Should be 1 player
       .spread((player1, none) => {
-        assert.equal('Players are: [abc1]', value);
+        assert.equal('Players are: [<@abc1>]', value);
         return player1;
       })
       // Add a second player
@@ -86,7 +86,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player2.whosPlaying()];
       })
       .then(args => {
-        assert.equal('Players are: [abc1,xyz2]', value);
+        assert.equal('Players are: [<@abc1>,<@xyz2>]', value);
         return args;
       })
       // And first player's whosPlaying() should now also see both players
@@ -94,7 +94,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.whosPlaying()];
       })
       .then(() => {
-        assert.equal('Players are: [abc1,xyz2]', value);
+        assert.equal('Players are: [<@abc1>,<@xyz2>]', value);
       })
       .catch(err => {
         assert.fail('What the fuck: ' + err.message);
@@ -179,7 +179,7 @@ describe('21 Game Setup', function () {
         return [game, player_abc1.whosTurn()];
       })
       .spread((game, none) => {
-        assert.equal(`Player xyz2's turn`, value);
+        assert.equal(`Player <@xyz2>'s turn`, value);
       });
   });
 
