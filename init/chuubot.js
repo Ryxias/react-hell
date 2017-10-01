@@ -8,7 +8,7 @@ const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/Slack
 module.exports = (config) => {
   const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
   const ll_client = new LoveLiveClient();
-  const chuu = require(PROJECT_ROOT + '/lib/slackbot_framework')(config.slack);
+  const chuu = require(PROJECT_ROOT + '/lib/SlackbotFramework')(config.slack);
 
   chuu.on(/.*/, (message, send) => {
     SlackMessage.create(
@@ -22,7 +22,7 @@ module.exports = (config) => {
   });
 
   // Add dumb listener for baachuu
-  chuu.on(/chuu/, (message, send) => { send('baaaaaaaaaa'); });
+  chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
 
   // gacha
   //   Provide `!gacha`
@@ -62,7 +62,8 @@ Usage:
     );
   });
 
-  chuu.on(/^!21 join/, (message, send) => {
+  // FIXME -- Eventually move this all to the Slackbot connector
+  chuu.on(/^!21 join$/, (message, send) => {
     let channel_id = message.channel;
     let player_id = message.user;
 
@@ -70,7 +71,7 @@ Usage:
     game.addPlayer(player_id);
   });
 
-  chuu.on(/^!21 start/, (message, send) => {
+  chuu.on(/^!21 start$/, (message, send) => {
     let channel_id = message.channel;
     let player_id = message.user;
 
@@ -80,7 +81,7 @@ Usage:
     });
   });
 
-  chuu.on(/^!21 whoami/, (message, send) => {
+  chuu.on(/^!21 whoami$/, (message, send) => {
     let channel_id = message.channel;
     let player_id = message.user;
 
@@ -120,7 +121,56 @@ Usage:
       return player.leaveGame();
     });
   });
+  // FIXME -- end
 
+  // Setting up Chuu to recognize your private channel
+  chuu.on(/^!chuuconfig private$/, (message, send) => {
+    let private_channel_id = message.channel;
+    let user_id = message.user;
+
+    Document.findOne({ where: { name: 'chuu-config' } })
+      .then(chuu_config => {
+        if (!chuu_config) {
+          return Document.create(
+            {
+              name: 'chuu-config',
+              content: '{}',
+              expiry: '2999-12-31 23:59:59',
+            }
+          );
+        }
+        return chuu_config;
+      })
+      .then(chuu_config => {
+        let chuu_config_data = JSON.parse(chuu_config.content) || {};
+        chuu_config_data.private_messaging = chuu_config_data.private_messaging || {};
+        chuu_config_data.private_messaging[user_id] = private_channel_id;
+        chuu_config.content = JSON.stringify(chuu_config_data);
+        return chuu_config.save();
+      })
+      .then(() => {
+        send(`Understood!  I will now message this channel, ${private_channel_id}, when private messaging you!`);
+      });
+  });
+  chuu.on(/^!private$/, (message, send) => {
+    let user_id = message.user;
+    Document.findOne({ where: { name: 'chuu-config' }})
+      .then(chuu_config => {
+        if (!chuu_config) {
+          throw new Error('Nope');
+        }
+        let chuu_config_data = JSON.parse(chuu_config.content);
+        if (!chuu_config_data.private_messaging) {
+          throw new Error('Huh');
+        }
+        let private_channel_id = chuu_config_data.private_messaging[user_id];
+        if (!private_channel_id) {
+          send(`You don't seem to have private messaging configured!  Please send me a *_private message_* with the command: \`!chuuconfig private\``);
+        }
+        send('This is a private message!', private_channel_id);
+      })
+      .catch(err => send('Whoops? ' + err.message));
+  });
 
   return chuu;
 };
