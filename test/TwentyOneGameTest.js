@@ -183,4 +183,26 @@ describe('21 Game Setup', function () {
       });
   });
 
+  it('should support hit', function () {
+    let value = '';
+    const capture = function(message) { value += message + '\n'; };
+
+    let player1, player2;
+    return newStartedGame(capture)
+      .then(game => {
+        return [game, game.getPlayer('abc1'), game.getPlayer('xyz2')];
+      })
+      .spread((game, p1, p2) => {
+        player1 = p1;
+        player2 = p2;
+      })
+      .then(() => player2.hit())
+      .then(() => {
+        return game.getEngine()
+      })
+      .then(engine => {
+        engine.getPlayerah
+      });
+  });
+
 });
