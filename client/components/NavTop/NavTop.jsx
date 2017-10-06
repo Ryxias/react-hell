@@ -9,8 +9,8 @@ class NavTop extends Component {
     this.changeToHomeTitle = this.changeToHomeTitle.bind(this);
 
     this.LINK_STATES = {
-      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>],
-      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>]
+      Home: [<Link to="/react/sif" className="nav-link" onClick={this.changeToGachaTitle}>Gacha Roll</Link>],
+      Gacha: [<Link to="/react/" className="nav-link" onClick={this.changeToHomeTitle}>Home</Link>]
     };
   }
 
@@ -36,12 +36,12 @@ class NavTop extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-sticky-top navbar-default">
+      <nav className="navbar navbar-expand-lg navbar-sticky-top navbar-dark primary-color">
 
         {/* Main Logo button */}
         <div className="navbar-header">
           <button className="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-items"
-                  aria-expanded="false">
+                  aria-controls="navbar-items" aria-expanded="false">
             <span className="sr-only"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
