@@ -156,7 +156,8 @@ describe('21 Game Setup', function () {
         },
         deck: [ 5, 6, 7, 8, 9, 10, 11 ],
         game_started: true,
-        player_acted: { 'xyz2': true, 'abc1': true },
+        game_over: false,
+        player_acted: { 'xyz2': false, 'abc1': true },
         player_turn: 'xyz2' })
       .then((game) => game)
       .then(game => {
@@ -215,6 +216,9 @@ describe('21 Game Setup', function () {
           {card: 5, hidden: false},
         ], p2_hand);
 
+        // Player 2 did something
+        assert.ok(game_state.player_acted['xyz2']);
+
         // And it should now be player1's turn
         assert.equal('abc1', game_state.player_turn);
       });
@@ -248,10 +252,35 @@ describe('21 Game Setup', function () {
         ], p2_hand);
 
         // Also mark that player2 did not do anything
-        assert.ok(game_state.player_acted['xyz2']);
+        assert.ok(!game_state.player_acted['xyz2']);
 
         // And it should now be player1's turn
         assert.equal('abc1', game_state.player_turn);
+      });
+  });
+
+  it('double pass should end game', function () {
+    let value = '';
+    const capture = function(message) { value += message + '\n'; };
+
+    let stored_game;
+    let player1, player2;
+    return newStartedGame(capture)
+      .spread((game, p1, p2) => {
+        player1 = p1;
+        player2 = p2;
+        stored_game = game;
+      })
+      .then(() => player2.stay())
+      .then(() => player1.stay())
+      .then(() => stored_game.debugGetGameState())
+      .then(game_state => {
+        // Also mark that both player1 and player2 did not do anything
+        assert.ok(!game_state.player_acted['abc1']);
+        assert.ok(!game_state.player_acted['xyz2']);
+
+        // It's game over now
+        assert.ok(game_state.game_over);
       });
   });
 
