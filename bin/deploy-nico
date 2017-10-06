@@ -9,4 +9,4 @@ set -e
 REMOTEUSER=nico
 
 # Use rsync to bring all files from this project
-rsync -avr --progress ~/Documents/OneDrive/Projects/react-hell/. $REMOTEUSER@machine.chuuni.me:~/repos/react-hell --exclude .git --exclude .idea --exclude /node_modules
+rsync -avr --progress ~/github/react-hell/. $REMOTEUSER@machine.chuuni.me:~/repos/react-hell --exclude .git --exclude .idea --exclude /node_modules

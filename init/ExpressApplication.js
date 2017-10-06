@@ -15,6 +15,9 @@ class ExpressApplication extends require('./BaseApplication') {
   }
 
   appBoot() {
+    // check environment
+    const PRODUCTION = process.env.NODE_ENV === 'production';
+
     // include packages
     const express = this.loadPackage('express');
 
@@ -33,21 +36,25 @@ class ExpressApplication extends require('./BaseApplication') {
     const app = express();
 
     // View Engine
-    app.engine('handlebars', this.loadPackage('express-handlebars')({ defaultLayout: 'base' }));
-    app.set('view engine', 'handlebars');
+    // app.engine('handlebars', this.loadPackage('express-handlebars')({ defaultLayout: 'base' }));
+    // app.set('view engine', 'handlebars');
 
     // Attach middleware
-    app.use(redirectHttpToHttps);
+    if (PRODUCTION) {
+      app.use(redirectHttpToHttps);
+    }
     app.use('/statics', staticsMiddleware);
     app.use(appRouter);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
 
     // Connect chuubot
-    chuubot.connect();
+    if (PRODUCTION) {
+      chuubot.connect();
+    }
 
     const runServer = () => {
-      const port = 80;
+      const port = PRODUCTION ? 80 : 8000;
 
       // We only listen to port 80
       //   On AWS, the application is fronted by a load balancer which terminates all inbound connections
