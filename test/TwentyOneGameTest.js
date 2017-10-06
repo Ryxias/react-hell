@@ -147,38 +147,42 @@ describe('21 Game Setup', function() {
 
 describe('21 Game Setup', function () {
   const newStartedGame = function(output) {
-    let game = new Game('test', `${Date.now()}-${Math.random()}`, output);
-    return game.debugSetGameState(
+    let g = new Game('test', `${Date.now()}-${Math.random()}`, output);
+    return g.debugSetGameState(
       { key: '21-game-test-1506815984174-0.6034531060655397',
-        player_data: { abc1: { player_id: 'abc1' }, xyz2: { player_id: 'xyz2' } },
-        deck: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+        player_data: {
+          abc1: { player_id: 'abc1', hand: [ {card: 1, hidden: true}, {card:3, hidden: false} ] },
+          xyz2: { player_id: 'xyz2', hand: [ {card: 2, hidden: true}, {card:4, hidden: false} ] },
+        },
+        deck: [ 5, 6, 7, 8, 9, 10, 11 ],
         game_started: true,
+        player_acted: { 'xyz2': true, 'abc1': true },
         player_turn: 'xyz2' })
-      .then(() => game);
+      .then((game) => game)
+      .then(game => {
+        return [game, game.getPlayer('abc1'), game.getPlayer('xyz2')];
+      });
   };
 
   it('should support whos turn', function () {
     let value = '';
     const capture = function(message) { value = message; };
 
+    let stored_game, player1, player2;
     return newStartedGame(capture)
-      .then(game => {
-        return [game, game.getPlayer('xyz2')];
+      .spread((game, p1, p2) => {
+        player1 = p1;
+        player2 = p2;
+        stored_game = game;
+        return player2.whosTurn();
       })
-      .spread((game, player_xyz2) => {
-        return [game, player_xyz2.whosTurn()];
-      })
-      .spread((game, none) => {
+      .then(() => {
         assert.equal('Your turn!', value);
-        return game;
       })
-      .then(game => {
-        return [game, game.getPlayer('abc1')];
+      .then(() => {
+        return player1.whosTurn();
       })
-      .spread((game, player_abc1) => {
-        return [game, player_abc1.whosTurn()];
-      })
-      .spread((game, none) => {
+      .then(() => {
         assert.equal(`Player <@xyz2>'s turn`, value);
       });
   });
@@ -187,21 +191,67 @@ describe('21 Game Setup', function () {
     let value = '';
     const capture = function(message) { value += message + '\n'; };
 
+    let stored_game;
     let player1, player2;
     return newStartedGame(capture)
-      .then(game => {
-        return [game, game.getPlayer('abc1'), game.getPlayer('xyz2')];
-      })
       .spread((game, p1, p2) => {
         player1 = p1;
         player2 = p2;
+        stored_game = game;
       })
       .then(() => player2.hit())
-      .then(() => {
-        return game.getEngine()
+      .then(() => stored_game.debugGetGameState())
+      .then(game_state => {
+        assert.ok(!game_state.game_over);
+
+        // The first card of the deck should be removed and move to player2's hand
+        let deck = game_state.deck;
+        assert.deepEqual([6,7,8,9,10,11], deck);
+
+        let p2_hand = game_state.player_data["xyz2"].hand;
+        assert.deepEqual([
+          {card: 2, hidden: true},
+          {card: 4, hidden: false},
+          {card: 5, hidden: false},
+        ], p2_hand);
+
+        // And it should now be player1's turn
+        assert.equal('abc1', game_state.player_turn);
+      });
+  });
+
+  it('should support stay', function () {
+    let value = '';
+    const capture = function(message) { value += message + '\n'; };
+
+    let stored_game;
+    let player1, player2;
+    return newStartedGame(capture)
+      .spread((game, p1, p2) => {
+        player1 = p1;
+        player2 = p2;
+        stored_game = game;
       })
-      .then(engine => {
-        engine.getPlayerah
+      .then(() => player2.stay())
+      .then(() => stored_game.debugGetGameState())
+      .then(game_state => {
+        assert.ok(!game_state.game_over);
+
+        // Nothing in player2's hand
+        let deck = game_state.deck;
+        assert.deepEqual([5,6,7,8,9,10,11], deck);
+
+        let p2_hand = game_state.player_data["xyz2"].hand;
+        assert.deepEqual([
+          {card: 2, hidden: true},
+          {card: 4, hidden: false},
+        ], p2_hand);
+
+        // Also mark that player2 did not do anything
+        assert.ok(game_state.player_acted['xyz2']);
+
+        // And it should now be player1's turn
+        assert.equal('abc1', game_state.player_turn);
       });
   });
 
