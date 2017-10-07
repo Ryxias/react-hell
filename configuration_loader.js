@@ -4,7 +4,7 @@
 //   which should be a javascript file that exports 'config'
 //
 
-const CONFIG_FILE_PATH = '/etc/chuuni/config';
+const CONFIG_FILE_PATH = process.env.NODE_ENV === 'production' ? '/etc/chuuni/config' : './config/config';
 
 // Blows up on bad permissions
 const config = require(CONFIG_FILE_PATH);
