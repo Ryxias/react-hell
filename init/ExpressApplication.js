@@ -21,16 +21,11 @@ class ExpressApplication extends require('./BaseApplication') {
     // include packages
     const express = this.loadPackage('express');
 
-    // Setup Globals
-    global.PROJECT_ROOT = this.loadPackage('fs').realpathSync(__dirname + '/..');
-    global.Promise = this.loadPackage('bluebird'); // Replace native promise with bluebird because it's better
-
     // Setup middleware
     const { redirectHttpToHttps } = require(PROJECT_ROOT + '/init/custom_app_redirects');
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
     const appRouter = require(PROJECT_ROOT + '/server/routes');
-    const chuubot = require(PROJECT_ROOT + '/init/chuubot')(this.getConfig());
 
     // Initialize the express app
     const app = express();
@@ -43,11 +38,6 @@ class ExpressApplication extends require('./BaseApplication') {
     app.use(appRouter);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
-
-    // Connect chuubot
-    if (production) {
-      chuubot.connect();
-    }
 
     const runServer = () => {
       const port = production ? 80 : this.config.port;
