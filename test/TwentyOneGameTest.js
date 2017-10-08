@@ -10,30 +10,24 @@ describe('21 Game Setup', function() {
   };
 
   it('should support join', function () {
-    let value = '';
-    const capture = function(message) {
-      value = message;
-    };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     return game.addPlayer('abc1')
       .then(() => {
-        assert.equal('Player <@abc1> joined!', value);
+        assert.equal('abc1', output.calls.notifyPlayerJoined[0]);
       })
       .then(() => {
         return game.addPlayer('xyz2');
       })
       .then(() => {
-        assert.equal('Player <@xyz2> joined!', value);
+        assert.equal('xyz2', output.calls.notifyPlayerJoined[0]);
       });
   });
 
   it('should support whoami', function () {
-    let value = '';
-    const capture = function(message) {
-      value = message;
-    };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     return game.addPlayer('abc')
       .then(() => {
@@ -43,14 +37,13 @@ describe('21 Game Setup', function() {
         return player.whoami();
       })
       .then(() => {
-        assert.equal(`You're player abc, <@abc>!`, value);
+        assert.equal(`abc`, output.calls.notifyWhoAmI[0]);
       });
   });
 
   it('should error on non-players', function () {
-    let value = '';
-    const capture = function(message) { value = message; };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     return game.getPlayer('adslfahw')
       .then(player => {
@@ -58,14 +51,13 @@ describe('21 Game Setup', function() {
       })
       .then(() => { assert.fail('Whoops') })
       .catch(err => {
-        assert.equal('You are not part of this game! The players are: [] [0007JPWQJD]', value);
+        assert.equal('Error: You are not part of this game! The players are: [] [0007JPWQJD]', output.calls.sendError[0]);
       });
   });
 
   it('should support get players', function () {
-    let value = '';
-    const capture = function(message) { value = message; };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     // First add 1 player
     game.addPlayer('abc1')
@@ -74,7 +66,7 @@ describe('21 Game Setup', function() {
       })
       // Should be 1 player
       .spread((player1, none) => {
-        assert.equal('Players are: [<@abc1>]', value);
+        assert.equal('abc1', output.calls.displayPlayers[0]);
         return player1;
       })
       // Add a second player
@@ -86,7 +78,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player2.whosPlaying()];
       })
       .then(args => {
-        assert.equal('Players are: [<@abc1>,<@xyz2>]', value);
+        assert.deepEqual(['abc1','xyz2'], output.calls.displayPlayers[0]);
         return args;
       })
       // And first player's whosPlaying() should now also see both players
@@ -94,7 +86,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.whosPlaying()];
       })
       .then(() => {
-        assert.equal('Players are: [<@abc1>,<@xyz2>]', value);
+        assert.deepEqual(['abc1','xyz2'], output.calls.displayPlayers[0]);
       })
       .catch(err => {
         assert.fail('What the fuck: ' + err.message);
@@ -102,9 +94,8 @@ describe('21 Game Setup', function() {
   });
 
   it('should support start game', function () {
-    let value = '';
-    const capture = function(message) { value = message; };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     return game.addPlayer('abc1')
       .then(player1 => {
@@ -114,7 +105,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.equal('The game has begun!', value);
+        assert.ok(output.calls.notifyGameBegin !== null);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -123,9 +114,8 @@ describe('21 Game Setup', function() {
   });
 
   it('should support start game', function () {
-    let value = '';
-    const capture = function(message) { value = message; };
-    let game = newGame(capture);
+    let output = new TestOutput();
+    let game = newGame(output);
 
     return game.addPlayer('abc1')
       .then(player1 => {
@@ -135,7 +125,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.equal('The game has begun!', value);
+        assert.ok(output.calls.notifyGameBegin !== null);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -166,11 +156,10 @@ describe('21 Game Setup', function () {
   };
 
   it('should support whos turn', function () {
-    let value = '';
-    const capture = function(message) { value = message; };
+    let output = new TestOutput();
 
     let stored_game, player1, player2;
-    return newStartedGame(capture)
+    return newStartedGame(output)
       .spread((game, p1, p2) => {
         player1 = p1;
         player2 = p2;
@@ -178,23 +167,22 @@ describe('21 Game Setup', function () {
         return player2.whosTurn();
       })
       .then(() => {
-        assert.equal('Your turn!', value);
+        assert.ok(output.calls.notifyYourTurn !== null);
       })
       .then(() => {
         return player1.whosTurn();
       })
       .then(() => {
-        assert.equal(`Player <@xyz2>'s turn`, value);
+        assert.equal(`xyz2`, output.calls.notifyPlayersTurn[0]);
       });
   });
 
   it('should support hit', function () {
-    let value = '';
-    const capture = function(message) { value += message + '\n'; };
+    let output = new TestOutput();
 
     let stored_game;
     let player1, player2;
-    return newStartedGame(capture)
+    return newStartedGame(output)
       .spread((game, p1, p2) => {
         player1 = p1;
         player2 = p2;
@@ -225,12 +213,11 @@ describe('21 Game Setup', function () {
   });
 
   it('should support stay', function () {
-    let value = '';
-    const capture = function(message) { value += message + '\n'; };
+    let output = new TestOutput();
 
     let stored_game;
     let player1, player2;
-    return newStartedGame(capture)
+    return newStartedGame(output)
       .spread((game, p1, p2) => {
         player1 = p1;
         player2 = p2;
@@ -260,12 +247,11 @@ describe('21 Game Setup', function () {
   });
 
   it('double pass should end game', function () {
-    let value = '';
-    const capture = function(message) { value += message + '\n'; };
+    let output = new TestOutput();
 
     let stored_game;
     let player1, player2;
-    return newStartedGame(capture)
+    return newStartedGame(output)
       .spread((game, p1, p2) => {
         player1 = p1;
         player2 = p2;
@@ -285,3 +271,50 @@ describe('21 Game Setup', function () {
   });
 
 });
+
+class TestOutput {
+  constructor() {
+    this.calls = {};
+  }
+
+  sendError(err) {
+    this.calls['sendError'] = arguments;
+    throw err;
+  }
+
+  notifyPlayerJoined() {
+    this.calls['notifyPlayerJoined'] = arguments;
+  }
+
+  notifyYourTurn() {
+    this.calls['notifyYourTurn'] = arguments;
+  }
+
+  notifyStayThenMoveToNextTurn() {
+    this.calls['notifyStayThenMoveToNextTurn'] = arguments;
+  }
+
+  notifyStayThenGameIsOver() {
+    this.calls['notifyStayThenGameIsOver'] = arguments;
+  }
+
+  notifyDrawThenMoveToNextTurn() {
+    this.calls['notifyDrawThenMoveToNextTurn'] = arguments;
+  }
+
+  notifyWhoAmI() {
+    this.calls['notifyWhoAmI'] = arguments;
+  }
+
+  displayPlayers() {
+    this.calls['displayPlayers'] = arguments;
+  }
+
+  notifyGameBegin() {
+    this.calls['notifyGameBegin'] = arguments;
+  }
+
+  notifyPlayersTurn() {
+    this.calls['notifyPlayersTurn'] = arguments;
+  }
+}
