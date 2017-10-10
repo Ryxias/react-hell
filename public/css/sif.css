@@ -33,6 +33,7 @@
 .gacha-container {
   height: 768px;
   max-width: 1024px;
+  margin: auto;
 }
 
 .gacha-dialogue {

@@ -72,8 +72,9 @@ class Gacha extends Component {
   enableGachaAnimation() {
     const $closed_envelope = $(".envelope-closed");
     const $open_envelope = $(".envelope-open");
-    const $data_blob = $(".data");
-    const audio = new Audio($data_blob.data("open-sound-url"));
+    let $data_blob = $(".data");
+    $data_blob.data("open-sound-url", "/statics/sound/" + this.state.open_sound);
+    let audio = new Audio($data_blob.data("open-sound-url"));
 
     const animateOpeningBox = () => {
       // Replace the closed envelope with the open one
@@ -86,14 +87,15 @@ class Gacha extends Component {
         $(".envelope-image-container").addClass("hide");
         let $container = $(".opened-card-container");
         $container.css("display", "none").removeClass("hide");
-        $container.fadeIn("slow");
+        $container.stop().fadeIn("slow");
       });
     };
 
-    $closed_envelope.on("click", () => {
-      // Play kinky music
-      //   Putting the animation crap in here ensures the audio begins to play before
-      //   the animations, making the UI "feel" more snappy.
+    // Play kinky music
+    //   Putting the animation crap in here ensures the audio begins to play before
+    //   the animations, making the UI "feel" more snappy.
+
+    $closed_envelope.off().on("click", () => {
       audio.play().then(animateOpeningBox);
     });
   }
@@ -102,7 +104,7 @@ class Gacha extends Component {
     this.getGacha();
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     this.enableGachaAnimation();
   }
 
