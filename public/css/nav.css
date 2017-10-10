@@ -2,6 +2,18 @@
 
 }
 
-#search-box {
+.search-box {
 
+}
+
+.navbar {
+    background-color: royalblue;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: transparent;
 }

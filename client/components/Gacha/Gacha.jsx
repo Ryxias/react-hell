@@ -10,16 +10,46 @@ class Gacha extends Component {
       card_ext_link: "",
       card_image_url: "",
       rarity: "",
-      envelope_image_closed: "envelope_r1.png",
-      envelope_image_open: "envelope_r2.png",
+      envelope_image_closed: "loading.gif",
+      envelope_image_open: "",
       open_sound: "r_open.mp3"
     };
 
+    this.resetGacha = this.resetGacha.bind(this);
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
   }
 
+  resetGacha() {
+    this.setState({
+      ard_title: "",
+      card_ext_link: "",
+      card_image_url: "",
+      rarity: "",
+      envelope_image_closed: "loading.gif",
+      envelope_image_open: "",
+      open_sound: "r_open.mp3"
+    });
+  }
+
   getGacha() {
+    this.resetGacha();
+
+    const $opened_card_container = $(".opened-card-container");
+    const $envelope_image_container = $(".envelope-image-container");
+    const $closed_envelope = $(".envelope-closed");
+    const $open_envelope = $(".envelope-open");
+
+    if (!$opened_card_container.hasClass("hide")) {
+      $opened_card_container.addClass("hide");
+    }
+
+    if ($envelope_image_container.hasClass("hide")) {
+      $envelope_image_container.removeClass("hide");
+      $closed_envelope.removeClass("hide");
+      $open_envelope.addClass("hide");
+    }
+
     axios.get("/api/sif/roll")
       .then((received) => {
       console.log('Received data:', received.data);
@@ -53,7 +83,7 @@ class Gacha extends Component {
       // Do some stupid ass animation of the open envelope
       $open_envelope.animate({width:'275px'}, 450, () => {
         //do stuff after animation
-        $(".envelope-image-container").remove();
+        $(".envelope-image-container").addClass("hide");
         let $container = $(".opened-card-container");
         $container.css("display", "none").removeClass("hide");
         $container.fadeIn("slow");
@@ -72,7 +102,7 @@ class Gacha extends Component {
     this.getGacha();
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     this.enableGachaAnimation();
   }
 
@@ -84,10 +114,14 @@ class Gacha extends Component {
           <img className="envelope-image envelope-open hide" src={"/statics/i/" + this.state.envelope_image_open} />
         </div>
         <div className="opened-card-container hide">
-        <span className="aidoru-name">
-          <a href={this.state.card_ext_link}>{this.state.card_title}</a>
+          <span className="aidoru-name">
+            <a href={this.state.card_ext_link}>{this.state.card_title}</a>
           </span>
           <img className="aidoru-image" src={this.state.card_image_url}/>
+          <div className="aidoru-buttons">
+            <button className="btn gacha-button" onClick={this.getGacha}>Re-roll</button>
+            <button className="btn gacha-button">Share this waifu</button>
+          </div>
         </div>
         <div className="data" data-open-sound-url={"/statics/sound/" + this.state.open_sound}></div>
       </div>

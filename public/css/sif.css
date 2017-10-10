@@ -4,12 +4,16 @@
 
 .envelope-image-container {
   text-align: center;
+  height: 768px;
+  max-width: 1024px;
 }
 
 .envelope-image {
   -ms-transform: rotate(7deg); /* IE 9 */
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
   transform: rotate(7deg);
+  max-width: 50%;
+
 }
 
 .aidoru-name a {
@@ -19,8 +23,27 @@
 
 .opened-card-container {
   text-align: center;
+  height: inherit;
 }
 
 .aidoru-name {
   display: block;
+}
+
+.gacha-container {
+  height: 768px;
+  max-width: 1024px;
+}
+
+.gacha-dialogue {
+
+}
+
+.aidoru-image {
+  height: 75%;
+  padding: 15px;
+}
+
+.gacha-button {
+  background-color: royalblue;
 }
