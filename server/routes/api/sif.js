@@ -7,9 +7,11 @@
 const router = require('express').Router();
 const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
 const ll_client = new LoveLiveClient();
+const units = ["Mu's", "Aqours"];
 
 router.get('/roll', (req, res) => {
-  ll_client.gachaRCard().then((card) => {
+  let unit = units[Math.floor(Math.random() * 2)];
+  ll_client.gachaRCard(unit).then((card) => {
     renderJSON(card, res);
   });
 });
