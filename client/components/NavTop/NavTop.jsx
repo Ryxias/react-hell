@@ -10,12 +10,8 @@ class NavTop extends Component {
     this.changeToBlogTitle = this.changeToBlogTitle.bind(this);
 
     this.LINK_STATES = {
-      Home: [<Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>,
-             <Link to="/react/blog" className="menu-item" onClick={this.changeToBlogTitle}>Blog</Link>],
-      Gacha: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>,
-              <Link to="/react/blog" className="menu-item" onClick={this.changeToBlogTitle}>Blog</Link>],
-      Blog: [<Link to="/react/" className="menu-item" onClick={this.changeToHomeTitle}>Home</Link>,
-             <Link to="/react/sif" className="menu-item" onClick={this.changeToGachaTitle}>Gacha Roll</Link>]
+      Home: [<Link to="/react/sif" className="nav-link waves-effect waves-light" onClick={this.changeToGachaTitle}>Gacha Roll</Link>],
+      Gacha: [<Link to="/react/" className="nav-link waves-effect waves-light" onClick={this.changeToHomeTitle}>Home</Link>]
     };
   }
 
@@ -38,36 +34,44 @@ class NavTop extends Component {
       $(".navbar-collapse").collapse("hide");
     });
 
-    $(".navbar-collapse .menu-item").click(function(){
+    $(".navbar-collapse .nav-item").click(function(){
       $(".navbar-collapse").collapse("hide");
     });
   }
 
   render() {
     return (
-      <nav className="navbar navbar-sticky-top navbar-default">
-
+      <nav className="navbar navbar-expand-lg navbar-sticky-top navbar-dark">
+        <div className="container-fluid">
         {/* Main Logo button */}
         <div className="navbar-header">
-          <button className="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-items"
-                  aria-expanded="false">
-            <span className="sr-only"></span>
+          <button className="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-items"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span className="sr-only">Toggle navigation</span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <Link to="/react" className="navbar-brand" onClick={this.changeToHomeTitle}>Chuuni.me</Link>
+          <Link to="/react" className="navbar-brand waves-effect waves-light" onClick={this.changeToHomeTitle}>Chuuni.me</Link>
         </div>
 
         {/* Collapsible content */}
         <div className="collapse navbar-collapse" id="navbar-items">
-          <ul className="nav navbar-nav">
-            {this.LINK_STATES[this.props.pageTitle].map(function(navitem, index) {
-              return <li key={index}>{navitem}</li>
-            })}
+          <ul className="nav navbar-nav mr-auto">
+
+            {/*{this.LINK_STATES[this.props.pageTitle].map(function(navitem, index) {*/}
+              {/*return <li key={index} className="nav-item">{navitem}</li>*/}
+            {/*})}*/}
+            <li className="nav-item">
+              <Link to="/react/" className="nav-link" onClick={this.changeToHomeTitle}>Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/react/sif" className="nav-link" onClick={this.changeToGachaTitle}>Gacha Roll</Link>
+            </li>
           </ul>
         </div>
 
+        </div>
       </nav>
     );
   }

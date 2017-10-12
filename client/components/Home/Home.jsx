@@ -7,7 +7,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home-container">
+        <h1>Welcome to the {this.props.pageTitle} page of Chuuni.me!!!</h1>
         Sorry, no contents in the Home Page yet!
       </div>
     );
