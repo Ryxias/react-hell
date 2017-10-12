@@ -9,8 +9,8 @@ module.exports = sequelize => {
       primaryKey: true,
       autoIncrement: true,
     },
-    createdAt: DATE,
-    updatedAt: DATE,
+    createdAt: 'created',
+    updatedAt: 'modified',
     author: {
       type: STRING(255),
       allowNull: false,
@@ -24,12 +24,8 @@ module.exports = sequelize => {
       allowNull: false,
     },
     tableName: 'blogposts',
-    createdAt: 'created',
-    updatedAt: 'modified',
     indexes: [
       { fields: ['createdAt'] },
     ],
-    hooks: {},
-    instanceMethods: {},
   });
 };
