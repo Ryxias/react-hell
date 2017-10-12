@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import GachaContent from './GachaContent.jsx';
+
 class Gacha extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +12,9 @@ class Gacha extends Component {
       card_ext_link: "",
       card_image_url: "",
       rarity: "",
-      envelope_image_closed: "loading.gif",
+      envelope_image_closed: "",
       envelope_image_open: "",
-      open_sound: "r_open.mp3"
+      open_sound: ""
     };
 
     this.resetGacha = this.resetGacha.bind(this);
@@ -20,9 +22,12 @@ class Gacha extends Component {
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
   }
 
+  // Resets game state to default states; open_sound has to be pre-populated
+  // with a filler value for the data-attribute to work properly
+
   resetGacha() {
     this.setState({
-      ard_title: "",
+      card_title: "",
       card_ext_link: "",
       card_image_url: "",
       rarity: "",
@@ -31,6 +36,9 @@ class Gacha extends Component {
       open_sound: "r_open.mp3"
     });
   }
+
+  // GETS a random gacha from schoolido.lu's LLSIF API and replaces
+  // the states with the obtained data
 
   getGacha() {
     this.resetGacha();
@@ -100,9 +108,13 @@ class Gacha extends Component {
     });
   }
 
+  // Retrieves data before presentation of the virtual DOM
+
   componentWillMount() {
     this.getGacha();
   }
+
+  // Attaches the jQuery events once the virtual DOM has been fully mounted and onClick event has been triggered
 
   componentDidUpdate() {
     this.enableGachaAnimation();
@@ -110,22 +122,8 @@ class Gacha extends Component {
 
   render() {
     return (
-      <div className="gacha-container">
-        <div className="envelope-image-container">
-          <img className="envelope-image envelope-closed" src={"/statics/i/" + this.state.envelope_image_closed} />
-          <img className="envelope-image envelope-open hide" src={"/statics/i/" + this.state.envelope_image_open} />
-        </div>
-        <div className="opened-card-container hide">
-          <span className="aidoru-name">
-            <a href={this.state.card_ext_link}>{this.state.card_title}</a>
-          </span>
-          <img className="aidoru-image" src={this.state.card_image_url}/>
-          <div className="aidoru-buttons">
-            <button className="btn gacha-button" onClick={this.getGacha}>Re-roll</button>
-            <button className="btn gacha-button">Share this waifu</button>
-          </div>
-        </div>
-        <div className="data" data-open-sound-url={"/statics/sound/" + this.state.open_sound}></div>
+      <div>
+        <GachaContent gameState={this.state} getGacha={this.getGacha} />
       </div>
     );
   }
