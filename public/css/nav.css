@@ -17,3 +17,8 @@
 .nav>li>a:focus, .nav>li>a:hover {
     background-color: transparent;
 }
+
+.blog-bar {
+    background-color: royalblue;
+    text-align: center;
+}

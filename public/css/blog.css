@@ -12,6 +12,10 @@
     border-style: dashed;
 }
 
+.blog-nav-spacer {
+    padding-bottom: 90px;
+}
+
 .blog-archive-container {
     padding: 5px;
     border: 3px;
@@ -19,8 +23,26 @@
     border-style: dashed;
 }
 
+.blog-list-container {
+    border: 3px;
+    border-color: mediumpurple;
+    border-style: dashed;
+}
+
+.blog-entry-container {
+    margin: 2px;
+    padding: 5px;
+    border: 3px;
+    border-color: yellow;
+    border-style: dashed;
+}
+
 .blog-header {
+    margin: 1px;
     text-align: center;
+    border: 3px;
+    border-color: gray;
+    border-style: dashed;
 }
 
 .blog-content {
@@ -48,5 +70,9 @@
 }
 
 .blog-footer {
+    margin: 1px;
     text-align: center;
+    border: 3px;
+    border-color: chocolate;
+    border-style: dashed;
 }

@@ -41,7 +41,7 @@ class NavTop extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-sticky-top navbar-dark">
+      <nav className="navbar navbar-expand-lg navbar-fixed-top navbar-dark">
         <div className="container-fluid">
         {/* Main Logo button */}
         <div className="navbar-header">
@@ -69,7 +69,7 @@ class NavTop extends Component {
               <Link to="/react/sif" className="nav-link" onClick={this.changeToGachaTitle}>Gacha Roll</Link>
             </li>
             <li className="nav-item">
-              <Link to="/react/blog" className="nav-link" onClick={this.changeToBlogTitle}>Blog</Link>
+              <Link to="/react/blog" className="nav-link" onClick={() => { this.changeToBlogTitle(); this.props.enableBlogNavBar();}}>Blog</Link>
             </li>
           </ul>
         </div>
