@@ -47,10 +47,7 @@ class Blog extends Component {
             <h1>Testing the blog header section.</h1>
           </div>
           <div className="row blog-content">
-            <div className="col-xs-3 blog-nav-container">
-              <h3>Testing the blog navigation section.</h3>
-            </div>
-            <div className="col-xs-6 blog-list-container">
+            <div className="col-xs-9 blog-list-container">
               {
                 this.state.testEntries.map(function(blogPost, index) {
                   return (
