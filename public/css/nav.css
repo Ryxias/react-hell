@@ -6,7 +6,7 @@
 
 }
 
-.navbar {
+.top-navbar {
     background-color: royalblue;
 }
 
@@ -19,6 +19,18 @@
 }
 
 .blog-bar {
-    background-color: royalblue;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    bottom: 0;
+    margin-bottom: 0;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
     text-align: center;
+}
+
+.blog-page {
+    border: 1px solid #ddd !important;
 }

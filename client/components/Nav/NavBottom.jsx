@@ -8,22 +8,22 @@ class NavBottom extends Component {
 
   render() {
     return (
-      <nav className="navbar blog-bar navbar-expand-lg navbar-fixed-bottom navbar-dark" aria-label="blog-pagination">
+      <nav className="blog-bar" aria-label="blog-pagination">
         <ul className="pagination">
           <li className="page-item disabled">
-            <Link className="page-link" to="#" tabIndex="-1">Previous</Link>
+            <Link className="page-link blog-page" to="#" tabIndex="-1">Previous</Link>
           </li>
           <li className="page-item">
-            <Link className="page-link" to="#">1</Link>
+            <Link className="page-link blog-page" to="#">1</Link>
           </li>
           <li className="page-item active">
-            <Link className="page-link" to="#">2 <span className="sr-only">(current)</span></Link>
+            <Link className="page-link blog-page" to="#">2 <span className="sr-only">(current)</span></Link>
           </li>
           <li className="page-item">
-            <Link className="page-link" to="#">3</Link>
+            <Link className="page-link blog-page" to="#">3</Link>
           </li>
           <li className="page-item">
-            <Link className="page-link" to="#">Next</Link>
+            <Link className="page-link blog-page" to="#">Next</Link>
           </li>
         </ul>
       </nav>

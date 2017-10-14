@@ -41,7 +41,7 @@ class NavTop extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-fixed-top navbar-dark">
+      <nav className="navbar top-navbar navbar-expand-lg navbar-fixed-top navbar-dark">
         <div className="container-fluid">
         {/* Main Logo button */}
         <div className="navbar-header">
