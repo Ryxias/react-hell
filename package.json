@@ -34,6 +34,7 @@
     "path": "^0.12.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-markdown": "^2.5.0",
     "react-router-dom": "^4.2.2",
     "sequelize": "^4.8.0",
     "showdown": "^1.7.4",

@@ -21,6 +21,7 @@
     border: 3px;
     border-color: green;
     border-style: dashed;
+    text-align: center;
 }
 
 .blog-list-container {

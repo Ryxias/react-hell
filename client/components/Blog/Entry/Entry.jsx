@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const BlogEntry = ({ testText, blogPost }) => {
   return (
@@ -7,7 +8,7 @@ const BlogEntry = ({ testText, blogPost }) => {
       <h3>{blogPost.title}</h3>
       <b>Date:</b> {blogPost.date}<br></br>
       <div>
-        {blogPost.text}
+        <ReactMarkdown source={blogPost.text} />
       </div>
     </div>
   );
