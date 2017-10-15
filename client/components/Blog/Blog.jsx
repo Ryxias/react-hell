@@ -32,8 +32,12 @@ class Blog extends Component {
     };
   }
 
+  componentDidMount() {
+    $(".blog-bar").show();
+  }
+
   componentWillUnmount() {
-    this.props.disableBlogNavBar();
+    $(".blog-bar").hide();
   }
 
   render() {

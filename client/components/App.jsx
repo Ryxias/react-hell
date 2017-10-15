@@ -13,13 +13,10 @@ class App extends Component {
     super(props);
 
     this.state = {
-      pageTitle: "Home",
-      isBlog: false
+      pageTitle: "Home"
     };
 
     this.changePageTitle = this.changePageTitle.bind(this);
-    this.enableBlogNavBar = this.enableBlogNavBar.bind(this);
-    this.disableBlogNavBar = this.disableBlogNavBar.bind(this);
   }
 
   changePageTitle(pageTitle) {
@@ -31,31 +28,17 @@ class App extends Component {
     }
   }
 
-  enableBlogNavBar() {
-    this.setState({
-      isBlog: true
-    });
-    console.log('Enabling blog navbar...');
-  }
-
-  disableBlogNavBar() {
-    this.setState({
-      isBlog: false
-    });
-    console.log('Disabling blog navbar...');
-  }
-
   render() {
     return (
       <div>
-        <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle} enableBlogNavBar={this.enableBlogNavBar} />
+        <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle} />
         <div className="container-fluid">
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
-          <Route path="/react/blog" component={() => <Blog disableBlogNavBar={this.disableBlogNavBar} />} />
+          <Route path="/react/blog/" component={Blog} />
         </div>
-        { this.state.isBlog ? <NavBottom /> : <div></div>}
+        <NavBottom />
       </div>
     );
   }

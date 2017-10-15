@@ -69,7 +69,7 @@ class NavTop extends Component {
               <Link to="/react/sif" className="nav-link" onClick={this.changeToGachaTitle}>Gacha Roll</Link>
             </li>
             <li className="nav-item">
-              <Link to="/react/blog" className="nav-link" onClick={() => { this.changeToBlogTitle(); this.props.enableBlogNavBar();}}>Blog</Link>
+              <Link to="/react/blog" className="nav-link" onClick={this.changeToBlogTitle}>Blog</Link>
             </li>
           </ul>
         </div>
