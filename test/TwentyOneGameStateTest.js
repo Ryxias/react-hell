@@ -86,4 +86,54 @@ describe('GameState', function() {
     assert.ok(!game_state.player_data.yamada_elf.hand[1].hidden);
   });
 
+  it('should support player hit action', function() {
+    const action = Actions.playerHitAction('eromanga_sensei');
+    const game_state = inProgressGameTemplate();
+    const events = game_state.dispatch(action);
+
+    assert.equal(events.length, 2);
+    assert.equal(events[0].type, ActionTypes.player_hit);
+    assert.equal(events[1].type, EventTypes.receive_card);
+    assert.equal(events[1].player, 'eromanga_sensei');
+    assert.equal(events[1].card, 1);
+    assert.ok(!events[1].hidden);
+
+    assert.equal(game_state.deck.length, 6);
+
+    assert.ok(game_state.player_acted.eromanga_sensei);
+    assert.ok(!game_state.player_acted.yamada_elf); // assume no action until they act
+
+    assert.equal(game_state.player_turn, 'yamada_elf');
+
+    assert.equal(game_state.player_data.eromanga_sensei.hand.length, 3);
+    assert.equal(game_state.player_data.eromanga_sensei.hand[2].card, 1);
+
+    assert.equal(game_state.player_data.yamada_elf.hand.length, 2);
+  });
 });
+
+function inProgressGameTemplate() {
+  const game_state = new GameState();
+  game_state.player_data = {
+    eromanga_sensei: {
+      player_id: 'eromanga_sensei',
+      hand: [
+        { card: 8, hidden: true },
+        { card: 9, hidden: false },
+      ],
+    },
+    yamada_elf: {
+      player_id: 'yamada_elf',
+      hand: [
+        { card: 10, hidden: true },
+        { card: 11, hidden: false },
+      ],
+    },
+  };
+  game_state.player_turn = 'eromanga_sensei';
+  game_state.player_acted = { eromanga_sensei: true, yamada_elf: true };
+  game_state.game_started = true;
+  game_state.deck = [1, 2, 3, 4, 5, 6, 7];
+
+  return game_state;
+}
