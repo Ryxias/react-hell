@@ -138,7 +138,19 @@ describe('GameState', function() {
     const events2 = game_state.dispatch(action2);
 
     assert.equal(events1.length, 1);
-    assert.equal(events2.length, 2);
+    assert.equal(events2.length, 3);
+
+    assert.equal(events2[0].type, ActionTypes.player_stay);
+    assert.equal(events2[1].type, EventTypes.game_ended);
+    assert.equal(events2[2].type, EventTypes.round_resolution);
+    assert.equal(events2[2].goal, 21);
+    assert.equal(events2[2].winner, 'yamada_elf');
+    assert.ok(!events2[2].tie);
+
+    assert.equal(events2[2].player_totals.eromanga_sensei, 17);
+    assert.equal(events2[2].player_totals.yamada_elf, 21);
+    assert.ok(!!events2[2].player_hands);
+    assert.deepEqual(events2[2].player_losses, {eromanga_sensei: 1});
 
     assert.equal(events2[1].type, EventTypes.game_ended);
 
