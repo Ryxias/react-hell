@@ -216,6 +216,19 @@ describe('GameState', function() {
     assert.equal(game_state.player_data.yamada_elf.bet, 2);
     assert.equal(game_state.player_data.eromanga_sensei.bet, 2);
   });
+
+  it('should support end of game', function() {
+    const action1 = Actions.playerStayAction('eromanga_sensei');
+    const action2 = Actions.playerStayAction('yamada_elf');
+
+    const game_state = inProgressGameTemplate();
+    game_state.player_data.eromanga_sensei.remaining_hp = 1;
+
+    game_state.dispatch(action1);
+    const events = game_state.dispatch(action2);
+
+    console.log(events);
+  });
 });
 
 function inProgressGameTemplate() {
