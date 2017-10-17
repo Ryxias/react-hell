@@ -63,13 +63,14 @@ describe('GameState', function() {
 
     const events = game_state.dispatch(action);
 
-    assert.equal(events.length, 6);
+    assert.equal(events.length, 7);
     assert.equal(ActionTypes.start_game, events[0].type);
     assert.equal(EventTypes.receive_card, events[1].type);
     assert.equal(EventTypes.receive_card, events[2].type);
     assert.equal(EventTypes.receive_card, events[3].type);
     assert.equal(EventTypes.receive_card, events[4].type);
     assert.equal(EventTypes.game_initialized, events[5].type);
+    assert.equal(EventTypes.round_started, events[6].type);
 
     assert.ok(game_state.game_started);
     assert.ok(!game_state.game_over);
@@ -84,6 +85,15 @@ describe('GameState', function() {
     assert.equal(game_state.player_data.yamada_elf.hand.length, 2);
     assert.ok(game_state.player_data.yamada_elf.hand[0].hidden);
     assert.ok(!game_state.player_data.yamada_elf.hand[1].hidden);
+
+    assert.equal(game_state.player_data.yamada_elf.remaining_hp, 10);
+    assert.equal(game_state.player_data.eromanga_sensei.remaining_hp, 10);
+
+    assert.equal(game_state.player_data.yamada_elf.base_bet, 1);
+    assert.equal(game_state.player_data.eromanga_sensei.base_bet, 1);
+
+    assert.equal(game_state.player_data.yamada_elf.bet, 1);
+    assert.equal(game_state.player_data.eromanga_sensei.bet, 1);
   });
 
   it('should support player hit action', function() {
@@ -155,6 +165,9 @@ describe('GameState', function() {
     assert.equal(events2[1].type, EventTypes.game_ended);
 
     assert.ok(game_state.game_over);
+
+    assert.equal(game_state.player_data.yamada_elf.remaining_hp, 10);
+    assert.equal(game_state.player_data.eromanga_sensei.remaining_hp, 9);
   });
 });
 
@@ -167,6 +180,9 @@ function inProgressGameTemplate() {
         { card: 8, hidden: true },
         { card: 9, hidden: false },
       ],
+      remaining_hp: 10,
+      base_bet: 1,
+      bet: 1,
     },
     yamada_elf: {
       player_id: 'yamada_elf',
@@ -174,6 +190,9 @@ function inProgressGameTemplate() {
         { card: 10, hidden: true },
         { card: 11, hidden: false },
       ],
+      remaining_hp: 10,
+      base_bet: 1,
+      bet: 1,
     },
   };
   game_state.player_turn = 'eromanga_sensei';
