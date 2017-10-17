@@ -19,7 +19,7 @@ module.exports = sequelize => {
       allowNull: false,
     },
     body: {
-      type: Sequelize.TEXT('medium'),
+      type: TEXT('medium'),
       allowNull: false,
     },
     createdAt: 'created',
