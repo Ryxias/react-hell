@@ -110,6 +110,40 @@ describe('GameState', function() {
 
     assert.equal(game_state.player_data.yamada_elf.hand.length, 2);
   });
+
+  it('should support player stay action', function() {
+    const action = Actions.playerStayAction('eromanga_sensei');
+    const game_state = inProgressGameTemplate();
+    const events = game_state.dispatch(action);
+
+    assert.equal(events.length, 1);
+    assert.equal(events[0].type, ActionTypes.player_stay);
+
+    assert.equal(game_state.deck.length, 7);
+
+    assert.ok(!game_state.player_acted.eromanga_sensei); // did nothing!
+    assert.ok(!game_state.player_acted.yamada_elf); // assume no action until they act
+
+    assert.equal(game_state.player_turn, 'yamada_elf');
+
+    assert.equal(game_state.player_data.eromanga_sensei.hand.length, 2);
+    assert.equal(game_state.player_data.yamada_elf.hand.length, 2);
+  });
+
+  it('should support both stay end game', function() {
+    const action1 = Actions.playerStayAction('eromanga_sensei');
+    const action2 = Actions.playerStayAction('yamada_elf');
+    const game_state = inProgressGameTemplate();
+    const events1 = game_state.dispatch(action1);
+    const events2 = game_state.dispatch(action2);
+
+    assert.equal(events1.length, 1);
+    assert.equal(events2.length, 2);
+
+    assert.equal(events2[1].type, EventTypes.game_ended);
+
+    assert.ok(game_state.game_over);
+  });
 });
 
 function inProgressGameTemplate() {
@@ -131,7 +165,7 @@ function inProgressGameTemplate() {
     },
   };
   game_state.player_turn = 'eromanga_sensei';
-  game_state.player_acted = { eromanga_sensei: true, yamada_elf: true };
+  game_state.player_acted = { eromanga_sensei: false, yamada_elf: true };
   game_state.game_started = true;
   game_state.deck = [1, 2, 3, 4, 5, 6, 7];
 
