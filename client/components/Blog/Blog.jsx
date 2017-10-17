@@ -24,7 +24,7 @@ class Blog extends Component {
         {
           'date': '10-14-17',
           'title': 'The ting go skrra',
-          'text': '# The ting go skrrrra ## pap pap cla cla cla \n ### skiddikipapap \n #### and the br br brrr boom \n > skyyya du du ku ku du doom \n ```poom poom```'
+          'text': '# The ting go skrrrra \n ## pap pap cla cla cla \n ### skiddikipapap \n #### and the br br brrr boom \n > skyyya du du ku ku du doom \n ```poom poom```'
         }
       ]
     };
