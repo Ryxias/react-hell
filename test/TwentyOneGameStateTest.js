@@ -74,6 +74,7 @@ describe('GameState', function() {
 
     assert.ok(game_state.game_started);
     assert.ok(!game_state.game_over);
+    assert.ok(!game_state.round_over);
     assert.ok(!!game_state.player_turn);
 
     assert.equal(game_state.deck.length, 7); // 11 cards - 4 cards dealt
@@ -164,10 +165,56 @@ describe('GameState', function() {
 
     assert.equal(events2[1].type, EventTypes.game_ended);
 
-    assert.ok(game_state.game_over);
+    assert.ok(!game_state.game_over); // it's not over till it's over!!
+    assert.ok(game_state.round_over);
 
     assert.equal(game_state.player_data.yamada_elf.remaining_hp, 10);
     assert.equal(game_state.player_data.eromanga_sensei.remaining_hp, 9);
+  });
+
+  it('should support next round', function() {
+    const action1 = Actions.playerStayAction('eromanga_sensei');
+    const action2 = Actions.playerStayAction('yamada_elf');
+    const action3 = Actions.startNextRoundAction();
+
+    const game_state = inProgressGameTemplate();
+    game_state.dispatch(action1);
+    game_state.dispatch(action2);
+    const events = game_state.dispatch(action3);
+
+    assert.equal(events.length, 6);
+
+    assert.equal(events[0].type, ActionTypes.next_round);
+    assert.equal(events[1].type, EventTypes.receive_card);
+    assert.equal(events[2].type, EventTypes.receive_card);
+    assert.equal(events[3].type, EventTypes.receive_card);
+    assert.equal(events[4].type, EventTypes.receive_card);
+    assert.equal(events[5].type, EventTypes.round_started);
+
+    assert.ok(game_state.game_started);
+    assert.ok(!game_state.game_over);
+    assert.ok(!game_state.round_over);
+
+    assert.equal(game_state.player_turn, 'eromanga_sensei'); // she lost last time
+
+    assert.equal(game_state.deck.length, 7); // 11 cards - 4 cards dealt
+
+    assert.equal(game_state.player_data.eromanga_sensei.hand.length, 2);
+    assert.ok(game_state.player_data.eromanga_sensei.hand[0].hidden);
+    assert.ok(!game_state.player_data.eromanga_sensei.hand[1].hidden);
+
+    assert.equal(game_state.player_data.yamada_elf.hand.length, 2);
+    assert.ok(game_state.player_data.yamada_elf.hand[0].hidden);
+    assert.ok(!game_state.player_data.yamada_elf.hand[1].hidden);
+
+    assert.equal(game_state.player_data.yamada_elf.remaining_hp, 10);
+    assert.equal(game_state.player_data.eromanga_sensei.remaining_hp, 9);
+
+    assert.equal(game_state.player_data.yamada_elf.base_bet, 2);
+    assert.equal(game_state.player_data.eromanga_sensei.base_bet, 2);
+
+    assert.equal(game_state.player_data.yamada_elf.bet, 2);
+    assert.equal(game_state.player_data.eromanga_sensei.bet, 2);
   });
 });
 
