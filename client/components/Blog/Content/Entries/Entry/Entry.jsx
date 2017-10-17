@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const BlogEntry = ({ testText, blogPost }) => {
+const BlogEntry = (props) => {
+  const { testText, blogPost } = props;
+
   return (
     <div className="blog-entry">
       There should be text here: { testText }

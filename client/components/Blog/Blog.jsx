@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import BlogEntry from './Entry/Entry.jsx';
+import BlogHeader from './Header/Header.jsx';
+import BlogContent from './Content/Content.jsx';
+import BlogFooter from './Footer/Footer.jsx';
+
 
 class Blog extends Component {
   constructor(props) {
@@ -11,7 +14,7 @@ class Blog extends Component {
         {
           'date': '~8000 BC',
           'title': 'Geronimo!',
-          'text': 'I didn\'t exist yet.'
+          'text': `I didn't exist yet.`
         },
         {
           'date': '9-26-17',
@@ -36,35 +39,14 @@ class Blog extends Component {
   }
 
   render() {
-
     let testText = this.state.testText;
 
     return (
       <div className="blog-nav-spacer">
         <div className="blog-container">
-          <div className="row blog-header">
-            <h1>Testing the blog header section.</h1>
-          </div>
-          <div className="row blog-content">
-            <div className="col-xs-9 blog-list-container">
-              {
-                this.state.testEntries.map(function(blogPost, index) {
-                  return (
-                          <div className="row blog-entry-container" key={index}>
-                              <hr></hr>
-                              <BlogEntry testText={testText} blogPost={blogPost} />
-                          </div>
-                         );
-                })
-              }
-            </div>
-            <div className="col-xs-3 blog-archive-container">
-              <h3>Testing the blog archival section.</h3>
-            </div>
-          </div>
-          <div className="row blog-footer">
-            <h4>Testing the blog footer section.</h4>
-          </div>
+          <BlogHeader />
+          <BlogContent testText={testText} blogState={this.state} />
+          <BlogFooter />
         </div>
       </div>
     );

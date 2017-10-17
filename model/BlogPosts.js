@@ -4,13 +4,12 @@ const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 
 module.exports = sequelize => {
   return sequelize.define('blogpost', {
+    tableName: 'blogposts',
     id: {
       type: BIGINT.UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
     },
-    createdAt: 'created',
-    updatedAt: 'modified',
     author: {
       type: STRING(255),
       allowNull: false,
@@ -20,12 +19,13 @@ module.exports = sequelize => {
       allowNull: false,
     },
     body: {
-      type: TEXT,
+      type: Sequelize.TEXT('medium'),
       allowNull: false,
     },
-    tableName: 'blogposts',
+    createdAt: 'created',
+    updatedAt: 'modified',
     indexes: [
-      { fields: ['createdAt'] },
+      { fields: ['created'] },
     ],
   });
 };
