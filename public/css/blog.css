@@ -1,17 +1,57 @@
-#blog-container {
-
+.blog-container {
+    padding: 10px;
+    border: 3px;
+    border-color: black;
+    border-style: dashed;
 }
 
-#blog-nav-container {
-
+.blog-nav-container {
+    padding: 5px;
+    border: 3px;
+    border-color: blue;
+    border-style: dashed;
 }
 
-#blog-archive-container {
-
+.blog-nav-spacer {
+    padding-bottom: 90px;
 }
 
-#blog-header {
+.blog-archive-container {
+    padding: 5px;
+    border: 3px;
+    border-color: green;
+    border-style: dashed;
+    text-align: center;
+}
 
+.blog-list-container {
+    border: 3px;
+    border-color: mediumpurple;
+    border-style: dashed;
+}
+
+.blog-entry-container {
+    margin: 2px;
+    padding: 5px;
+    border: 3px;
+    border-color: yellow;
+    border-style: dashed;
+}
+
+.blog-header {
+    margin: 1px;
+    text-align: center;
+    border: 3px;
+    border-color: gray;
+    border-style: dashed;
+}
+
+.blog-content {
+    margin: 5px;
+    padding: 5px;
+    border: 3px;
+    border-color: deeppink;
+    border-style: dashed;
 }
 
 .blog-title {
@@ -23,9 +63,17 @@
 }
 
 .blog-entry {
-
+    margin: 10px;
+    padding: 5px;
+    border: 3px;
+    border-color: red;
+    border-style: dashed;
 }
 
-#blog-footer {
-
+.blog-footer {
+    margin: 1px;
+    text-align: center;
+    border: 3px;
+    border-color: chocolate;
+    border-style: dashed;
 }

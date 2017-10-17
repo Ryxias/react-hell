@@ -3,10 +3,12 @@ import { Route } from 'react-router-dom';
 
 import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
-import NavTop from './NavTop/NavTop.jsx';
+import NavTop from './Nav/NavTop.jsx';
+import Blog from './Blog/Blog.jsx';
+import NavBottom from './Nav/NavBottom.jsx';
 
 
-class App extends Component {  // i.e extends React.Component
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +36,9 @@ class App extends Component {  // i.e extends React.Component
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
+          <Route path="/react/blog/" component={Blog} />
         </div>
+        <NavBottom />
       </div>
     );
   }

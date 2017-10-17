@@ -9,8 +9,7 @@ class ExpressApplication extends require('./BaseApplication') {
   appPackages() {
     // Packages that are express-only
     return [
-      'express',
-      'express-handlebars',
+      'express'
     ];
   }
 
@@ -26,6 +25,7 @@ class ExpressApplication extends require('./BaseApplication') {
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
     const appRouter = require(PROJECT_ROOT + '/server/routes');
+    const bodyParser = require('body-parser')
 
     // Initialize the express app
     const app = express();
@@ -36,6 +36,7 @@ class ExpressApplication extends require('./BaseApplication') {
     }
     app.use('/statics', staticsMiddleware);
     app.use(appRouter);
+    app.use(bodyParser);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
 

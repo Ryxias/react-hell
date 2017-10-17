@@ -1,10 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./client/index.jsx", // should be the main index.jsx of the client
+  entry: './client/index.jsx', // should be the main index.jsx of the client
   output: {
-    path: path.join(__dirname, "public/dist"),
-    filename: "bundle.js" // bundles all the files together into a single file
+    path: path.join(__dirname, 'public/dist'),
+    filename: 'bundle.js' // bundles all the files together into a single file
   },
   module: {
     loaders: [
@@ -12,5 +12,5 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
-  devtool: "source-map"  // easier debugging of de-minified code in browser
+  devtool: 'source-map',  // easier debugging of de-minified code in browser
 }

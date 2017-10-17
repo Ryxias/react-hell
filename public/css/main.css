@@ -1,6 +1,9 @@
 /* Main CSS File */
-* {
-  font-family: 'Josefin Sans', sans-serif;
+/** {*/
+  /*font-family: 'Josefin Sans', sans-serif;*/
+/*}*/
+body {
+  padding-top: 70px;
 }
 
 #header, #footer {
