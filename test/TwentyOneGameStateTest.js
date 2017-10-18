@@ -156,7 +156,7 @@ describe('GameState', function() {
     assert.equal(events2.length, 3); // there is no player-next-turn event here
 
     assert.equal(events2[0].type, ActionTypes.player_stay);
-    assert.equal(events2[1].type, EventTypes.game_ended);
+    assert.equal(events2[1].type, EventTypes.round_ended);
     assert.equal(events2[2].type, EventTypes.round_resolution);
     assert.equal(events2[2].goal, 21);
     assert.equal(events2[2].winner, 'yamada_elf');
@@ -167,7 +167,7 @@ describe('GameState', function() {
     assert.ok(!!events2[2].player_hands);
     assert.deepEqual(events2[2].player_losses, {eromanga_sensei: 1});
 
-    assert.equal(events2[1].type, EventTypes.game_ended);
+    assert.equal(events2[1].type, EventTypes.round_ended);
 
     assert.ok(!game_state.game_over); // it's not over till it's over!!
     assert.ok(game_state.round_over);
@@ -233,7 +233,7 @@ describe('GameState', function() {
 
     assert.equal(events.length, 4);
     assert.equal(events[0].type, ActionTypes.player_stay);
-    assert.equal(events[1].type, EventTypes.game_ended);
+    assert.equal(events[1].type, EventTypes.round_ended);
     assert.equal(events[2].type, EventTypes.round_resolution);
     assert.equal(events[3].type, EventTypes.game_ended);
 
