@@ -331,4 +331,8 @@ class TestOutput {
   notifyPlayersTurn() {
     this.calls['notifyPlayersTurn'] = arguments;
   }
+
+  notifyStayThenRoundIsOver() {
+    this.calls['notifyStayThenRoundIsOver'] = arguments;
+  }
 }

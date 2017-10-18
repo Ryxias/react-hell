@@ -102,12 +102,14 @@ describe('GameState', function() {
     const game_state = inProgressGameTemplate();
     const events = game_state.dispatch(action);
 
-    assert.equal(events.length, 2);
+    assert.equal(events.length, 3);
     assert.equal(events[0].type, ActionTypes.player_hit);
     assert.equal(events[1].type, EventTypes.receive_card);
     assert.equal(events[1].player, 'eromanga_sensei');
     assert.equal(events[1].card, 1);
     assert.ok(!events[1].hidden);
+    assert.equal(events[2].type, EventTypes.next_player_turn);
+    assert.equal(events[2].next_player_id, 'yamada_elf');
 
     assert.equal(game_state.deck.length, 6);
 
@@ -127,8 +129,10 @@ describe('GameState', function() {
     const game_state = inProgressGameTemplate();
     const events = game_state.dispatch(action);
 
-    assert.equal(events.length, 1);
+    assert.equal(events.length, 2);
     assert.equal(events[0].type, ActionTypes.player_stay);
+    assert.equal(events[1].type, EventTypes.next_player_turn);
+    assert.equal(events[1].next_player_id, 'yamada_elf');
 
     assert.equal(game_state.deck.length, 7);
 
@@ -148,8 +152,8 @@ describe('GameState', function() {
     const events1 = game_state.dispatch(action1);
     const events2 = game_state.dispatch(action2);
 
-    assert.equal(events1.length, 1);
-    assert.equal(events2.length, 3);
+    assert.equal(events1.length, 2);
+    assert.equal(events2.length, 3); // there is no player-next-turn event here
 
     assert.equal(events2[0].type, ActionTypes.player_stay);
     assert.equal(events2[1].type, EventTypes.game_ended);
