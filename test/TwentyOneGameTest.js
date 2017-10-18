@@ -313,8 +313,9 @@ describe('21 Game Setup', function () {
         assert.ok(game_state.isGameOver());
 
         // Ensure proper output was called
+        //   Both of these should get called one after the other
         assert.ok(output.calls.notifyStayThenGameIsOver !== undefined);
-        assert.ok(output.calls.notifyStayThenRoundIsOver === undefined);
+        assert.ok(output.calls.notifyStayThenRoundIsOver !== undefined);
       });
   });
 });
