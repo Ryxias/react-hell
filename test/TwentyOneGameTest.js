@@ -141,12 +141,25 @@ describe('21 Game Setup', function () {
     return g.debugSetGameState(
       { key: '21-game-test-1506815984174-0.6034531060655397',
         player_data: {
-          abc1: { player_id: 'abc1', hand: [ {card: 1, hidden: true}, {card:3, hidden: false} ] },
-          xyz2: { player_id: 'xyz2', hand: [ {card: 2, hidden: true}, {card:4, hidden: false} ] },
+          abc1: {
+            player_id: 'abc1',
+            hand: [ {card: 1, hidden: true}, {card:3, hidden: false} ],
+            remaining_hp: 10,
+            base_bet: 1,
+            bet: 1,
+          },
+          xyz2: {
+            player_id: 'xyz2',
+            hand: [ {card: 2, hidden: true}, {card:4, hidden: false} ],
+            remaining_hp: 10,
+            base_bet: 1,
+            bet: 1,
+          },
         },
         deck: [ 5, 6, 7, 8, 9, 10, 11 ],
         game_started: true,
         game_over: false,
+        round_over: false,
         player_acted: { 'xyz2': false, 'abc1': true },
         player_turn: 'xyz2' })
       .then((game) => game)
@@ -246,7 +259,7 @@ describe('21 Game Setup', function () {
       });
   });
 
-  it('double pass should end game', function () {
+  it('double pass should end round', function () {
     let output = new TestOutput();
 
     let stored_game;
@@ -266,7 +279,8 @@ describe('21 Game Setup', function () {
         assert.ok(!game_state.player_acted['xyz2']);
 
         // It's game over now
-        assert.ok(game_state.game_over);
+        assert.ok(game_state.isRoundOver());
+        assert.ok(!game_state.isGameOver());
       });
   });
 
