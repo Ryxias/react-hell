@@ -105,7 +105,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.ok(output.calls.notifyGameBegin !== null);
+        assert.ok(output.calls.notifyGameBegin !== undefined);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -125,7 +125,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.ok(output.calls.notifyGameBegin !== null);
+        assert.ok(output.calls.notifyGameBegin !== undefined);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -141,12 +141,25 @@ describe('21 Game Setup', function () {
     return g.debugSetGameState(
       { key: '21-game-test-1506815984174-0.6034531060655397',
         player_data: {
-          abc1: { player_id: 'abc1', hand: [ {card: 1, hidden: true}, {card:3, hidden: false} ] },
-          xyz2: { player_id: 'xyz2', hand: [ {card: 2, hidden: true}, {card:4, hidden: false} ] },
+          abc1: {
+            player_id: 'abc1',
+            hand: [ {card: 1, hidden: true}, {card:3, hidden: false} ],
+            remaining_hp: 10,
+            base_bet: 1,
+            bet: 1,
+          },
+          xyz2: {
+            player_id: 'xyz2',
+            hand: [ {card: 2, hidden: true}, {card:4, hidden: false} ],
+            remaining_hp: 10,
+            base_bet: 1,
+            bet: 1,
+          },
         },
         deck: [ 5, 6, 7, 8, 9, 10, 11 ],
         game_started: true,
         game_over: false,
+        round_over: false,
         player_acted: { 'xyz2': false, 'abc1': true },
         player_turn: 'xyz2' })
       .then((game) => game)
@@ -167,7 +180,7 @@ describe('21 Game Setup', function () {
         return player2.whosTurn();
       })
       .then(() => {
-        assert.ok(output.calls.notifyYourTurn !== null);
+        assert.ok(output.calls.notifyYourTurn !== undefined);
       })
       .then(() => {
         return player1.whosTurn();
@@ -246,7 +259,7 @@ describe('21 Game Setup', function () {
       });
   });
 
-  it('double pass should end game', function () {
+  it('double pass should end round', function () {
     let output = new TestOutput();
 
     let stored_game;
@@ -265,11 +278,45 @@ describe('21 Game Setup', function () {
         assert.ok(!game_state.player_acted['abc1']);
         assert.ok(!game_state.player_acted['xyz2']);
 
-        // It's game over now
-        assert.ok(game_state.game_over);
+        // Round is over now
+        assert.ok(game_state.isRoundOver());
+        assert.ok(!game_state.isGameOver());
+      })
+      .then(() => {
+        // Ensure proper output was called
+        assert.ok(output.calls.notifyStayThenGameIsOver === undefined);
+        assert.ok(output.calls.notifyStayThenRoundIsOver !== undefined);
       });
   });
 
+  it('end of game', function () {
+    let output = new TestOutput();
+
+    let stored_game;
+    let player1, player2;
+    return newStartedGame(output)
+      .spread((game, p1, p2) => {
+        // Override the game
+        player1 = p1;
+        player2 = p2;
+        stored_game = game;
+
+        // cause player abc1 to lose the game
+        game.engine.game_state.player_data.abc1.bet = 10;
+      })
+      .then(() => player2.stay())
+      .then(() => player1.stay())
+      .then(() => stored_game.debugGetGameState())
+      .then(game_state => {
+        // Game is over now
+        assert.ok(game_state.isRoundOver());
+        assert.ok(game_state.isGameOver());
+
+        // Ensure proper output was called
+        assert.ok(output.calls.notifyStayThenGameIsOver !== undefined);
+        assert.ok(output.calls.notifyStayThenRoundIsOver === undefined);
+      });
+  });
 });
 
 class TestOutput {
@@ -316,5 +363,9 @@ class TestOutput {
 
   notifyPlayersTurn() {
     this.calls['notifyPlayersTurn'] = arguments;
+  }
+
+  notifyStayThenRoundIsOver() {
+    this.calls['notifyStayThenRoundIsOver'] = arguments;
   }
 }
