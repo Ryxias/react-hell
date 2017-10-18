@@ -105,7 +105,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.ok(output.calls.notifyGameBegin !== null);
+        assert.ok(output.calls.notifyGameBegin !== undefined);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -125,7 +125,7 @@ describe('21 Game Setup', function() {
         return [player1, player2, player1.startGame()];
       })
       .spread((player1, player2, none) => {
-        assert.ok(output.calls.notifyGameBegin !== null);
+        assert.ok(output.calls.notifyGameBegin !== undefined);
         return game.debugGetGameState();
       })
       .then(game_state => {
@@ -180,7 +180,7 @@ describe('21 Game Setup', function () {
         return player2.whosTurn();
       })
       .then(() => {
-        assert.ok(output.calls.notifyYourTurn !== null);
+        assert.ok(output.calls.notifyYourTurn !== undefined);
       })
       .then(() => {
         return player1.whosTurn();
@@ -278,12 +278,45 @@ describe('21 Game Setup', function () {
         assert.ok(!game_state.player_acted['abc1']);
         assert.ok(!game_state.player_acted['xyz2']);
 
-        // It's game over now
+        // Round is over now
         assert.ok(game_state.isRoundOver());
         assert.ok(!game_state.isGameOver());
+      })
+      .then(() => {
+        // Ensure proper output was called
+        assert.ok(output.calls.notifyStayThenGameIsOver === undefined);
+        assert.ok(output.calls.notifyStayThenRoundIsOver !== undefined);
       });
   });
 
+  it('end of game', function () {
+    let output = new TestOutput();
+
+    let stored_game;
+    let player1, player2;
+    return newStartedGame(output)
+      .spread((game, p1, p2) => {
+        // Override the game
+        player1 = p1;
+        player2 = p2;
+        stored_game = game;
+
+        // cause player abc1 to lose the game
+        game.engine.game_state.player_data.abc1.bet = 10;
+      })
+      .then(() => player2.stay())
+      .then(() => player1.stay())
+      .then(() => stored_game.debugGetGameState())
+      .then(game_state => {
+        // Game is over now
+        assert.ok(game_state.isRoundOver());
+        assert.ok(game_state.isGameOver());
+
+        // Ensure proper output was called
+        assert.ok(output.calls.notifyStayThenGameIsOver !== undefined);
+        assert.ok(output.calls.notifyStayThenRoundIsOver === undefined);
+      });
+  });
 });
 
 class TestOutput {
