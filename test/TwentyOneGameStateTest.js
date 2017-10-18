@@ -222,12 +222,18 @@ describe('GameState', function() {
     const action2 = Actions.playerStayAction('yamada_elf');
 
     const game_state = inProgressGameTemplate();
-    game_state.player_data.eromanga_sensei.remaining_hp = 1;
+    game_state.player_data.eromanga_sensei.remaining_hp = 1; // heh heh
 
     game_state.dispatch(action1);
     const events = game_state.dispatch(action2);
 
-    console.log(events);
+    assert.equal(events.length, 4);
+    assert.equal(events[0].type, ActionTypes.player_stay);
+    assert.equal(events[1].type, EventTypes.game_ended);
+    assert.equal(events[2].type, EventTypes.round_resolution);
+    assert.equal(events[3].type, EventTypes.game_ended);
+
+    assert.equal(events[3].winner, 'yamada_elf');
   });
 });
 
