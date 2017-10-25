@@ -33,8 +33,8 @@ module.exports = sequelize => {
     createdAt: 'created',
     updatedAt: 'modified',
     indexes: [
-      { fields: ['text', 'created'], unique: true },
-      { fields: ['user', 'created'], unique: true },
+      { fields: ['text', 'created'] },
+      { fields: ['user', 'created'] },
     ],
     hooks: {},
     instanceMethods: {},
