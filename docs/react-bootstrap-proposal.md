@@ -27,11 +27,11 @@
 
 #### <a name="purpose"></a> 1.1 Purpose
 
-This document provides a comprehensive overview of the current UI state of the React single page application ([chuuni.me] (https://chuuni.me)) and its problems.  It will also outline our requirements for the app as well as a proposal plan on how to migrate our codebase into **React-Bootstrap**.  This document's purpose is also used to practice ***Markdown*** and ***technical documentation skills*** that are essential to a software engineer's skillset.
+This document provides a comprehensive overview of the current UI state of the React single page application ([chuuni.me](https://chuuni.me)) and its problems.  It will also outline our requirements for the app as well as a proposal plan on how to migrate our codebase into **React-Bootstrap**.  This document's purpose is also used to practice ***Markdown*** and ***technical documentation skills*** that are essential to a software engineer's skillset.
 
 #### <a name="scope"></a> 1.2 Scope
 
-This document will be covering all of the React components that rely on regular Bootstrap to render usable and aesthetically-pleasing GUI to the DOM in [chuuni.me] (https://chuuni.me).  
+This document will be covering all of the React components that rely on regular Bootstrap to render usable and aesthetically-pleasing GUI to the DOM in [chuuni.me](https://chuuni.me).  
 
 #### <a name="references"></a> 1.3 References
 
