@@ -8,20 +8,20 @@
 
 ## Table of Contents
 
-[**1. Introduction**] (#introduction)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.1 Purpose] (#purpose)    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.2 Scope] (#scope)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.3 References] (#references)  
-[**2. Current Issues**] (#current-issues)  
-[**3. Requirements**] (#requirements)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1 Goals] (#goals)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Constraints] (#constraints)  
-[**4. Proposal**] (#proposal)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Overview] (#proposal-overview)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2 Implementation] (#implementation)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.3 Execution] (#execution)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.4 Contingency Measures] (#contingency)  
-[**5. Other Thoughts**] (#other-thoughts)  
+[**1. Introduction**](#introduction)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.1 Purpose](#purpose)    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.2 Scope](#scope)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.3 References](#references)  
+[**2. Current Issues**](#current-issues)  
+[**3. Requirements**](#requirements)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1 Goals](#goals)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Constraints](#constraints)  
+[**4. Proposal**](#proposal)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Overview](#proposal-overview)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2 Implementation](#implementation)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.3 Execution](#execution)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.4 Contingency Measures](#contingency)  
+[**5. Other Thoughts**](#other-thoughts)  
 
 ## <a name="introduction"></a> 1. Introduction
 
@@ -37,9 +37,9 @@ This document will be covering all of the React components that rely on regular 
 
 The following references were used as knowledgebases for this project:
 
-* [React-Bootstrap - GUI Refactorization] (https://react-bootstrap.github.io/)
-* [Markdown - Documentation Building] (https://daringfireball.net/projects/markdown/)
-* [Example Technical Documentation - Software Architecture Document] (http://www.ecs.csun.edu/~rlingard/COMP684/Example2SoftArch.htm)
+* [React-Bootstrap - GUI Refactorization](https://react-bootstrap.github.io/)
+* [Markdown - Documentation Building](https://daringfireball.net/projects/markdown/)
+* [Example Technical Documentation - Software Architecture Document](http://www.ecs.csun.edu/~rlingard/COMP684/Example2SoftArch.htm)
 
 ## <a name="current-issues"></a> 2. Current Issues
 
