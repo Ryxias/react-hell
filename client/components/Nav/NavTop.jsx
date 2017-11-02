@@ -10,6 +10,7 @@ const NavTop = () => {
   return (
     <Navbar fixedTop fluid collapseOnSelect bsStyle="dark" className="top-navbar">
       <Grid fluid>
+
       {/* Main Logo button */}
       <Navbar.Header>
         <Navbar.Brand>
@@ -20,7 +21,7 @@ const NavTop = () => {
 
       {/* Collapsible content */}
         <Navbar.Collapse>
-          <Nav onSelect={() => {}}>
+          <Nav>
             <LinkContainer to="/react/">
               <NavItem eventKey={1}>
                 <div className="nav-link">Home</div>
