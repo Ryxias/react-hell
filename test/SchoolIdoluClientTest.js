@@ -3,8 +3,8 @@
 require('./init');
 const assert = require('assert');
 
-describe('Love Live Client', function() {
-  const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
+describe('SchoolIdo.lu Client', function() {
+  const LoveLiveClient = require('../lib/SchoolIdo.lu/Client');
   const client = new LoveLiveClient();
 
   it('should be able to getCard', function() {
