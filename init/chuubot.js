@@ -4,12 +4,23 @@
 //
 
 const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/SlackConnector');
+const GachaSlackConnector = require('../lib/SchoolIdo.lu/SlackConnector');
+const slackbotBuilder = require(PROJECT_ROOT + '/lib/SlackbotFramework');
 
 module.exports = (config) => {
-  const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
-  const ll_client = new LoveLiveClient();
-  const chuu = require(PROJECT_ROOT + '/lib/SlackbotFramework')(config.slack);
+  // Boot up chuubot
+  const chuu = slackbotBuilder(config.slack);
 
+  // This attaches all !gacha listeners to chuu
+  GachaSlackConnector.connectChuubot(chuu);
+
+  // This attaches all !21 listeners to chuu
+  TwentyOneSlackConnector.connectChuubot(chuu);
+
+  // Dumb sanity check
+  chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
+
+  // Logger
   chuu.on(/.*/, (message, send) => {
     SlackMessage.create(
       {
@@ -20,35 +31,6 @@ module.exports = (config) => {
       }
     );
   });
-
-  // Add dumb listener for baachuu
-  chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
-
-  // gacha
-  //   Provide `!gacha`
-  //   You can add 'sr' or 'aqours' to change the mode of the bot
-  chuu.on(/^!gacha/, (message, send) => {
-    let message_text = message.text.toLowerCase();
-
-    let unit = 'mus';
-    if (message_text.includes('aqours')) {
-      unit = 'aqours';
-    }
-
-    let promise;
-    if (message_text.includes('sr')) {
-      promise = ll_client.gachaSRCard(unit);
-    } else {
-      promise = ll_client.gachaRCard(unit);
-    }
-
-    promise.then((card) => {
-      send('[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl());
-    });
-  });
-
-  // This attaches all !21 listeners to chuu
-  TwentyOneSlackConnector.connectChuubot(chuu);
 
   // Setting up Chuu to recognize your private channel
   chuu.on(/^!chuuconfig private$/, (message, send) => {
