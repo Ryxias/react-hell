@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Nav, Pagination } from 'react-bootstrap';
 
 class NavBottom extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      activePage: 1,
+    };
+
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  handleSelect(eventKey) {
+    this.setState({
+      activePage: eventKey,
+    });
   }
 
   render() {
     return (
-      <nav className="blog-bar" aria-label="blog-pagination" hidden>
-        <ul className="pagination">
-          <li className="page-item disabled">
-            <Link className="page-link blog-page" to="/react/blog" tabIndex="-1">Previous</Link>
-          </li>
-          <li className="page-item">
-            <Link className="page-link blog-page" to="/react/blog">1</Link>
-          </li>
-          <li className="page-item active">
-            <Link className="page-link blog-page" to="/react/blog">2 <span className="sr-only">(current)</span></Link>
-          </li>
-          <li className="page-item">
-            <Link className="page-link blog-page" to="/react/blog">3</Link>
-          </li>
-          <li className="page-item">
-            <Link className="page-link blog-page" to="/react/blog">Next</Link>
-          </li>
-        </ul>
-      </nav>
+      <Nav className="blog-pagination" aria-label="blog-pagination">
+        <Pagination
+          prev
+          next
+          first
+          last
+          ellipsis
+          boundaryLinks
+          items={10}
+          maxButtons={3}
+          activePage={this.state.activePage}
+          onSelect={this.handleSelect}
+        />
+      </Nav>
     );
   }
 }

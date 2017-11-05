@@ -5,7 +5,8 @@ import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
 import NavTop from './Nav/NavTop.jsx';
 import Blog from './Blog/Blog.jsx';
-import NavBottom from './Nav/NavBottom.jsx';
+import { Grid } from 'react-bootstrap';
+
 
 
 class App extends Component {
@@ -13,32 +14,19 @@ class App extends Component {
     super(props);
 
     this.state = {
-      pageTitle: "Home"
     };
-
-    this.changePageTitle = this.changePageTitle.bind(this);
-  }
-
-  changePageTitle(pageTitle) {
-    console.log('Changing page title to', pageTitle);
-    if (typeof pageTitle === 'string') {
-      this.setState({
-        pageTitle: pageTitle
-      });
-    }
   }
 
   render() {
     return (
       <div>
-        <NavTop changePageTitle={this.changePageTitle} pageTitle={this.state.pageTitle} />
-        <div className="container-fluid">
+        <NavTop />
+        <Grid fluid>
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
-        </div>
-        <NavBottom />
+        </Grid>
       </div>
     );
   }

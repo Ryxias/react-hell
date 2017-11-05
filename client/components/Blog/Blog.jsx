@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BlogHeader from './Header/Header.jsx';
 import BlogContent from './Content/Content.jsx';
 import BlogFooter from './Footer/Footer.jsx';
-
+import NavBottom from '../Nav/NavBottom.jsx';
 
 class Blog extends Component {
   constructor(props) {
@@ -30,14 +30,6 @@ class Blog extends Component {
     };
   }
 
-  componentDidMount() {
-    $(".blog-bar").show();
-  }
-
-  componentWillUnmount() {
-    $(".blog-bar").hide();
-  }
-
   render() {
     let testText = this.state.testText;
 
@@ -48,6 +40,7 @@ class Blog extends Component {
           <BlogContent testText={testText} blogState={this.state} />
           <BlogFooter />
         </div>
+        <NavBottom />
       </div>
     );
   }

@@ -1,10 +1,11 @@
 import React from 'react';
+import { Row } from 'react-bootstrap';
 
 const BlogFooter = (props) => {
   return (
-    <div className="row blog-footer">
+    <Row className="blog-footer">
       <h4>Testing the blog footer section.</h4>
-    </div>
+    </Row>
   );
 };
 
