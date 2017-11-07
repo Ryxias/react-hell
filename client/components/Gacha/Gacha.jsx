@@ -22,6 +22,7 @@ class Gacha extends Component {
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
     this.openEnvelope = this.openEnvelope.bind(this);
+    this.enableSound = this.enableSound.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
@@ -84,11 +85,6 @@ class Gacha extends Component {
     const $closed_envelope = $(".envelope-closed");
     const $open_envelope = $(".envelope-open");
 
-    const soundElement = document.getElementsByClassName("data")[0];
-    soundElement.setAttribute("data-open-sound-url", "/statics/sound/" + this.state.open_sound);
-    const soundData = soundElement.getAttribute("data-open-sound-url");
-    const audio = new Audio(soundData);
-
     const animateOpeningBox = () => {
       // Replace the closed envelope with the open one
       $closed_envelope.removeClass("reveal");
@@ -110,7 +106,7 @@ class Gacha extends Component {
     //   the animations, making the UI "feel" more snappy.
 
     $closed_envelope.off().on("click", () => {
-      audio.play().then(animateOpeningBox);
+      animateOpeningBox();
     });
   }
 
@@ -121,6 +117,16 @@ class Gacha extends Component {
     this.setState({
       envelopeIsOpened: true,
     });
+    this.enableSound().play();
+  }
+
+  // Creates audio object from new sound URL
+
+  enableSound() {
+    const soundElement = document.getElementsByClassName("data")[0];
+    soundElement.setAttribute("data-open-sound-url", "/statics/sound/" + this.state.open_sound);
+    const soundData = soundElement.getAttribute("data-open-sound-url");
+    return new Audio(soundData);
   }
 
   // Retrieves data before presentation of the virtual DOM
