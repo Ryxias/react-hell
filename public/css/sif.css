@@ -13,7 +13,20 @@
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
   transform: rotate(7deg);
   max-width: 50%;
+}
 
+.envelope-image.envelope-closed.reveal {
+  -ms-transform: rotate(7deg); /* IE 9 */
+  -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
+  transform: rotate(7deg);
+  max-width: 50%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.envelope-image.envelope-closed.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .aidoru-name a {

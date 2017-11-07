@@ -14,12 +14,14 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "",
       envelope_image_open: "",
-      open_sound: ""
+      open_sound: "",
+      envelopeIsOpened: false
     };
 
     this.resetGacha = this.resetGacha.bind(this);
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
+    this.openEnvelope = this.openEnvelope.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
@@ -33,7 +35,8 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "loading.gif",
       envelope_image_open: "",
-      open_sound: "r_open.mp3"
+      open_sound: "r_open.mp3",
+      envelopeIsOpened: false
     });
   }
 
@@ -80,12 +83,15 @@ class Gacha extends Component {
   enableGachaAnimation() {
     const $closed_envelope = $(".envelope-closed");
     const $open_envelope = $(".envelope-open");
-    let $data_blob = $(".data");
-    $data_blob.data("open-sound-url", "/statics/sound/" + this.state.open_sound);
-    let audio = new Audio($data_blob.data("open-sound-url"));
+
+    const soundElement = document.getElementsByClassName("data")[0];
+    soundElement.setAttribute("data-open-sound-url", "/statics/sound/" + this.state.open_sound);
+    const soundData = soundElement.getAttribute("data-open-sound-url");
+    const audio = new Audio(soundData);
 
     const animateOpeningBox = () => {
       // Replace the closed envelope with the open one
+      $closed_envelope.removeClass("reveal");
       $closed_envelope.addClass("hide");
       $open_envelope.removeClass("hide");
 
@@ -108,6 +114,15 @@ class Gacha extends Component {
     });
   }
 
+  // Triggers envelopeIsOpened state upon clicking a closed envelope
+
+  openEnvelope() {
+    console.log('Opening envelope...');
+    this.setState({
+      envelopeIsOpened: true,
+    });
+  }
+
   // Retrieves data before presentation of the virtual DOM
 
   componentWillMount() {
@@ -123,7 +138,7 @@ class Gacha extends Component {
   render() {
     return (
       <div>
-        <GachaContent gameState={this.state} getGacha={this.getGacha} />
+        <GachaContent gameState={this.state} getGacha={this.getGacha} openEnvelope={this.openEnvelope} />
       </div>
     );
   }
