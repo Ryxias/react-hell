@@ -34,6 +34,7 @@
     "mysql2": "^1.4.2",
     "path": "^0.12.7",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^15.6.1",
     "react-markdown": "^2.5.0",

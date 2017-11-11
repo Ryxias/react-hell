@@ -14,7 +14,7 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "",
       envelope_image_open: "",
-      open_sound: "",
+      open_sound: null,
       envelopeIsOpened: false
     };
 
@@ -22,7 +22,6 @@ class Gacha extends Component {
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
     this.openEnvelope = this.openEnvelope.bind(this);
-    this.enableSound = this.enableSound.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
@@ -36,7 +35,7 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "loading.gif",
       envelope_image_open: "",
-      open_sound: "r_open.mp3",
+      open_sound: null,
       envelopeIsOpened: false
     });
   }
@@ -72,7 +71,7 @@ class Gacha extends Component {
         rarity: received.data.rarity,
         envelope_image_closed: received.data.envelope_image_closed,
         envelope_image_open: received.data.envelope_image_open,
-        open_sound: received.data.open_sound
+        open_sound: new Audio("/statics/sound/" + received.data.open_sound)
       });
     });
   }
@@ -105,9 +104,9 @@ class Gacha extends Component {
     //   Putting the animation crap in here ensures the audio begins to play before
     //   the animations, making the UI "feel" more snappy.
 
-    $closed_envelope.off().on("click", () => {
-      animateOpeningBox();
-    });
+    // $closed_envelope.off().on("click", () => {
+    //   animateOpeningBox();
+    // });
   }
 
   // Triggers envelopeIsOpened state upon clicking a closed envelope
@@ -117,16 +116,7 @@ class Gacha extends Component {
     this.setState({
       envelopeIsOpened: true,
     });
-    this.enableSound().play();
-  }
-
-  // Creates audio object from new sound URL
-
-  enableSound() {
-    const soundElement = document.getElementsByClassName("data")[0];
-    soundElement.setAttribute("data-open-sound-url", "/statics/sound/" + this.state.open_sound);
-    const soundData = soundElement.getAttribute("data-open-sound-url");
-    return new Audio(soundData);
+    this.state.open_sound.play();
   }
 
   // Retrieves data before presentation of the virtual DOM
