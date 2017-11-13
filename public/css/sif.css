@@ -8,38 +8,36 @@
   max-width: 1024px;
 }
 
-.envelope-image {
+.envelope {
   -ms-transform: rotate(7deg); /* IE 9 */
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
   transform: rotate(7deg);
   max-width: 50%;
+  /*transition: transform 450ms;*/
 }
 
-.envelope-image.envelope-closed.reveal {
-  opacity: 1;
-  visibility: visible;
+/*.envelope:hover {*/
+  /*transform: rotate(7deg) scale(1.1, 1.1);*/
+/*}*/
+
+.reveal-enter {
+  transform: rotate(7deg) scale(1, 1);
 }
 
-.envelope-image.envelope-closed.hide {
+.reveal-enter-active {
+  transform: rotate(7deg) scale(1.1, 1.1);
+  -webkit-transition: all 450ms;
+  transition: all 450ms ease-out;
+}
+
+.reveal-appear {
   opacity: 0;
-  visibility: hidden;
-  height: 0;
-  width: 0;
 }
 
-.envelope-image.envelope-open.reveal {
-  width: 300px;
+.reveal-appear-active {
   opacity: 1;
-  visibility: visible;
-  -webkit-transition: width 3s, height 0ms 450ms, opacity 0ms 450ms;
-  transition: width 3s ease-in-out, height 0ms 450ms, opacity 0ms 450ms;
-}
-
-.envelope-image.envelope-open.hide {
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: width 3s 0ms;
-  transition: width 3s ease-in-out 0ms;
+  -webkit-transition: opacity 500ms;
+  transition: opacity 500ms;
 }
 
 .aidoru-name a {
