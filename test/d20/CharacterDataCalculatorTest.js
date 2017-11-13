@@ -5,6 +5,8 @@ const assert = require('assert');
 const CharacterData = require(PROJECT_ROOT + '/lib/d20/State/CharacterData');
 const CharacterDataCalculator = require(PROJECT_ROOT + '/lib/d20/State/CharacterDataCalculator');
 
+// FIXME (derek) currently 'npm run test' doesn't run mocha recursively so this test gets skipped
+//  port over the work we did over with James to make it run
 describe('CharacterDataCalculator', function() {
   describe('using the template', function() {
     it('should be able to calculate hit dice', function() {
@@ -48,7 +50,7 @@ describe('CharacterDataCalculator', function() {
     it('should be able to calculate armor class', function() {
       const character_data = CharacterData.getTemplate();
       character_data.recalculateDerivedStatistics();
-      
+
       assert.equal(character_data.compute.armor_class.normal.stat, 12);
       assert.equal(character_data.compute.armor_class.flat_footed.stat, 10);
       assert.equal(character_data.compute.armor_class.touch.stat, 12);
