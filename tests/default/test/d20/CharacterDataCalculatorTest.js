@@ -120,5 +120,15 @@ describe('CharacterData', function() {
       assert.equal(subject.getParameter('accumulation:armor_class:touch'), 13);
       assert.equal(subject.getParameter('accumulation:armor_class:flat_footed'), 17);
     });
+
+    it('should be able to calculate foundation saving throwx', function() {
+      const subject = CharacterData.getTemplate();
+
+      subject.recalculateAll();
+
+      assert.equal(subject.getParameter('foundation:saving_throws:fortitude'), 3);
+      assert.equal(subject.getParameter('foundation:saving_throws:reflex'), 2);
+      assert.equal(subject.getParameter('foundation:saving_throws:will'), 2);
+    });
   });
 });
