@@ -1,6 +1,5 @@
 'use strict';
 
-require('./init');
 const assert = require('assert');
 
 describe('Sanity test', function() {

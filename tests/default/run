@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# This script rsyncs code on local machines to the webserver.
+# This project will not work properly unless you setup your ssh config file
+#
+set -e
+
+# Get to test root
+cd "$(dirname "$0")"
+
+NODE_ENV=production ../../node_modules/mocha/bin/mocha --require init --recursive $@

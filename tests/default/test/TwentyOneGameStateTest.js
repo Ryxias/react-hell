@@ -1,6 +1,5 @@
 'use strict';
 
-require('./init');
 const assert = require('assert');
 const GameState = require(PROJECT_ROOT + '/lib/TwentyOneGame/GameState');
 const Actions = require(PROJECT_ROOT + '/lib/TwentyOneGame/Actions');

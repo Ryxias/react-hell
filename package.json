@@ -9,7 +9,8 @@
     "dev": "sudo NODE_ENV=development nodemon server/server.js",
     "sync_models": "node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
-    "test": "NODE_ENV=production ./node_modules/mocha/bin/mocha"
+    "test": "NODE_ENV=production ./node_modules/mocha/bin/mocha",
+    "tests": "./bin/runtests"
   },
   "repository": {
     "type": "git",
