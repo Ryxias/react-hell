@@ -117,6 +117,8 @@ describe('CharacterData', function() {
 
       // 2 dex, 1 size, 3 armor, 3 shield
       assert.equal(subject.getParameter('accumulation:armor_class:base'), 19);
+      assert.equal(subject.getParameter('accumulation:armor_class:touch'), 13);
+      assert.equal(subject.getParameter('accumulation:armor_class:flat_footed'), 17);
     });
   });
 });
