@@ -56,9 +56,9 @@ describe('CharacterData', function() {
 
       subject.recalculateAll();
 
-      const value = subject.getParameter('adjustment.equipment.bonus_breakdowns.wisdom');
+      const value = subject.getParameter('adjustment:equipment:bonus_breakdowns:wisdom');
       assert.equal(value.enhancement, 2);
-      assert.equal(subject.getParameter('adjustment.equipment.bonuses.wisdom'), 2);
+      assert.equal(subject.getParameter('adjustment:equipment:bonuses:wisdom'), 2);
     });
 
     it('should be able to incorporate equipment bonuses into actual ability scores', function() {
@@ -108,6 +108,15 @@ describe('CharacterData', function() {
 
       // With 2 bracers, the one with the HIGHER wis score wins
       assert.equal(subject.getParameter('accumulation:ability_scores:wisdom'), 13);
+    });
+
+    it('should be able to calculate armor class', function() {
+      const subject = CharacterData.getTemplate();
+
+      subject.recalculateAll();
+
+      // 2 dex, 1 size, 3 armor, 3 shield
+      assert.equal(subject.getParameter('accumulation:armor_class:base'), 19);
     });
   });
 });
