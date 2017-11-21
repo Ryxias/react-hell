@@ -23,6 +23,20 @@ const COMMONER = {
   'foundation:ability_scores:intelligence': 9,
   'foundation:ability_scores:wisdom': 10,
   'foundation:ability_scores:charisma': 9,
+  'foundation:class_levels': [
+    ClassRepository.classLevelWith('FIGHTER', 1, {
+      hp_roll: 4,
+      skill_ranks: { profession: 1 }
+    }),
+  ],
+  'foundation:basics:race': 'human',
+  'foundation:basics:size': 'M',
+  'equipment': [
+
+  ],
+  'inventory': [
+
+  ],
 };
 
 
