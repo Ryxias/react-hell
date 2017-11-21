@@ -121,7 +121,7 @@ describe('CharacterData', function() {
       assert.equal(subject.getParameter('accumulation:armor_class:flat_footed'), 17);
     });
 
-    it('should be able to calculate foundation saving throwx', function() {
+    it('should be able to calculate foundation saving throws', function() {
       const subject = CharacterData.getTemplate();
 
       subject.recalculateAll();
@@ -129,6 +129,30 @@ describe('CharacterData', function() {
       assert.equal(subject.getParameter('foundation:saving_throws:fortitude'), 3);
       assert.equal(subject.getParameter('foundation:saving_throws:reflex'), 2);
       assert.equal(subject.getParameter('foundation:saving_throws:will'), 2);
+    });
+
+    it('should be able to calculate adjustment aggregates for ability scores', function() {
+      const subject = CharacterData.getTemplate();
+
+      subject.recalculateAll();
+
+      const strength_aggregate = subject.getParameter('adjustment:aggregates:ability_scores:strength');
+      assert.equal(strength_aggregate.length, 1);
+      assert.deepEqual(strength_aggregate[0], {
+        from: 'base_ability_score',
+        stat: 'strength',
+        type: 'no_type:base',
+        value: 15
+      });
+
+      const wisdom_aggregate = subject.getParameter('adjustment:aggregates:ability_scores:wisdom');
+      assert.equal(wisdom_aggregate.length, 2); // Guy is wearing a amulet of +2
+      assert.deepEqual(wisdom_aggregate[1], {
+        from: 'equipment',
+        stat: 'wisdom',
+        type: 'enhancement',
+        value: 2
+      });
     });
   });
 });
