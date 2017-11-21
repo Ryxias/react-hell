@@ -146,10 +146,17 @@ describe('CharacterData', function() {
       const fortitude_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.FORTITUDE_SAVE);
       const reflex_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.REFLEX_SAVE);
       const will_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.WILL_SAVE);
+
+      assert.deepEqual(fortitude_breakdown, { 'no_type:base': 3, 'no_type:base_ability_modifier': 1 });
+      assert.deepEqual(reflex_breakdown, { 'no_type:base': 2, 'no_type:base_ability_modifier': 2 });
+      assert.deepEqual(will_breakdown, { 'no_type:base': 2, 'no_type:base_ability_modifier': 1 });
     });
 
-    it.skip('should be able to calculate class skills', function() {
+    it('should be able to calculate class skills', function() {
+      const class_skills = subject.getParameter(DataKeys.FOUNDATION.CLASS_SKILLS);
 
+      assert.deepEqual(class_skills, [ 'climb', 'jump', 'swim', 'climb',
+        'jump', 'swim', 'bluff', 'diplomacy', 'fly', 'sense_motive' ]);
     });
   });
 });
