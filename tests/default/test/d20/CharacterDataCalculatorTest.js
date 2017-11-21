@@ -152,6 +152,16 @@ describe('CharacterData', function() {
       assert.deepEqual(will_breakdown, { 'no_type:base': 2, 'no_type:base_ability_modifier': 1 });
     });
 
+    it('should be able to calculate save accumulation', function() {
+      const fortitude_save = subject.getParameter(DataKeys.ACCUMULATION.SAVES.FORTITUDE);
+      const reflex_save = subject.getParameter(DataKeys.ACCUMULATION.SAVES.REFLEX);
+      const will_save = subject.getParameter(DataKeys.ACCUMULATION.SAVES.WILL);
+
+      assert.equal(fortitude_save, 4);
+      assert.equal(reflex_save, 4);
+      assert.equal(will_save, 3);
+    });
+
     it('should be able to calculate class skills', function() {
       const class_skills = subject.getParameter(DataKeys.FOUNDATION.CLASS_SKILLS);
 
