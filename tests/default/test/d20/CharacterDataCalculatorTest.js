@@ -4,12 +4,13 @@ const assert = require('assert');
 const DataKeys = require('../../../../lib/d20/State/DataKeys');
 const EquipmentRepository = require('../../../../lib/d20/Data/EquipmentRepository');
 const CharacterData = require('../../../../lib/d20/State/CharacterData');
+const CharacterTemplates = require('../../data/D20CharacterTemplates');
 
 // FIXME (derek) currently 'npm run test' doesn't run mocha recursively so this test gets skipped
 //  port over the work we did over with James to make it run
 describe('CharacterData', function() {
   describe('using the template', function() {
-    const subject = CharacterData.getTemplate();
+    const subject = CharacterTemplates.elinFighter();
     subject.recalculateAll();
 
     it('should be able to do recalculation', function() {
