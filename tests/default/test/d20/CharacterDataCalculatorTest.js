@@ -1,8 +1,8 @@
 'use strict';
 
+const assert = require('assert');
 const DataKeys = require('../../../../lib/d20/State/DataKeys');
 const EquipmentRepository = require('../../../../lib/d20/Data/EquipmentRepository');
-const assert = require('assert');
 const CharacterData = require('../../../../lib/d20/State/CharacterData');
 
 // FIXME (derek) currently 'npm run test' doesn't run mocha recursively so this test gets skipped
@@ -215,7 +215,21 @@ describe('CharacterData', function() {
     });
 
     it('should be able to calculate skill breakdown', function() {
+      const breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.skill('bluff'));
+      assert.deepEqual(breakdown, { 'no_type:skill_ranks': 3,
+        'no_type:class_bonus': 3,
+        'no_type:ability_mod': 0,
+        insight: 2 });
+    });
 
+    it('should be able to calculate carrying capacity', function() {
+      const carrying_capacity = subject.getParameter(DataKeys.ACCUMULATION.CARRYING_CAPACITY);
+      assert.deepEqual(carrying_capacity, { heavy: 150, medium: 100, light: 50 }); // 15 str but small-sized
+    });
+
+    it('should be able to calculate current carrying weight', function() {
+      const carrying_weight = subject.getParameter(DataKeys.ACCUMULATION.INVENTORY_WEIGHT);
+      assert.equal(carrying_weight, 25.8);
     });
   });
 });
