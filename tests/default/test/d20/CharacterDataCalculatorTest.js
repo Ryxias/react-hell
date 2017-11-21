@@ -17,14 +17,14 @@ describe('CharacterData', function() {
     });
 
     it('should be able to calculate ability scores and modifiers', function() {
+      // Deprecated
       const subject = CharacterData.getTemplate();
 
-      subject.setParameter('adjustment:ability_scores:strength', 2);
+      subject.recalculateAll();
 
-      assert.equal(subject.getParameter('adjustment:ability_scores:strength'), 2);
       assert.equal(subject.getParameter('foundation:ability_scores:strength'), 15);
-      assert.equal(subject.getParameter('accumulation:ability_scores:strength'), 17);
-      assert.equal(subject.getParameter('foundation:ability_modifiers:strength'), 3);
+      assert.equal(subject.getParameter('accumulation:ability_scores:strength'), 15);
+      assert.equal(subject.getParameter('foundation:ability_modifiers:strength'), 2);
     });
 
     it('should be able to accumulate foundation hp from class, race, and constitution', function() {
@@ -131,7 +131,7 @@ describe('CharacterData', function() {
       assert.equal(subject.getParameter('foundation:saving_throws:will'), 2);
     });
 
-    it('should be able to calculate adjustment aggregates for ability scores', function() {
+    it('should be able to calculate adjustment aggregates and breakdowns for ability scores', function() {
       const subject = CharacterData.getTemplate();
 
       subject.recalculateAll();
@@ -142,7 +142,8 @@ describe('CharacterData', function() {
         from: 'base_ability_score',
         stat: 'strength',
         type: 'no_type:base',
-        value: 15
+        value: 15,
+        tags: [ 'test_tag' ],
       });
 
       const wisdom_aggregate = subject.getParameter('adjustment:aggregates:ability_scores:wisdom');
@@ -151,8 +152,12 @@ describe('CharacterData', function() {
         from: 'equipment',
         stat: 'wisdom',
         type: 'enhancement',
-        value: 2
+        value: 2,
+        tags: [ 'test_tag' ],
       });
+
+      const wisdom_breakdown = subject.getParameter('adjustment:breakdown:ability_scores:wisdom');
+      assert.deepEqual(wisdom_breakdown, { 'no_type:base': 10, enhancement: 2 });
     });
   });
 });
