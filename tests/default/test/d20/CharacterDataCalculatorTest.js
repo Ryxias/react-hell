@@ -51,7 +51,8 @@ describe('CharacterData', function() {
       assert.equal(subject.getParameter('accumulation:attack_bonus:ranged'), 5);
     });
 
-    it('should be able to accumulate equipment adjustments', function() {
+    it.skip('should be able to accumulate equipment adjustments', function() {
+      // These data points are deprecated
       const subject = CharacterData.getTemplate();
 
       subject.recalculateAll();
@@ -115,7 +116,55 @@ describe('CharacterData', function() {
 
       subject.recalculateAll();
 
-      // 2 dex, 1 size, 3 armor, 3 shield
+      // Get the breakdown
+      const armor_aggregation = subject.getParameter('adjustment:aggregates:combat:armor_class');
+      assert.equal(armor_aggregation.length, 7);
+      assert.deepEqual(armor_aggregation[0], {
+        from: 'base_armor_class',
+        type: 'no_type:base',
+        stat: 'armor_class',
+        value: 10,
+        tags: ['immutable']
+      });
+      assert.deepEqual(armor_aggregation[1], {
+        from: 'dexterity',
+        type: 'dexterity',
+        stat: 'armor_class',
+        value: 2,
+        tags: ['dexterity']
+      });
+      assert.deepEqual(armor_aggregation[2], {from: 'equipment', type: 'armor', stat: 'armor_class', value: 2, tags: ['armor']});
+      assert.deepEqual(armor_aggregation[3],
+        {
+          from: 'equipment',
+          type: 'armor_enhancement',
+          stat: 'armor_class',
+          value: 1,
+          tags: ['armor']
+        });
+      assert.deepEqual(armor_aggregation[4], {from: 'equipment', type: 'shield', stat: 'armor_class', value: 2, tags: ['armor']});
+      assert.deepEqual(armor_aggregation[5],
+        {
+          from: 'equipment',
+          type: 'shield_enhancement',
+          stat: 'armor_class',
+          value: 1,
+          tags: ['armor']
+        });
+      assert.deepEqual(armor_aggregation[6], {from: 'size', type: 'size', stat: 'armor_class', value: 1, tags: ['size']});
+
+      // Breakdown
+      const armor_breakdown = subject.getParameter('adjustment:breakdown:combat:armor_class');
+      assert.deepEqual(armor_breakdown, {
+        'no_type:base': 10,
+        dexterity: 2,
+        armor: 2,
+        armor_enhancement: 1,
+        shield: 2,
+        shield_enhancement: 1,
+        size: 1 });
+
+      // 10 + 2 dex, 1 size, 3 armor, 3 shield
       assert.equal(subject.getParameter('accumulation:armor_class:base'), 19);
       assert.equal(subject.getParameter('accumulation:armor_class:touch'), 13);
       assert.equal(subject.getParameter('accumulation:armor_class:flat_footed'), 17);
