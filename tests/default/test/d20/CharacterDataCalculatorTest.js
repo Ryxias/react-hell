@@ -168,5 +168,54 @@ describe('CharacterData', function() {
       assert.deepEqual(class_skills, [ 'climb', 'jump', 'swim', 'climb',
         'jump', 'swim', 'bluff', 'diplomacy', 'fly', 'sense_motive' ]);
     });
+
+    it('should be able to calculate skill ranks', function() {
+      const skill_ranks = subject.getParameter(DataKeys.FOUNDATION.SKILL_RANKS);
+      const expectation = { climb: 1, stealth: 2, profession: 1, jump: 2, bluff: 3, diplomacy: 3, knowledge_arcana: 3 };
+
+      assert.deepEqual(skill_ranks, expectation);
+    });
+
+    it('should be able to calculate skill aggregation', function() {
+      const aggregate = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.skill('diplomacy')); // ranks, and a class skill
+
+      // 1 from rank, 1 from class and 1 from ability score mod, 1 from equipment
+      assert.equal(aggregate.length, 4);
+
+      const class_skill = aggregate[1];
+      assert.deepEqual(class_skill, { from: 'class_skill',
+        stat: 'diplomacy',
+        type: 'no_type:class_bonus',
+        value: 3 });
+    });
+
+    it.skip('should be able to calculate skill aggregation with armor check penalty', function() {
+      const aggregate = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.skill('jump'));
+
+      pp(aggregate);
+    });
+
+    it('should be able to calculate skill aggregation that is not class skill', function() {
+      const aggregate = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.skill('knowledge_arcana')); // ranks, and not a class skill
+      const cross = aggregate[1];
+      assert.deepEqual(cross, { from: 'cross_class_skill',
+        stat: 'knowledge_arcana',
+        type: 'no_type:class_bonus',
+        value: 1 });
+    });
+
+    it('should be able to calculate skill aggregation from zero skill', function() {
+      const aggregate = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.skill('knowledge_history')); // no ranks, not class skill
+      assert.equal(aggregate.length, 1); // 1 int
+    });
+
+    it('should be able to calculate skill aggregation with equipment', function() {
+      const aggregate = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.skill('bluff')); // cape of lies
+      assert.deepEqual(aggregate[3], { from: 'equipment', stat: 'bluff', type: 'insight', value: 2 });
+    });
+
+    it('should be able to calculate skill breakdown', function() {
+
+    });
   });
 });
