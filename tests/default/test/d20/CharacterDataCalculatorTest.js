@@ -1,5 +1,7 @@
 'use strict';
 
+const DataKeys = require('../../../../lib/d20/State/DataKeys');
+const EquipmentRepository = require('../../../../lib/d20/Data/EquipmentRepository');
 const assert = require('assert');
 const CharacterData = require('../../../../lib/d20/State/CharacterData');
 
@@ -7,184 +9,100 @@ const CharacterData = require('../../../../lib/d20/State/CharacterData');
 //  port over the work we did over with James to make it run
 describe('CharacterData', function() {
   describe('using the template', function() {
+    const subject = CharacterData.getTemplate();
+    subject.recalculateAll();
+
     it('should be able to do recalculation', function() {
-      const subject = CharacterData.getTemplate();
-
       // this value isn't defined in the template.  Should be derived with recalculateAll()
-      subject.recalculateAll();
-
       assert.equal(subject.getParameter('foundation:ability_modifiers:strength'), 2);
     });
 
     it('should be able to calculate ability scores and modifiers', function() {
-      // Deprecated
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
       assert.equal(subject.getParameter('foundation:ability_scores:strength'), 15);
       assert.equal(subject.getParameter('accumulation:ability_scores:strength'), 15);
       assert.equal(subject.getParameter('foundation:ability_modifiers:strength'), 2);
     });
 
-    it('should be able to accumulate foundation hp from class, race, and constitution', function() {
-      const subject = CharacterData.getTemplate();
+    it('should be able to incorporate equipment bonuses into actual ability scores', function() {
+      // Guy has 10 wis and is wearing a +2 wis bracer
+      assert.equal(subject.getParameter('accumulation:ability_scores:wisdom'), 12);
+    });
 
-      subject.recalculateAll();
+    it('should be able to accumulate foundation hp from class, race, and constitution', function() {
       assert.equal(subject.getParameter('foundation:hit_points'), 22); // 10 + 7 + 2 (+1 con x 3 levels)
     });
 
     it('should be able to accumulate base attack bonus', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
       assert.equal(subject.getParameter('foundation:base_attack_bonus'), 2);
     });
 
     it('should be able to accumulate combat maneuver stats', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
       assert.equal(subject.getParameter('accumulation:combat_maneuver:bonus'), 3);
       assert.equal(subject.getParameter('accumulation:combat_maneuver:defense'), 15);
       assert.equal(subject.getParameter('accumulation:attack_bonus:melee'), 5);
       assert.equal(subject.getParameter('accumulation:attack_bonus:ranged'), 5);
     });
 
-    it.skip('should be able to accumulate equipment adjustments', function() {
-      // These data points are deprecated
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
-      const value = subject.getParameter('adjustment:equipment:bonus_breakdowns:wisdom');
-      assert.equal(value.enhancement, 2);
-      assert.equal(subject.getParameter('adjustment:equipment:bonuses:wisdom'), 2);
-    });
-
-    it('should be able to incorporate equipment bonuses into actual ability scores', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
-      // Guy has 10 wis and is wearing a +2 wis bracer
-      assert.equal(subject.getParameter('accumulation:ability_scores:wisdom'), 12);
-    });
-
     it('should be able to de-dupe non-stacking bonuses', function() {
-      const subject = CharacterData.getTemplate();
+      const subject2 = CharacterData.getTemplate();
 
       const bunch_of_gear = [
         {
-          slot: 'wrists',
-          item: {
-            key: 'asdfqwertyyuo',
-            slot: 'wrists',
-            name: 'Amulet of Wisdom (+2)',
-            type: 'equipment',
-            size: 'S',
-            adjustments: [
-              {attribute: 'wisdom', type: 'enhancement', value: 2}
-            ],
-            tags: [],
-          },
+          slot: 'wrist-1',
+          item: EquipmentRepository.repo['item:amulet:amulet-of-wisdom-2'],
         },
         {
-          slot: 'face...',
-          item: {
-            key: 'aoweifjwaoeifjaoweifj',
-            slot: 'wrists',
-            name: 'Amulet of Wisdom (+3)',
-            type: 'equipment',
-            size: 'S',
-            adjustments: [
-              {attribute: 'wisdom', type: 'enhancement', value: 3}
-            ],
-            tags: [],
-          },
+          slot: 'wrist-2',
+          item: EquipmentRepository.repo['item:amulet:amulet-of-wisdom-3'],
         }
       ];
 
-      subject.setParameter('equipment', bunch_of_gear);
+      subject2.setParameter('equipment', bunch_of_gear);
 
       // With 2 bracers, the one with the HIGHER wis score wins
-      assert.equal(subject.getParameter('accumulation:ability_scores:wisdom'), 13);
+      assert.equal(subject2.getParameter('accumulation:ability_scores:wisdom'), 13);
     });
 
-    it('should be able to calculate armor class', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
+    it('should be able to calculate armor class aggregates', function() {
       // Get the breakdown
       const armor_aggregation = subject.getParameter('adjustment:aggregates:combat:armor_class');
       assert.equal(armor_aggregation.length, 7);
-      assert.deepEqual(armor_aggregation[0], {
-        from: 'base_armor_class',
-        type: 'no_type:base',
-        stat: 'armor_class',
-        value: 10,
-        tags: ['immutable']
-      });
-      assert.deepEqual(armor_aggregation[1], {
-        from: 'dexterity',
-        type: 'dexterity',
-        stat: 'armor_class',
-        value: 2,
-        tags: ['dexterity']
-      });
-      assert.deepEqual(armor_aggregation[2], {from: 'equipment', type: 'armor', stat: 'armor_class', value: 2, tags: ['armor']});
-      assert.deepEqual(armor_aggregation[3],
-        {
-          from: 'equipment',
-          type: 'armor_enhancement',
-          stat: 'armor_class',
-          value: 1,
-          tags: ['armor']
-        });
-      assert.deepEqual(armor_aggregation[4], {from: 'equipment', type: 'shield', stat: 'armor_class', value: 2, tags: ['armor']});
-      assert.deepEqual(armor_aggregation[5],
-        {
-          from: 'equipment',
-          type: 'shield_enhancement',
-          stat: 'armor_class',
-          value: 1,
-          tags: ['armor']
-        });
-      assert.deepEqual(armor_aggregation[6], {from: 'size', type: 'size', stat: 'armor_class', value: 1, tags: ['size']});
+      assert.equal(armor_aggregation[0].from, 'base_armor_class');
+      assert.equal(armor_aggregation[0].value, 10);
+      assert.equal(armor_aggregation[0].type, 'no_type:base');
+      assert.equal(armor_aggregation[0].stat, 'armor_class');
 
+      assert.equal(armor_aggregation[1].from, 'dexterity');
+      assert.equal(armor_aggregation[1].value, '2');
+
+      assert.equal(armor_aggregation[2].from, 'equipment');
+      assert.equal(armor_aggregation[2].type, 'armor');
+      assert.equal(armor_aggregation[3].type, 'armor_enhancement');
+      assert.equal(armor_aggregation[4].type, 'shield');
+      assert.equal(armor_aggregation[5].type, 'shield_enhancement');
+      assert.equal(armor_aggregation[6].type, 'size');
+    });
+
+    it('should be able to calculate armor class breakdown', function() {
       // Breakdown
       const armor_breakdown = subject.getParameter('adjustment:breakdown:combat:armor_class');
-      assert.deepEqual(armor_breakdown, {
-        'no_type:base': 10,
-        dexterity: 2,
-        armor: 2,
-        armor_enhancement: 1,
-        shield: 2,
-        shield_enhancement: 1,
-        size: 1 });
+      assert.equal(armor_breakdown.dexterity, 2);
+      assert.equal(armor_breakdown.armor, 2);
+      assert.equal(armor_breakdown.armor_enhancement, 1);
+      assert.equal(armor_breakdown.shield, 2);
+      assert.equal(armor_breakdown.shield_enhancement, 1);
+      assert.equal(armor_breakdown.size, 1);
+      assert.equal(armor_breakdown['no_type:base'], 10);
+    });
 
+    it('should be able to calculate armor class accumulations', function() {
       // 10 + 2 dex, 1 size, 3 armor, 3 shield
       assert.equal(subject.getParameter('accumulation:armor_class:base'), 19);
       assert.equal(subject.getParameter('accumulation:armor_class:touch'), 13);
       assert.equal(subject.getParameter('accumulation:armor_class:flat_footed'), 17);
     });
 
-    it('should be able to calculate foundation saving throws', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
-      assert.equal(subject.getParameter('foundation:saving_throws:fortitude'), 3);
-      assert.equal(subject.getParameter('foundation:saving_throws:reflex'), 2);
-      assert.equal(subject.getParameter('foundation:saving_throws:will'), 2);
-    });
-
     it('should be able to calculate adjustment aggregates and breakdowns for ability scores', function() {
-      const subject = CharacterData.getTemplate();
-
-      subject.recalculateAll();
-
       const strength_aggregate = subject.getParameter('adjustment:aggregates:ability_scores:strength');
       assert.equal(strength_aggregate.length, 1);
       assert.deepEqual(strength_aggregate[0], {
@@ -207,6 +125,31 @@ describe('CharacterData', function() {
 
       const wisdom_breakdown = subject.getParameter('adjustment:breakdown:ability_scores:wisdom');
       assert.deepEqual(wisdom_breakdown, { 'no_type:base': 10, enhancement: 2 });
+    });
+
+    it('should be able to calculate foundation saving throws', function() {
+      assert.equal(subject.getParameter(DataKeys.FOUNDATION.SAVES.FORTITUDE), 3);
+      assert.equal(subject.getParameter(DataKeys.FOUNDATION.SAVES.REFLEX), 2);
+      assert.equal(subject.getParameter(DataKeys.FOUNDATION.SAVES.WILL), 2);
+    });
+
+    it('should be able to calculate save aggregation', function() {
+      const fortitude_aggregation = subject.getParameter(DataKeys.ADJUSTMENT.AGGREGATES.FORTITUDE_SAVE);
+
+      assert.equal(fortitude_aggregation[0].from, 'base_save');
+      assert.equal(fortitude_aggregation[0].value, 3);
+      assert.equal(fortitude_aggregation[1].from, 'base_ability_mod');
+      assert.equal(fortitude_aggregation[1].value, 1);
+    });
+
+    it('should be able to calculate save breakdown', function() {
+      const fortitude_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.FORTITUDE_SAVE);
+      const reflex_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.REFLEX_SAVE);
+      const will_breakdown = subject.getParameter(DataKeys.ADJUSTMENT.BREAKDOWNS.WILL_SAVE);
+    });
+
+    it.skip('should be able to calculate class skills', function() {
+
     });
   });
 });
