@@ -70,6 +70,11 @@ class BaseApplication {
     global.PROJECT_ROOT = this.loadPackage('fs').realpathSync(__dirname + '/..');
     global.Promise = this.loadPackage('bluebird');
 
+    // Convenient global method for debugging
+    global.pp = function(thing) {
+      console.log(require('util').inspect(thing, false, null));
+    };
+
     // Load configurations
     this.config = require(PROJECT_ROOT + '/configuration_loader');
     this.sequelize = require(PROJECT_ROOT + '/init/sequelize')(this.getConfig().db);

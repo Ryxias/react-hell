@@ -1,10 +1,9 @@
 'use strict';
 
-require('./init');
 const assert = require('assert');
 
 describe('SchoolIdo.lu Client', function() {
-  const LoveLiveClient = require('../lib/SchoolIdo.lu/Client');
+  const LoveLiveClient = require('../../../lib/SchoolIdo.lu/Client');
   const client = new LoveLiveClient();
 
   it('should be able to getCard', function() {

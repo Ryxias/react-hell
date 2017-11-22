@@ -1,11 +1,19 @@
 #!/bin/bash
 #
-# This script rsyncs code on local machines to the webserver.
-# This project will not work properly unless you setup your ssh config file
+# This script wraps tests to decouple our application from mocha and allows us to organize our directory
+# better.  Also allows us to run different mutually exclusive testing environments.
 #
-set -e
+# Intentionally dont use set -e because the test runners can stop one another
+# if there are failures.
 
 # Get to project root
 cd "$(dirname "$0")/.."
 
-node_modules/mocha/bin/mocha
+#echo "Rebuilding database..."
+#npm run mysql_import
+
+echo "Running default tests"
+./tests/default/run --reporter dot
+
+#echo "Running react tests"
+#./tests/react/run --reporter dot

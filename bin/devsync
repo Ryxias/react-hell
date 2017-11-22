@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# This script performs a two-way sync on the development webserver back down to the local machine
+# This project will not work properly unless you setup your ssh config file with a host of
+# "chuuni".  It places all files into the target directory of ~/repos/react-hell/
+#
+set -e
+
+#
+# Get to project root
+#
+cd "$(dirname "$0")/.."
+
+# It is always at ".", since this script pegs it with the above statement
+
+LOCAL_DIR="./"
+REMOTE_DIR="chuuni:~/repos/react-hell/"
+
+
+# Use rsync to bring all files from local to the remote
+#
+# Flags:
+#  -a Archive mode: It combines the -rlptgoD options together.  This handles recursive traversal and preserving
+#       symlinks, file modification times, and permissions.
+#  -r Recursive (note, I found a trick where you need to postfix the source with a dot "." to get this to work properly)
+#  -b Backs up the files on the destination when there are conflicts
+#  -d Deletes files that are not recognized
+#  -u Ignore files on the destination that are newer (this is enabled on the upload, not the download!)
+#  -v Verbose
+rsync -avu $LOCAL_DIR. $REMOTE_DIR \
+  --progress \
+  --delete \
+  --exclude .git \
+  --exclude .idea \
+  --exclude .DS_Store \
+  --exclude node_modules \
+  --exclude lambda/runtime \
+  --exclude public/js/dev
+
+
+# Use rsync to bring all files on the server back down to the local
+rsync -av $REMOTE_DIR. $LOCAL_DIR \
+  --progress \
+  --delete \
+  --exclude .git \
+  --exclude .idea \
+  --exclude .DS_Store \
+  --exclude node_modules \
+  --exclude lambda/runtime \
+  --exclude public/js/dev
