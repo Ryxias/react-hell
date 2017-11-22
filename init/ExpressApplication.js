@@ -25,10 +25,26 @@ class ExpressApplication extends require('./BaseApplication') {
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
     const appRouter = require(PROJECT_ROOT + '/server/routes');
-    const bodyParser = require('body-parser')
+    const bodyParser = require('body-parser');
+    const session = require('express-session');
+    const secret = require(PROJECT_ROOT + '/config/config.js').secret;
 
     // Initialize the express app
     const app = express();
+
+    const sessionSettings = {
+      secret: secret,
+      cookie: {
+        path: '/',  // Designates a path that should exist in the requested source when sending the cookie header
+        httpOnly: production ? false : true,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
+        expires: null,  // this will automatically be set via maxAge
+        maxAge: 300000,  // 5 minutes (in milliseconds)
+        saveUninitialized: false, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
+        resave: false,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
+        secure: true,  // Does not necessarily encrypt cookie data as cookies are inherently insecure, see MDN documentation
+        sameSite: 'strict', // Protection against Cross-Site Request Forgery attacks if set to 'strict'
+      },
+    };
 
     // Attach middleware
     if (production) {
@@ -39,6 +55,7 @@ class ExpressApplication extends require('./BaseApplication') {
     app.use(bodyParser);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
+    app.use(session(sessionSettings));
 
     const runServer = () => {
       const port = production ? 80 : this.config.port;
