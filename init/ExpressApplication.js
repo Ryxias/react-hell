@@ -27,21 +27,28 @@ class ExpressApplication extends require('./BaseApplication') {
     const appRouter = require(PROJECT_ROOT + '/server/routes');
     const bodyParser = require('body-parser');
     const session = require('express-session');
-    const secret = require(PROJECT_ROOT + '/config/config.js').secret;
+    var MySQLStore = require('express-mysql-session')(session);
+    var sessionStore = new MySQLStore(this.config.db);
+    const secret = this.config.secret;
+    const productionOnly = production;
 
     // Initialize the express app
     const app = express();
 
     const sessionSettings = {
+      name: 'chuuni.me',
+      proxy: true,  // Trust the reverse proxy when setting secure cookies (via the "X-Forwarded-Proto" header).
+      resave: true,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
+      rolling: true,  // Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.
+      saveUninitialized: true, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
       secret: secret,
+      store: sessionStore,
       cookie: {
-        path: '/',  // Designates a path that should exist in the requested source when sending the cookie header
-        httpOnly: production ? false : true,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
         expires: null,  // this will automatically be set via maxAge
+        httpOnly: productionOnly,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
         maxAge: 300000,  // 5 minutes (in milliseconds)
-        saveUninitialized: false, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
-        resave: false,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
-        secure: true,  // Does not necessarily encrypt cookie data as cookies are inherently insecure, see MDN documentation
+        path: '/',  // Designates a path that should exist in the requested source when sending the cookie header
+        secure: productionOnly,  // Does not necessarily encrypt cookie data as cookies are inherently insecure, see MDN documentation
         sameSite: 'strict', // Protection against Cross-Site Request Forgery attacks if set to 'strict'
       },
     };
@@ -50,12 +57,19 @@ class ExpressApplication extends require('./BaseApplication') {
     if (production) {
       app.use(redirectHttpToHttps);
     }
+    app.use(session(sessionSettings));
+    app.use(function(req, res, next) {
+      req.session.username = 'david';
+      req.session.save();
+      console.log('Session value set to:', req.session.username);
+      console.log('Session id:', req.sessionID);
+      next();
+    });
     app.use('/statics', staticsMiddleware);
     app.use(appRouter);
     app.use(bodyParser);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
-    app.use(session(sessionSettings));
 
     const runServer = () => {
       const port = production ? 80 : this.config.port;
