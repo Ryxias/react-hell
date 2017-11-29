@@ -28,6 +28,7 @@
     "babel-preset-react": "^6.24.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.18.2",
+    "connect-session-sequelize": "^5.0.1",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
