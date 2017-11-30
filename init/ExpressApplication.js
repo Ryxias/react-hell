@@ -25,7 +25,7 @@ class ExpressApplication extends require('./BaseApplication') {
     const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
     const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
     const appRouter = require(PROJECT_ROOT + '/server/routes');
-    const bodyParser = require('body-parser')
+    const bodyParser = require('body-parser');
 
     // Initialize the express app
     const app = express();
@@ -34,6 +34,12 @@ class ExpressApplication extends require('./BaseApplication') {
     if (production) {
       app.use(redirectHttpToHttps);
     }
+    app.use(this.getSession()(this.getSessionConfig()));
+    app.use(function(req, res, next) {
+      req.session.views = req.session.views + 1 || 1;
+      req.session.save();
+      next();
+    });
     app.use('/statics', staticsMiddleware);
     app.use(appRouter);
     app.use(bodyParser);

@@ -37,6 +37,18 @@ class BaseApplication {
     return this.sequelize_models;
   }
 
+  getSession() {
+    return this.session;
+  }
+
+  getSessionStore() {
+    return this.sessionStore;
+  }
+
+  getSessionConfig() {
+    return this.sessionConfig;
+  }
+
   warmPackage(package_name) {
     this.packages[package_name] = require(package_name);
   }
@@ -79,6 +91,27 @@ class BaseApplication {
     this.config = require(PROJECT_ROOT + '/configuration_loader');
     this.sequelize = require(PROJECT_ROOT + '/init/sequelize')(this.getConfig().db);
     this.sequelize_models = require(PROJECT_ROOT + '/init/load_models')(this.getSequelizeConnection());
+    this.session = require('express-session');
+    this.sessionStore = new (require('connect-session-sequelize')(this.getSession().Store))({
+      db: this.getSequelizeConnection(),
+    });
+    this.sessionConfig = {
+      name: 'chuuni.me',
+      // proxy: true,  // Trust the reverse proxy when setting secure cookies (via the "X-Forwarded-Proto" header).
+      resave: false,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
+      // rolling: true,  // Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.
+      saveUninitialized: false, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
+      secret: this.getConfig().secret,
+      store: this.getSessionStore(),
+      cookie: {
+        // expires: null,  // this will automatically be set via maxAge
+        // httpOnly: production,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
+        maxAge: 300000,  // 5 minutes (in milliseconds)
+        // path: '/',  // Designates a path that should exist in the requested source when sending the cookie header
+        // secure: production,  // Does not necessarily encrypt cookie data as cookies are inherently insecure, see MDN documentation
+        // sameSite: 'strict', // Protection against Cross-Site Request Forgery attacks if set to 'strict'
+      },
+    };
 
     // Do Application-specific custom boots
     this.appBoot();
