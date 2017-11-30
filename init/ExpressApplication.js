@@ -40,7 +40,7 @@ class ExpressApplication extends require('./BaseApplication') {
     const sessionSettings = {
       name: 'chuuni.me',
       // proxy: true,  // Trust the reverse proxy when setting secure cookies (via the "X-Forwarded-Proto" header).
-      resave: false,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
+      resave: true,  // Forces the session to be saved back to the session store if set to 'true', even if the session was never modified during the request.
       // rolling: true,  // Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.
       saveUninitialized: false, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
       secret: secret,
