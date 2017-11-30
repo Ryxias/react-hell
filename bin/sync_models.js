@@ -10,6 +10,7 @@ APP.boot();
 
 const sequelize = APP.getSequelizeConnection();
 const models = APP.getSequelizeModels();
+const sessionStore = APP.getSessionStore();
 
 const model_sync_promises = [];
 
@@ -37,6 +38,7 @@ Object.keys(models).forEach((model_name) => {
 
 // Wait until all sync promises resolve then exit
 Promise.all(model_sync_promises)
+  .then(() => sessionStore.sync())  // create/syncs the session db tables
   .then(() => sequelize.close())
   .then(() => {
     console.log('Models synchronization completed');

@@ -13,18 +13,11 @@ router.get('/', (req, res, next) => {
       root: `${PROJECT_ROOT}/public`
     }
   );
-
-  if(req.session.username == undefined){
-    console.log("# Username not set in session yet");
-  } else {
-    console.log("# Username from session: "+ req.session.username);
-  }
-
 });
 
 
 router.get('/*', (req, res, next) => {
-  return res.redirect('/');
+  res.redirect('/');
 });
 
 
