@@ -7,7 +7,7 @@
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
     "dev": "sudo NODE_ENV=development nodemon server/server.js",
-    "sync_models": "node bin/sync_models.js",
+    "sync_models": "sudo NODE_ENV=production node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
     "test": "NODE_ENV=production ./node_modules/mocha/bin/mocha"
   },
