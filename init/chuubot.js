@@ -21,16 +21,16 @@ module.exports = (config) => {
   chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
 
   // Logger
-  chuu.on(/.*/, (message, send) => {
-    SlackMessage.create(
-      {
-        type:     message.type || 'unknown',
-        channel:  message.channel || 'unknown',
-        user:     message.user || 'unknown',
-        text:     message.text || '',
-      }
-    );
-  });
+  // chuu.on(/.*/, (message, send) => {
+  //   SlackMessage.create(
+  //     {
+  //       type:     message.type || 'unknown',
+  //       channel:  message.channel || 'unknown',
+  //       user:     message.user || 'unknown',
+  //       text:     message.text || '',
+  //     }
+  //   );
+  // });
 
   // Setting up Chuu to recognize your private channel
   chuu.on(/^!chuuconfig private$/, (message, send) => {
