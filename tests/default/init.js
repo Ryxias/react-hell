@@ -1,7 +1,8 @@
 'use strict';
 
-const MochaApplication = require('../../init/MochaApplication');
-const app = new MochaApplication();
-app.boot();
+const AppKernel = require('../../app/AppKernel');
+const app_kernel = new AppKernel('production');
 
-module.exports = app;
+app_kernel.boot();
+
+module.exports = app_kernel;

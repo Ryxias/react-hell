@@ -57,13 +57,7 @@ module.exports = service_container => {
 
   service_container.registerFactory('express.server', require('./express'));
 
-
-  // Below this line is crap
-
-  // Configure the service container here
-
-
-
+  service_container.registerFactory('chuubot', require('../../init/chuubot'));
 
 
   service_container.autowire('database.model_validator', require('../../lib/Database/ModelValidator'));

@@ -3,7 +3,7 @@
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 
 module.exports = sequelize => {
-  return sequelize.define('blogpost', {
+  const BlogPosts = sequelize.define('blogpost', {
     id: {
       type: BIGINT.UNSIGNED,
       primaryKey: true,
@@ -31,4 +31,6 @@ module.exports = sequelize => {
     hooks: {},
     instanceMethods: {},
   });
+
+  return BlogPosts;
 };

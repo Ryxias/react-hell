@@ -3,7 +3,9 @@
 //
 'use strict';
 
-const ChuubotApplication = require('../init/ChuubotApplication');
-global.CHUUBOT_APP = new ChuubotApplication();
+const AppKernel = require('../app/AppKernel');
+const kernel = new AppKernel('production');
 
-CHUUBOT_APP.boot();
+kernel.boot();
+
+kernel.getContainer().get('chuubot').connect();
