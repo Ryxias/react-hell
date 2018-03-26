@@ -3,9 +3,9 @@
 // Connect Chuubot and provide an example of how to create a listener
 //
 
-const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/SlackConnector');
+const TwentyOneSlackConnector = require('../lib/TwentyOneGame/SlackConnector');
 const GachaSlackConnector = require('../lib/SchoolIdo.lu/SlackConnector');
-const slackbotBuilder = require(PROJECT_ROOT + '/lib/SlackbotFramework');
+const slackbotBuilder = require('../lib/SlackbotFramework');
 
 module.exports = (config) => {
   // Boot up chuubot

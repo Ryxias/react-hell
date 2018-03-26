@@ -2,11 +2,11 @@
 
 class AppKernel {
   constructor(environment) {
-
+    this.environment = environment;
   }
 
   boot() {
-    global.Promise = this.loadPackage('bluebird');
+    global.Promise = require('bluebird');
     // Convenient global method for debugging
     global.pp = function(thing) {
       console.log(require('util').inspect(thing, false, null));
@@ -14,10 +14,16 @@ class AppKernel {
 
     // Boot the service container!
     this.service_container = require('../services/container');
-
-    this.service_container.get('express.server').start(); // Runs the server
   }
 
+
+  getContainer() {
+    return this.service_container;
+  }
+
+  shutdown() {
+    this.service_container = null;
+  }
 
 }
 

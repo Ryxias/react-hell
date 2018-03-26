@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = service_container => {
+  const path = require('path');
 
   // Express specific stuff
   // check environment
@@ -11,9 +12,9 @@ module.exports = service_container => {
 
 // Setup middleware
   const {redirectHttpToHttps} = require('../../init/custom_app_redirects');
-  const {notFoundHandler, defaultErrorHandler} = require('../..//init/error_handlers');
-  const staticsMiddleware = express.static('../../public'); // Express to serve static files easily without nginx
-  const appRouter = require('../..//server/routes');
+  const {notFoundHandler, defaultErrorHandler} = require('../../init/error_handlers');
+  const staticsMiddleware = express.static(path.resolve(__dirname + '/../../public')); // Express to serve static files easily without nginx
+  const appRouter = require('../../server/routes');
   const bodyParser = require('body-parser');
 
   // Initialize the express app
@@ -39,6 +40,8 @@ module.exports = service_container => {
   app.use(notFoundHandler);
   app.use(defaultErrorHandler);
 
+  app.use('/test', (req, res, next) => res.send('omfg why'));
+
   const start = () => {
     const port = production ? 80 : service_container.get('ConfigurationManager').getValue('port');
 
@@ -46,7 +49,7 @@ module.exports = service_container => {
     //   On AWS, the application is fronted by a load balancer which terminates all inbound connections
     //   and forwards them to the webservers on port 80.
     require('http').createServer(app).listen(port, () => {
-      console.log('Server started, listening on port ' + port + '...');
+      console.log('AppKernel: Express server started, listening on port ' + port + '...');
     });
   };
 

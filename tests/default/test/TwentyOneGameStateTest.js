@@ -1,9 +1,9 @@
 'use strict';
 
 const assert = require('assert');
-const GameState = require(PROJECT_ROOT + '/lib/TwentyOneGame/GameState');
-const Actions = require(PROJECT_ROOT + '/lib/TwentyOneGame/Actions');
-const { ActionTypes, EventTypes } = require(PROJECT_ROOT + '/lib/TwentyOneGame/EventTypes');
+const GameState = require('../../../lib/TwentyOneGame/GameState');
+const Actions = require('../../../lib/TwentyOneGame/Actions');
+const { ActionTypes, EventTypes } = require('../../../lib/TwentyOneGame/EventTypes');
 
 describe('GameState', function() {
 

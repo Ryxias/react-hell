@@ -8,7 +8,7 @@ class ChuubotApplication extends require('./BaseApplication') {
 
   appBoot() {
     // Setup middleware
-    const chuubot = require(PROJECT_ROOT + '/init/chuubot')(this.getConfig());
+    const chuubot = require('../init/chuubot')(this.getConfig());
 
     chuubot.connect();
   }

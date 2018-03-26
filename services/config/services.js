@@ -13,13 +13,13 @@ module.exports = service_container => {
 
   // Configuration manager
   service_container.registerFactory('app.config', service_container => {
-    const ConfigurationManager = require('./lib/Configuration/ConfigurationManager');
+    const ConfigurationManager = require('../..//lib/Configuration/ConfigurationManager');
     return new ConfigurationManager(require('../../configuration_loader'));
   });
   service_container.alias('ConfigurationManager', 'app.config');
 
   // Database connection
-  service_container.registerFactory('database.connection_manager', require('../database_connection'));
+  service_container.registerFactory('database.connection_manager', require('./database_connection'));
   service_container.alias('ConnectionManager', 'database.connection_manager');
 
 

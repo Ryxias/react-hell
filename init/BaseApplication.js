@@ -79,8 +79,8 @@ class BaseApplication {
     });
 
     // Step 1.5, set up some relatively safe globals
-    global.PROJECT_ROOT = this.loadPackage('fs').realpathSync(__dirname + '/..');
-    global.Promise = this.loadPackage('bluebird');
+    global.PROJECT_ROOT = require('fs').realpathSync(__dirname + '/..');
+    global.Promise = require('bluebird');
 
     // Convenient global method for debugging
     global.pp = function(thing) {

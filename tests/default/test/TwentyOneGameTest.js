@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const Game = require(PROJECT_ROOT + '/lib/TwentyOneGame/Game');
+const Game = require('../../../lib/TwentyOneGame/Game');
 
 describe('21 Game Setup', function() {
   const newGame = function (output) {

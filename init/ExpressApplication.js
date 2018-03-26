@@ -1,9 +1,10 @@
+/*
 'use strict';
 
-/**
+/!**
  * This class is intended to encapsulate all of the steps and side effects of booting and running
  * CSPA as an express app intended to run in a loop and keep the website alive.
- */
+ *!/
 class ExpressApplication extends require('./BaseApplication') {
 
   appPackages() {
@@ -21,10 +22,10 @@ class ExpressApplication extends require('./BaseApplication') {
     const express = this.loadPackage('express');
 
     // Setup middleware
-    const { redirectHttpToHttps } = require(PROJECT_ROOT + '/init/custom_app_redirects');
-    const { notFoundHandler, defaultErrorHandler } = require(PROJECT_ROOT + '/init/error_handlers');
-    const staticsMiddleware = express.static(PROJECT_ROOT + '/public'); // Express to serve static files easily without nginx
-    const appRouter = require(PROJECT_ROOT + '/server/routes');
+    const {redirectHttpToHttps} = require('./custom_app_redirects');
+    const {notFoundHandler, defaultErrorHandler} = require('./error_handlers');
+    const staticsMiddleware = express.static('../public'); // Express to serve static files easily without nginx
+    const appRouter = require('../server/routes');
     const bodyParser = require('body-parser');
 
     // Initialize the express app
@@ -35,7 +36,7 @@ class ExpressApplication extends require('./BaseApplication') {
       app.use(redirectHttpToHttps);
     }
     app.use(this.getSession()(this.getSessionConfig()));
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
       req.session.views = req.session.views + 1 || 1;
       req.session.save();
       next();
@@ -62,3 +63,4 @@ class ExpressApplication extends require('./BaseApplication') {
 }
 
 module.exports = ExpressApplication;
+*/
