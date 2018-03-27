@@ -27,6 +27,26 @@ module.exports = service_container => {
   });
 
   registry.routeBuilder({
+    '/api': {
+      '/login': {
+        post: [ 'app.controllers.auth', 'login_action' ]
+      },
+      '/logout': {
+        post: [ 'app.controllers.auth', 'logout_action' ]
+      },
+      '/whoami': {
+        get: [ 'app.controllers.auth', 'whoami_action' ]
+      },
+      '/register': {
+        post: [ 'app.controllers.auth', 'register_action' ]
+      },
+      '/change_password': {
+        post: [ 'app.controllers.auth', 'change_password_action' ]
+      },
+    }
+  });
+
+  registry.routeBuilder({
     '/_debug/': { // hopefully hard to guess
       '/routes': {
         get: [ 'app.controllers.debug', 'get_all_routes_action' ],

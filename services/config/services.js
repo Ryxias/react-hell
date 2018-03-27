@@ -2,6 +2,9 @@
 
 module.exports = service_container => {
 
+  const bcrypt = require('bcryptjs');
+  Promise.promisifyAll(bcrypt);
+
   service_container.set('service_container', service_container);
   service_container.alias('ServiceContainer', 'service_container');
 
@@ -46,6 +49,7 @@ module.exports = service_container => {
     service_container.autowire('app.controllers.debug', require('../../server/controllers/DebugController')).addTag('controller');
     service_container.autowire('app.controllers.sif_api', require('../../server/controllers/SifApiController')).addTag('controller');
     service_container.autowire('app.controllers.react', require('../../server/controllers/ReactController')).addTag('controller');
+    service_container.autowire('app.controllers.auth', require('../../server/controllers/AuthenticationApiController')).addTag('controller');
     service_container.addCompilerPass(new ControllerCompilerPass());
   }
 };
