@@ -14,12 +14,14 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "",
       envelope_image_open: "",
-      open_sound: ""
+      open_sound: null,
+      envelopeIsOpened: false
     };
 
     this.resetGacha = this.resetGacha.bind(this);
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
+    this.openEnvelope = this.openEnvelope.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
@@ -33,7 +35,8 @@ class Gacha extends Component {
       rarity: "",
       envelope_image_closed: "loading.gif",
       envelope_image_open: "",
-      open_sound: "r_open.mp3"
+      open_sound: null,
+      envelopeIsOpened: false
     });
   }
 
@@ -68,7 +71,7 @@ class Gacha extends Component {
         rarity: received.data.rarity,
         envelope_image_closed: received.data.envelope_image_closed,
         envelope_image_open: received.data.envelope_image_open,
-        open_sound: received.data.open_sound
+        open_sound: new Audio("/statics/sound/" + received.data.open_sound)
       });
     });
   }
@@ -80,12 +83,10 @@ class Gacha extends Component {
   enableGachaAnimation() {
     const $closed_envelope = $(".envelope-closed");
     const $open_envelope = $(".envelope-open");
-    let $data_blob = $(".data");
-    $data_blob.data("open-sound-url", "/statics/sound/" + this.state.open_sound);
-    let audio = new Audio($data_blob.data("open-sound-url"));
 
     const animateOpeningBox = () => {
       // Replace the closed envelope with the open one
+      $closed_envelope.removeClass("reveal");
       $closed_envelope.addClass("hide");
       $open_envelope.removeClass("hide");
 
@@ -103,9 +104,19 @@ class Gacha extends Component {
     //   Putting the animation crap in here ensures the audio begins to play before
     //   the animations, making the UI "feel" more snappy.
 
-    $closed_envelope.off().on("click", () => {
-      audio.play().then(animateOpeningBox);
+    // $closed_envelope.off().on("click", () => {
+    //   animateOpeningBox();
+    // });
+  }
+
+  // Triggers envelopeIsOpened state upon clicking a closed envelope
+
+  openEnvelope() {
+    console.log('Opening envelope...');
+    this.setState({
+      envelopeIsOpened: true,
     });
+    this.state.open_sound.play();
   }
 
   // Retrieves data before presentation of the virtual DOM
@@ -123,7 +134,7 @@ class Gacha extends Component {
   render() {
     return (
       <div>
-        <GachaContent gameState={this.state} getGacha={this.getGacha} />
+        <GachaContent gameState={this.state} getGacha={this.getGacha} openEnvelope={this.openEnvelope} />
       </div>
     );
   }

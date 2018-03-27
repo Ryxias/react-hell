@@ -8,12 +8,36 @@
   max-width: 1024px;
 }
 
-.envelope-image {
+.envelope {
   -ms-transform: rotate(7deg); /* IE 9 */
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
   transform: rotate(7deg);
   max-width: 50%;
+  /*transition: transform 450ms;*/
+}
 
+/*.envelope:hover {*/
+  /*transform: rotate(7deg) scale(1.1, 1.1);*/
+/*}*/
+
+.reveal-enter {
+  transform: rotate(7deg) scale(1, 1);
+}
+
+.reveal-enter-active {
+  transform: rotate(7deg) scale(1.1, 1.1);
+  -webkit-transition: all 450ms;
+  transition: all 450ms ease-out;
+}
+
+.reveal-appear {
+  opacity: 0;
+}
+
+.reveal-appear-active {
+  opacity: 1;
+  -webkit-transition: opacity 500ms;
+  transition: opacity 500ms;
 }
 
 .aidoru-name a {
