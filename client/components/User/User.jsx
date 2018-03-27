@@ -1,9 +1,8 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
-import NavBottom from '../Nav/NavBottom.jsx';
 
-class Login extends PureComponent {
+class User extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -17,4 +16,4 @@ class Login extends PureComponent {
   }
 }
 
-export default Login;
+export default User;
