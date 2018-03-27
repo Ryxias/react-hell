@@ -4,7 +4,6 @@
 //
 
 
-const TwentyOneSlackConnector = require('../lib/TwentyOneGame/SlackConnector');
 const GachaSlackConnector = require('../lib/SchoolIdo.lu/SlackConnector');
 const slackbotBuilder = require('../lib/SlackbotFramework');
 
@@ -16,9 +15,6 @@ module.exports = service_container => {
 
   // This attaches all !gacha listeners to chuu
   GachaSlackConnector.connectChuubot(chuu);
-
-  // This attaches all !21 listeners to chuu
-  TwentyOneSlackConnector.connectChuubot(chuu);
 
   // Dumb sanity check
   chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });
