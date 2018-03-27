@@ -73,7 +73,15 @@ module.exports = service_container => {
       next();
     });
     app.use('/statics', staticsMiddleware);
+
+    // Routing 2.0
+    const appRouter2 = require('express').Router();
+    service_container.get('app.route_registry').registerAll(appRouter2);
+    app.use(appRouter2);
+
+    // Old routing
     app.use(appRouter);
+
     app.use(bodyParser);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);

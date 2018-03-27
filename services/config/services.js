@@ -24,12 +24,18 @@ module.exports = service_container => {
   service_container.autowire('database.model_validator', require('../../lib/Database/ModelValidator'));
   service_container.alias('ModelValidator', 'database.model_validator');
 
+  service_container.autowire('sif.client', require('../../lib/LoveLiveClient'));
+
+  // Routes
+  service_container.registerFactory('app.route_registry', require('../../server/routing'));
+  service_container.alias('RouteRegistry', 'app.route_registry');
+
   // Model Stores
   {
     // FIXME (derek) in the future, we can automate this registration by scanning the /lib/ModelStores/ directory,
     // and registering them by classname.
 
-    service_container.autowire('GenericGameStateStore', require('../../lib/ModelStores/GenericGameStateStore'));
+    service_container.autowire('UserStore', require('../../lib/ModelStores/UserStore'));
   }
 
 
@@ -38,6 +44,7 @@ module.exports = service_container => {
     const { ControllerCompilerPass } = require('express-route-registry');
 
     service_container.autowire('app.controllers.debug', require('../../server/controllers/DebugController')).addTag('controller');
+    service_container.autowire('app.controllers.sif_api', require('../../server/controllers/SifApiController')).addTag('controller');
     service_container.addCompilerPass(new ControllerCompilerPass());
   }
 };
