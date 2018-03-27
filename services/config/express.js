@@ -52,10 +52,9 @@ module.exports = service_container => {
 
   service_container.registerFactory('express.server', service_container => {
     // Setup middleware
-    const {redirectHttpToHttps} = require('../../init/custom_app_redirects');
-    const {notFoundHandler, defaultErrorHandler} = require('../../init/error_handlers');
+    const { redirectHttpToHttps } = require('../../init/custom_app_redirects');
+    const { notFoundHandler, defaultErrorHandler } = require('../../init/error_handlers');
     const staticsMiddleware = express.static(path.resolve(__dirname + '/../../public')); // Express to serve static files easily without nginx
-    const appRouter = require('../../server/routes');
     const bodyParser = require('body-parser');
 
     // Initialize the express app
@@ -74,12 +73,8 @@ module.exports = service_container => {
     });
     app.use('/statics', staticsMiddleware);
 
-    // Routing 2.0
-    const appRouter2 = require('express').Router();
-    service_container.get('app.route_registry').registerAll(appRouter2);
-    app.use(appRouter2);
-
-    // Old routing
+    const appRouter = require('express').Router();
+    service_container.get('app.route_registry').registerAll(appRouter);
     app.use(appRouter);
 
     app.use(bodyParser);

@@ -12,7 +12,6 @@ module.exports = service_container => {
   const registry = new RouteRegistry();
   registry.setContainer(service_container);
 
-
   registry.routeBuilder({
     '/api': {
       '/sif/': {
@@ -36,6 +35,15 @@ module.exports = service_container => {
           get: [ 'app.controllers.debug', 'get_match_routes_action' ],
         }
       },
+    },
+  });
+
+  registry.routeBuilder({
+    '/': {
+      get: [ 'app.controllers.react', 'index_action' ]
+    },
+    '/*': {
+      get: [ 'app.controllers.react', 'redirect_back_to_index_action' ]
     },
   });
 
