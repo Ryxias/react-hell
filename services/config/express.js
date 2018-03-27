@@ -50,12 +50,19 @@ module.exports = service_container => {
     return session(sessionConfig);
   });
 
+  service_container.autowire('express.passport_middleware', require('../../lib/Passport/PassportMiddleware'));
+  service_container.alias('PassportMiddleware', 'express.passport_middleware');
+
   service_container.registerFactory('express.server', service_container => {
     // Setup middleware
     const { redirectHttpToHttps } = require('../../init/custom_app_redirects');
     const { notFoundHandler, defaultErrorHandler } = require('../../init/error_handlers');
     const staticsMiddleware = express.static(path.resolve(__dirname + '/../../public')); // Express to serve static files easily without nginx
     const bodyParser = require('body-parser');
+    const bodyparserUrlencodingMiddleware = bodyParser.urlencoded({extended: true});
+    const bodyparserJsonMiddleware = bodyParser.json({limit: '20mb'});
+
+    const passport = service_container.get('express.passport_middleware').getPassport();
 
     // Initialize the express app
     const app = express();
@@ -65,19 +72,24 @@ module.exports = service_container => {
       app.use(redirectHttpToHttps);
     }
 
+    app.use('/statics', staticsMiddleware);
+
     app.use(service_container.get('express.session_middleware'));
+    app.use(bodyparserUrlencodingMiddleware);
+    app.use(bodyparserJsonMiddleware);
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     app.use(function (req, res, next) {
       req.session.views = req.session.views + 1 || 1;
       req.session.save();
       next();
     });
-    app.use('/statics', staticsMiddleware);
 
     const appRouter = require('express').Router();
     service_container.get('app.route_registry').registerAll(appRouter);
     app.use(appRouter);
 
-    app.use(bodyParser);
     app.use(notFoundHandler);
     app.use(defaultErrorHandler);
 

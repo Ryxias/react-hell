@@ -11,5 +11,8 @@ kernel.boot();
 
 kernel.getContainer().get('ConnectionManager').sync()
   .then(() => console.log('Sync completed!'))
-  .then(() => process.exit(0))
-  .catch(err => console.error(`Sync error: ${err.message}.`));
+  .catch(err => {
+    console.error(`Sync error:`);
+    console.error(err);
+  })
+  .then(() => process.exit(0));
