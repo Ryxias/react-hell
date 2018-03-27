@@ -1,19 +1,30 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 
 class User extends PureComponent {
-  constructor(props) {
-    super(props);
-
-  }
-
   render() {
-
     return (
-      <div></div>
+      <div>
+        <span>Hello my username is {this.props.username}!</span>
+      </div>
     );
   }
 }
 
-export default User;
+User.propTypes = {
+  username: PropTypes.string.isRequired,
+};
+
+
+function mapStateToProps(state) {
+  return {
+    username: 'sunsilverdragon',
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(User)

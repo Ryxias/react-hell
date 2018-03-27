@@ -10,9 +10,8 @@ module.exports = service_container => {
 // include packages
   const express = require('express');
 
-
   // Config stuff
-  service_container.set('express.session', require('express-session'));
+  service_container.registerFactory('express.session', () => require('express-session'));
   service_container.registerFactory('express.session_store', service_container => {
     const ExpressSession = service_container.get('express.session');
     const connectSessionSequelize = require('connect-session-sequelize');

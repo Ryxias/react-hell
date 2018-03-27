@@ -5,7 +5,7 @@ import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
 import NavTop from './Nav/NavTop.jsx';
 import Blog from './Blog/Blog.jsx';
-import User from './Blog/User.jsx';
+import User from './User/User.jsx';
 import { Grid } from 'react-bootstrap';
 
 
@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
-          <Route path="/dashboard" component={User} />
+          <Route path="/login" component={User} />
         </Grid>
       </div>
     );
