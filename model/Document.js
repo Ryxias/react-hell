@@ -8,7 +8,7 @@ module.exports = sequelize => {
    * Some silly generic document store
    * You can store things by name and look them up later.  You can also set an expiration.
    */
-  return sequelize.define('document', {
+  const Document = sequelize.define('document', {
     id: {
       type: BIGINT.UNSIGNED,
       primaryKey: true,
@@ -36,4 +36,6 @@ module.exports = sequelize => {
     hooks: {},
     instanceMethods: {},
   });
+
+  return Document;
 };

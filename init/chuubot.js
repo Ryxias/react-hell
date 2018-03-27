@@ -3,19 +3,18 @@
 // Connect Chuubot and provide an example of how to create a listener
 //
 
-const TwentyOneSlackConnector = require(PROJECT_ROOT + '/lib/TwentyOneGame/SlackConnector');
-const GachaSlackConnector = require('../lib/SchoolIdo.lu/SlackConnector');
-const slackbotBuilder = require(PROJECT_ROOT + '/lib/SlackbotFramework');
 
-module.exports = (config) => {
+const GachaSlackConnector = require('../lib/SchoolIdo.lu/SlackConnector');
+const slackbotBuilder = require('../lib/SlackbotFramework');
+
+module.exports = service_container => {
+  const slack_config = service_container.get('ConfigurationManager').getObject('slack');
+
   // Boot up chuubot
-  const chuu = slackbotBuilder(config.slack);
+  const chuu = slackbotBuilder(slack_config);
 
   // This attaches all !gacha listeners to chuu
   GachaSlackConnector.connectChuubot(chuu);
-
-  // This attaches all !21 listeners to chuu
-  TwentyOneSlackConnector.connectChuubot(chuu);
 
   // Dumb sanity check
   chuu.on(/^chuu$/, (message, send) => { send('baaaaaaaaaa'); });

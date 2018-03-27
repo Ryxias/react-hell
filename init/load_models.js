@@ -9,11 +9,11 @@
 const fs = require('fs');
 const loadModels = function loadModels(sequelize) {
   let models = {};
-  fs.readdirSync(PROJECT_ROOT + '/model')
+  fs.readdirSync(__dirname + '/../model')
     .filter(filename => filename.match(/^[A-Z][a-zA-Z0-9]+\.js$/))
     .map(filename => filename.substring(0, filename.length - 3))
     .forEach(model => {
-      models[model] = require(PROJECT_ROOT + '/model/' + model)(sequelize); // TODO Replace with sequelize.import later...
+      models[model] = require('../model/' + model)(sequelize); // TODO Replace with sequelize.import later...
     });
   return models;
 };

@@ -6,7 +6,7 @@ module.exports = sequelize => {
   /**
    *
    */
-  return sequelize.define('slack_message', {
+  const SlackMessage = sequelize.define('slack_message', {
     id: {
       type: BIGINT.UNSIGNED,
       primaryKey: true,
@@ -39,5 +39,7 @@ module.exports = sequelize => {
     hooks: {},
     instanceMethods: {},
   });
+
+  return SlackMessage;
 };
 

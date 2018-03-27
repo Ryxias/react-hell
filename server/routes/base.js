@@ -7,12 +7,11 @@ const router = require('express').Router();
  * The universal react root, sending the react index file
  */
 router.get('/', (req, res, next) => {
-  res.sendFile(
-    'index.html',
-    {
-      root: `${PROJECT_ROOT}/public`
-    }
-  );
+  const path = require('path');
+  const file = path.resolve(__dirname + `/../../public/index.html`);
+
+  console.log('Sneding react index file: ' + file);
+  return res.status(200).sendFile(file);
 });
 
 

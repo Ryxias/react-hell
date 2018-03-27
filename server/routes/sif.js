@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
-const LoveLiveClient = require(PROJECT_ROOT + '/lib/LoveLiveClient');
+const LoveLiveClient = require('../../lib/LoveLiveClient');
 const ll_client = new LoveLiveClient();
 
 /**

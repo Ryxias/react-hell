@@ -5,7 +5,9 @@
 //
 'use strict';
 
-const ExpressApplication = require('../init/ExpressApplication');
-global.EXPRESS_APP = new ExpressApplication();
+const AppKernel = require('../app/AppKernel');
+const app_kernel = new AppKernel('production');
 
-EXPRESS_APP.boot();
+app_kernel.boot();
+
+app_kernel.getContainer().get('express.server').start();

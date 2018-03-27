@@ -3,26 +3,31 @@
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 
 module.exports = sequelize => {
-  const BlogPosts = sequelize.define('blogpost', {
+  const User = sequelize.define('user', {
     id: {
       type: BIGINT.UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
     },
-    author: {
+    username: {
       type: STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
-    title: {
-      type: STRING(255),
+    email: {
+      type: STRING(180),
+      unique: true,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+        isEmail: true,
+        len: [0, 50],
+      },
     },
-    body: {
-      type: TEXT('medium'),
-      allowNull: false,
+    auth: {
+      type: STRING(180),
     },
   }, {
-    tableName: 'blogposts',
+    tableName: 'users',
     createdAt: 'created',
     updatedAt: 'modified',
     indexes: [
@@ -32,5 +37,5 @@ module.exports = sequelize => {
     instanceMethods: {},
   });
 
-  return BlogPosts;
+  return User;
 };
