@@ -1,10 +1,11 @@
 'use strict';
 
 module.exports = service_container => {
-
+  // Global Application config, maybe move into AppKernel??
   const bcrypt = require('bcryptjs');
   Promise.promisifyAll(bcrypt);
 
+  //
   service_container.set('service_container', service_container);
   service_container.alias('ServiceContainer', 'service_container');
 
@@ -14,8 +15,6 @@ module.exports = service_container => {
     return new ConfigurationManager(require('../../configuration_loader'));
   });
   service_container.alias('ConfigurationManager', 'app.config');
-
-  service_container.registerFactory('chuubot', require('../../init/chuubot'));
 
   service_container.autowire('sif.client', require('../../lib/LoveLiveClient'));
 

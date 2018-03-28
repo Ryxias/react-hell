@@ -1,10 +1,11 @@
 'use strict';
 
-const ConnectionManager = require('../../lib/Database/ConnectionManager');
-
+// Database connection
+//
+// Exports "ConnectionManager" and "ModelValidator"
 
 module.exports = service_container => {
-  // Database connection
+  const ConnectionManager = require('../../lib/Database/ConnectionManager');
   service_container.registerFactory('database.connection_manager', service_container => {
 
     const configuration_manager = service_container.get('app.config');

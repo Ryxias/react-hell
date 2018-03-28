@@ -8,10 +8,21 @@ import React from 'react';  // Main React library
 import ReactDOM from 'react-dom';  // Used to render virtual DOM
 import App from './components/App.jsx';  // Main App (root) component
 import { BrowserRouter } from 'react-router-dom';  // React Router v4
+import { Provider } from 'react-redux';
+
+import ReactKernel from '../app/ReactKernel';
+
+const kernel = new ReactKernel('production');
+kernel.boot();
+
+const container = kernel.getContainer();
+const store = container.get('redux.store');
 
 ReactDOM.render((
   <BrowserRouter>
-    <App/>
+    <Provider>
+      <App store={store}/>
+    </Provider>
   </BrowserRouter>
 ),
 document.getElementById('app'));  // Renders the root component to <div>
