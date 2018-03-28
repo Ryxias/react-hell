@@ -10,9 +10,9 @@ import App from './components/App.jsx';  // Main App (root) component
 import { BrowserRouter } from 'react-router-dom';  // React Router v4
 import { Provider } from 'react-redux';
 
-import ReactKernel from '../app/ReactKernel';
+import AppKernel from '../app/AppKernel';
 
-const kernel = new ReactKernel('production');
+const kernel = new AppKernel('react');
 kernel.boot();
 
 const container = kernel.getContainer();

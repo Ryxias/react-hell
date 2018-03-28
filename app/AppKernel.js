@@ -13,9 +13,18 @@ class AppKernel {
     };
 
     // Boot the service container!
-    this.service_container = require('../services/container');
+    switch (this.environment) {
+      case 'react':
+        this.service_container = require('../client/services/react_container');
+        break;
+      case 'production':
+      case 'test':
+        this.service_container = require('../services/container');
+        break;
+      default:
+        throw new Error(`Unrecognized environment: ${this.environment}.`);
+    }
   }
-
 
   getContainer() {
     return this.service_container;
@@ -24,7 +33,6 @@ class AppKernel {
   shutdown() {
     this.service_container = null;
   }
-
 }
 
 module.exports = AppKernel;
