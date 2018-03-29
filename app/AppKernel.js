@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * This specifically pertains to the NodeJS/ECMAScript6-compatible application.
+ *
+ * We specifically split the ReactKernel out of this because otherwise Webpack may decide to bundle
+ * up the entire backend Express application which... we don't want.
+ */
 class AppKernel {
   constructor(environment) {
     this.environment = environment;
@@ -14,9 +20,6 @@ class AppKernel {
 
     // Boot the service container!
     switch (this.environment) {
-      case 'react':
-        this.service_container = require('../client/services/react_container');
-        break;
       case 'production':
       case 'test':
         this.service_container = require('../services/container');

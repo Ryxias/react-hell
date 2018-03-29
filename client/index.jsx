@@ -10,18 +10,20 @@ import App from './components/App.jsx';  // Main App (root) component
 import { BrowserRouter } from 'react-router-dom';  // React Router v4
 import { Provider } from 'react-redux';
 
-import AppKernel from '../app/AppKernel';
+import ReactKernel from './ReactKernel';
 
-const kernel = new AppKernel('react');
+const kernel = new ReactKernel('production');
 kernel.boot();
 
 const container = kernel.getContainer();
 const store = container.get('redux.store');
 
+console.log(store);
+
 ReactDOM.render((
   <BrowserRouter>
-    <Provider>
-      <App store={store}/>
+    <Provider store={store}>
+      <App/>
     </Provider>
   </BrowserRouter>
 ),
