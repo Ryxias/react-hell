@@ -18,8 +18,6 @@ kernel.boot();
 const container = kernel.getContainer();
 const store = container.get('redux.store');
 
-console.log(store);
-
 ReactDOM.render((
   <BrowserRouter>
     <Provider store={store}>
