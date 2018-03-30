@@ -65,6 +65,10 @@ class AuthenticationController extends Controller {
       }));
   }
 
+  reset_password_action(req, res, next) {
+
+  }
+
   register_action(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
