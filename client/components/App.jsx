@@ -5,6 +5,7 @@ import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
 import NavTop from './Nav/NavTop.jsx';
 import Blog from './Blog/Blog.jsx';
+import User from './User/User.jsx';
 import { Grid } from 'react-bootstrap';
 
 
@@ -18,14 +19,21 @@ class App extends Component {
   }
 
   render() {
+
+    const navTopProps = {
+      loginUrl: '/login', // or /dashboard
+      loginText: 'Login', // or username
+    };
+
     return (
       <div>
-        <NavTop />
+        <NavTop {...navTopProps} />
         <Grid fluid>
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
+          <Route path="/login" component={User} />
         </Grid>
       </div>
     );

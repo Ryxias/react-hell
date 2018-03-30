@@ -4,7 +4,9 @@ import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const NavTop = () => {
+const NavTop = (props) => {
+  const { loginUrl, loginText } = props;
+
   // Adds MD-Bootstrap's style variant of 'dark' to React-Bootstrap
   bootstrapUtils.addStyle(Navbar, 'dark');
   return (
@@ -35,6 +37,11 @@ const NavTop = () => {
             <LinkContainer to="/react/blog">
               <NavItem eventKey={3}>
                 <div className="nav-link">Blog</div>
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to={loginUrl}>
+              <NavItem eventKey={4}>
+                <div className="nav-link">{loginText}</div>
               </NavItem>
             </LinkContainer>
           </Nav>

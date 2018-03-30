@@ -1,5 +1,12 @@
 'use strict';
 
+//
+// Service Container configurations pertinent to expressJS
+//
+// The most important service here is "express.server", which you use to run the ... express server.
+//
+//   container.get('express.server').start()
+//
 module.exports = service_container => {
   const path = require('path');
 
@@ -7,12 +14,11 @@ module.exports = service_container => {
   // check environment
   const production = process.env.NODE_ENV === 'production';
 
-// include packages
+  // include packages
   const express = require('express');
 
-
   // Config stuff
-  service_container.set('express.session', require('express-session'));
+  service_container.registerFactory('express.session', () => require('express-session'));
   service_container.registerFactory('express.session_store', service_container => {
     const ExpressSession = service_container.get('express.session');
     const connectSessionSequelize = require('connect-session-sequelize');
