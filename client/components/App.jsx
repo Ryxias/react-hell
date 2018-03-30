@@ -9,17 +9,9 @@ import User from './User/User.jsx';
 import { Grid } from 'react-bootstrap';
 
 
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    };
-  }
+class App extends React.PureComponent {
 
   render() {
-
     const navTopProps = {
       loginUrl: '/login', // or /dashboard
       loginText: 'Login', // or username
@@ -31,7 +23,7 @@ class App extends Component {
         <Grid fluid>
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
-          <Route path="/react/sif" component={Gacha} />
+          {/*<Route path="/react/sif" component={Gacha} />*/}
           <Route path="/react/blog/" component={Blog} />
           <Route path="/login" component={User} />
         </Grid>

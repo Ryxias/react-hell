@@ -1,21 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import GachaContent from './GachaContent.jsx';
+import actionCreators from '../../actions/gacha_action_creators';
 
-class Gacha extends Component {
+class Gacha extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      card_title: "",
-      card_ext_link: "",
-      card_image_url: "",
-      rarity: "",
-      envelope_image_closed: "",
-      envelope_image_open: "",
-      open_sound: ""
-    };
 
     this.resetGacha = this.resetGacha.bind(this);
     this.getGacha = this.getGacha.bind(this);
@@ -24,17 +17,8 @@ class Gacha extends Component {
 
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
-
   resetGacha() {
-    this.setState({
-      card_title: "",
-      card_ext_link: "",
-      card_image_url: "",
-      rarity: "",
-      envelope_image_closed: "loading.gif",
-      envelope_image_open: "",
-      open_sound: "r_open.mp3"
-    });
+    this.props.dispatch(actionCreators.resetGacha());
   }
 
   // GETS a random gacha from schoolido.lu's LLSIF API and replaces
@@ -110,23 +94,45 @@ class Gacha extends Component {
 
   // Retrieves data before presentation of the virtual DOM
 
-  componentWillMount() {
-    this.getGacha();
-  }
+  // componentWillMount() {
+  //   this.getGacha();
+  // }
 
   // Attaches the jQuery events once the virtual DOM has been fully mounted and onClick event has been triggered
 
-  componentDidUpdate() {
-    this.enableGachaAnimation();
-  }
+  // componentDidUpdate() {
+  //   this.enableGachaAnimation();
+  // }
 
   render() {
     return (
       <div>
-        <GachaContent gameState={this.state} getGacha={this.getGacha} />
+        <span>hlleo world!</span>
+        <GachaContent card={this.props.card} getGacha={this.getGacha} />
       </div>
     );
   }
 }
 
-export default Gacha;
+Gacha.propTypes = {
+  card: PropTypes.object.isRequired,
+};
+Gacha.defaultProps = {
+  card: {},
+};
+
+const mapStateToProps = (state, ownProps) => {
+
+  console.log(state); // see the whole redux state everything EVERYTHING
+
+  // gets set into "this.props"
+  return {
+    card: state.gacha.card,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return { dispatch };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gacha);
