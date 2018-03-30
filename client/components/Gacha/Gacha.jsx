@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import GachaContent from './GachaContent.jsx';
+import GachaLoadingScreen from './GachaLoadingScreen.jsx';
 import actionCreators from '../../actions/gacha_action_creators';
 
 class Gacha extends PureComponent {
@@ -95,7 +96,10 @@ class Gacha extends PureComponent {
   render() {
     return (
       <div>
-        <GachaContent card={this.props.card} getGacha={this.getGacha} />
+        { this.props.isLoading
+          ? <GachaLoadingScreen />
+          : <GachaContent card={this.props.card} getGacha={this.getGacha} />
+        }
       </div>
     );
   }
@@ -103,6 +107,7 @@ class Gacha extends PureComponent {
 
 Gacha.propTypes = {
   card: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 Gacha.defaultProps = {
   card: {},
@@ -115,6 +120,7 @@ const mapStateToProps = (state, ownProps) => {
   // gets set into "this.props"
   return {
     card: state.gacha.card,
+    isLoading: !!state.gacha.loading,
   };
 };
 
