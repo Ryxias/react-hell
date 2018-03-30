@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import GachaContent from './GachaContent.jsx';
 import actionCreators from '../../actions/gacha_action_creators';
@@ -42,19 +42,7 @@ class Gacha extends PureComponent {
       $open_envelope.addClass("hide");
     }
 
-    axios.get("/api/sif/roll")
-      .then((received) => {
-      console.log('Received data:', received.data);
-      this.setState({
-        card_title: received.data.card_title,
-        card_ext_link: received.data.card_ext_link,
-        card_image_url: received.data.card_image_url,
-        rarity: received.data.rarity,
-        envelope_image_closed: received.data.envelope_image_closed,
-        envelope_image_open: received.data.envelope_image_open,
-        open_sound: received.data.open_sound
-      });
-    });
+    this.props.dispatch(actionCreators.startGachaRoll());
   }
 
   // Put an onclick listener on the close envelope that replaces it
@@ -65,7 +53,7 @@ class Gacha extends PureComponent {
     const $closed_envelope = $(".envelope-closed");
     const $open_envelope = $(".envelope-open");
     let $data_blob = $(".data");
-    $data_blob.data("open-sound-url", "/statics/sound/" + this.state.open_sound);
+    $data_blob.data("open-sound-url", "/statics/sound/" + this.props.card.open_sound);
     let audio = new Audio($data_blob.data("open-sound-url"));
 
     const animateOpeningBox = () => {
@@ -94,20 +82,19 @@ class Gacha extends PureComponent {
 
   // Retrieves data before presentation of the virtual DOM
 
-  // componentWillMount() {
-  //   this.getGacha();
-  // }
+  componentWillMount() {
+    this.getGacha();
+  }
 
   // Attaches the jQuery events once the virtual DOM has been fully mounted and onClick event has been triggered
 
-  // componentDidUpdate() {
-  //   this.enableGachaAnimation();
-  // }
+  componentDidUpdate() {
+    this.enableGachaAnimation();
+  }
 
   render() {
     return (
       <div>
-        <span>hlleo world!</span>
         <GachaContent card={this.props.card} getGacha={this.getGacha} />
       </div>
     );
@@ -135,4 +122,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return { dispatch };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gacha);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gacha));

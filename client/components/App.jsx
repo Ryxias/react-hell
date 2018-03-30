@@ -9,7 +9,7 @@ import User from './User/User.jsx';
 import { Grid } from 'react-bootstrap';
 
 
-class App extends React.PureComponent {
+class App extends Component {
 
   render() {
     const navTopProps = {
@@ -23,7 +23,7 @@ class App extends React.PureComponent {
         <Grid fluid>
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
-          {/*<Route path="/react/sif" component={Gacha} />*/}
+          <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
           <Route path="/login" component={User} />
         </Grid>

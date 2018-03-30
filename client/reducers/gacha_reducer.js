@@ -11,13 +11,12 @@ function gacha(state = null, action) {
       // display sexy megumin or smth
 
       const newState = Object.assign({}, state); // clones the old "state"
-
       newState.card = {
         envelope_image_closed: "loading.gif",
         open_sound: "r_open.mp3", // ????
       };
 
-      return state;
+      return newState;
 
       break;
     case GACHA_ACTIONS.RECEIVE_GACHA_ROLL:
