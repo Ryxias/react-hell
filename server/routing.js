@@ -59,6 +59,12 @@ module.exports = service_container => {
   });
 
   registry.routeBuilder({
+    '/helloworld': {
+      get: [ 'app.controllers.helloworld', 'index_action' ],
+    }
+  });
+
+  registry.routeBuilder({
     '/': {
       get: [ 'app.controllers.react', 'index_action' ]
     },
