@@ -18,6 +18,7 @@ function sample(state = null, action) {
 const rootReducer = combineReducers({
   sample,
   gacha: require('./gacha_reducer'),
+  user: require('./user_reducer'),
 });
 
 module.exports = rootReducer;

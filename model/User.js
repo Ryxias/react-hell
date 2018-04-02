@@ -63,5 +63,14 @@ module.exports = sequelize => {
       });
   };
 
+  User.prototype.publish = function() {
+    return {
+      class: 'user',
+      id: this.id,
+      username: this.username,
+      email: this.email,
+    }
+  };
+
   return User;
 };
