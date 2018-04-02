@@ -9,12 +9,18 @@ const Slackbot = require('../../lib/Slack/Slackbot');
 
 module.exports = service_container => {
 
+  //
+  // nicobot scripts configuration
+  //
   service_container.registerFactory('nicobot', service_container => {
-    const slack_config = service_container.get('chuubot.config');
+    const slack_config = service_container.get('ConfigurationManager').getObject('nicobot');
 
     const { bot_token, bot_user_id } = slack_config;
     const verbose = true;
     const nico = new Slackbot(bot_token, bot_user_id, verbose);
+
+    // const MimicScript = require('../../lib/Slack/BotScripts/MimicScript');
+    // nico.addScript(new MimicScript());
 
     return nico;
   });
@@ -29,8 +35,12 @@ module.exports = service_container => {
     const verbose = true;
     const chuu = new Slackbot(bot_token, bot_user_id, verbose);
 
+    const GachaScript = require('../../lib/Slack/BotScripts/Gacha');
+    chuu.addScript(new GachaScript());
+
+
     // This attaches all !gacha listeners to chuu
-    GachaSlackConnector.connectChuubot(chuu);
+    //GachaSlackConnector.connectChuubot(chuu);
 
     // Dumb sanity check
     chuu.on(/^chuu$/, (message, output) => { output.reply('baaaaaaaaaa'); });

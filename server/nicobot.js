@@ -1,5 +1,5 @@
 //
-// Start point for chuubot
+// Start point for nicobot
 //
 'use strict';
 
