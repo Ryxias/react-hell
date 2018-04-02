@@ -10,8 +10,11 @@ module.exports = service_container => {
 
   service_container.registerFactory('redux.store', service_container => {
     return service_container.get('redux.configure_store')(
-      {}, // pre loaded state
-      true // skip logging
+      // This is the initial redux state
+      {
+        gacha: {},
+      },
+      false // skip logging
     );
   });
 };

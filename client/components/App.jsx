@@ -9,17 +9,9 @@ import User from './User/User.jsx';
 import { Grid } from 'react-bootstrap';
 
 
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    };
-  }
 
   render() {
-
     const navTopProps = {
       loginUrl: '/login', // or /dashboard
       loginText: 'Login', // or username
