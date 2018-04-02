@@ -28,6 +28,7 @@ module.exports = service_container => {
     // and registering them by classname.
 
     service_container.autowire('UserStore', require('../../lib/ModelStores/UserStore'));
+    service_container.autowire('GossipStore', require('../../lib/ModelStores/GossipStore'));
   }
 
 
