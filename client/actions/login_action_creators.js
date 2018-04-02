@@ -1,7 +1,7 @@
 'use strict';
 
 const axios = require('axios');
-const ACTIONS = require('./actions');
+const ACTIONS = require('./login_actions');
 
 function login(email, password) {
   return (dispatch, ownState) => {
@@ -17,7 +17,7 @@ function login(email, password) {
         console.log(response);
         dispatch({
           type: ACTIONS.LOGIN_SUCCESSFUL,
-          result: response.data,
+          user: response.data.user,
         });
       })
       .catch(err => {

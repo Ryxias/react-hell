@@ -16,16 +16,24 @@ class AuthenticationController extends Controller {
         if (err) {
           return next(err);
         }
-        return res.send({ success: true, user_id: user.id });
+        return res.send({
+          success: true,
+          user: user.publish()
+        });
       })
     })(req, res, next);
   }
 
   whoami_action(req, res, next) {
     if (!req.user) {
-      return res.send('Not logged in');
+      return {
+        user: null,
+        message: 'Not logged in',
+      }
     }
-    return res.send(`You are user #${req.user.id}`);
+    return res.send({
+      user: req.user.publish(),
+    });
   }
 
   logout_action(req, res, next) {
@@ -51,7 +59,7 @@ class AuthenticationController extends Controller {
             if (answer) {
               return user.setPasswordAndSave(new_password)
                 .then(user => {
-                  return res.send({ success: true });
+                  return res.send({ success: true, user });
                 });
             } else {
               return res.status(403).send({ success: false, message: 'Wrong' });
@@ -78,7 +86,7 @@ class AuthenticationController extends Controller {
       .then(user => res.send({
         success: true,
         message: 'Successfully registered',
-        user_id: user.id,
+        user: user.publish(),
       }))
       .catch(err => res.status(400).send({
         success: false,

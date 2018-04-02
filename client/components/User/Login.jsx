@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import LoginForm from './LoginForm.jsx';
-import { login } from '../../actions/login/action_creators';
+import { login } from '../../actions/login_action_creators';
 
 /**
  * Containing component under all routes for /user
@@ -49,9 +49,7 @@ class Login extends PureComponent {
   }
 }
 
-Login.propTypes = {
-};
-
+Login.propTypes = {};
 
 function mapStateToProps(state) {
   return {};

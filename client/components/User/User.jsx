@@ -15,11 +15,8 @@ import Login from './Login.jsx';
 class User extends PureComponent {
   render() {
     if (this.props.isLoggedIn) {
-      const props = {
-
-      };
       return (
-        <Dashboard {...props} />
+        <Dashboard/>
       )
     } else {
       return (
@@ -36,7 +33,7 @@ User.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: false,
+    isLoggedIn: !!(state.user && state.user.user && state.user.user.id),
   };
 }
 

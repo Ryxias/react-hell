@@ -8,7 +8,7 @@ class Dashboard extends PureComponent {
   render() {
     return (
       <div>
-        <span>Hello my username is {this.props.username}!</span>
+        <span>Hello, {this.props.username}!</span>
       </div>
     );
   }
@@ -21,7 +21,7 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    username: 'sunsilverdragon',
+    username: state.user.user.username || state.user.user.email,
   };
 }
 
