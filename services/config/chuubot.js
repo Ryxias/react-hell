@@ -4,7 +4,6 @@
 //
 
 
-const GachaSlackConnector = require('../../lib/SchoolIdo.lu/SlackConnector');
 const Slackbot = require('../../lib/Slack/Slackbot');
 
 module.exports = service_container => {
@@ -22,8 +21,12 @@ module.exports = service_container => {
     // const MimicScript = require('../../lib/Slack/BotScripts/MimicScript');
     // nico.addScript(new MimicScript());
 
+    nico.addScript(service_container.get('slackbot.scripts.gossip'));
+
     return nico;
   });
+
+  service_container.autowire('slackbot.scripts.gossip', require('../../lib/Slack/BotScripts/Gossip'));
 
   service_container.set('chuubot.config', service_container.get('ConfigurationManager').getObject('slack'));
 
@@ -37,10 +40,6 @@ module.exports = service_container => {
 
     const GachaScript = require('../../lib/Slack/BotScripts/Gacha');
     chuu.addScript(new GachaScript());
-
-
-    // This attaches all !gacha listeners to chuu
-    //GachaSlackConnector.connectChuubot(chuu);
 
     // Dumb sanity check
     chuu.on(/^chuu$/, (message, output) => { output.reply('baaaaaaaaaa'); });
