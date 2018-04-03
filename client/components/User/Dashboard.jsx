@@ -4,11 +4,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Logout from './Logout.jsx';
+
 class Dashboard extends PureComponent {
   render() {
     return (
       <div>
         <span>Hello, {this.props.username}!</span>
+        <Logout/>
       </div>
     );
   }

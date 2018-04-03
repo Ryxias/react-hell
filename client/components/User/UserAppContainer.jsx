@@ -12,7 +12,7 @@ import Login from './Login.jsx';
  *
  * This top level component should only manage the organization of the components beneath it!
  */
-class User extends PureComponent {
+class UserAppContainer extends PureComponent {
   render() {
     if (this.props.isLoggedIn) {
       return (
@@ -26,7 +26,7 @@ class User extends PureComponent {
   }
 }
 
-User.propTypes = {
+UserAppContainer.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
@@ -39,4 +39,4 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps
-)(User);
+)(UserAppContainer);

@@ -14,7 +14,6 @@ function login(email, password) {
       password,
     })
       .then(response => {
-        console.log(response);
         dispatch({
           type: ACTIONS.LOGIN_SUCCESSFUL,
           user: response.data.user,
@@ -29,24 +28,55 @@ function login(email, password) {
   };
 }
 
-function register(username, password) {
+function logout() {
+  return (dispatch, ownState) => {
+    dispatch({
+      type: ACTIONS.LOGOUT_START,
+    });
+
+    return axios.post('/api/logout')
+      .then(response => {
+        dispatch({
+          type: ACTIONS.LOGOUT_SUCCESS,
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: ACTIONS.LOGOUT_FAILURE,
+        });
+      });
+  };
+}
+
+function register(email, password) {
   return (dispatch, getState) => {
 
     dispatch({
-      type: 'prototyp',
+      type: ACTIONS.REGISTER_START,
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.get("/api/sif/roll")
-      .then((received) => {
+    return axios.get("/api/register", {
+      email,
+      password
+    })
+      .then(response => {
         dispatch({
-          type: ACTIONS.RECEIVE_GACHA_ROLL,
-          card: received.data,
+          type: ACTIONS.REGISTER_SUCCESS,
+          user: response.data.user,
+          response_data: response.data,
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: ACTIONS.REGISTER_FAIL,
         });
       });
   };
 }
 
 module.exports = {
-  login
+  login,
+  logout,
+  register,
 };
