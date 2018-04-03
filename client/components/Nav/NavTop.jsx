@@ -5,7 +5,7 @@ import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const NavTop = (props) => {
-  const { loginUrl, loginText } = props;
+  const { userAppText } = props;
 
   // Adds MD-Bootstrap's style variant of 'dark' to React-Bootstrap
   bootstrapUtils.addStyle(Navbar, 'dark');
@@ -16,7 +16,7 @@ const NavTop = (props) => {
       {/* Main Logo button */}
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/react" className="waves-effect waves-light">Chuuni.me</Link>
+          <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
@@ -24,11 +24,6 @@ const NavTop = (props) => {
       {/* Collapsible content */}
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="/react/">
-              <NavItem eventKey={1}>
-                <div className="nav-link">Home</div>
-              </NavItem>
-            </LinkContainer>
             <LinkContainer to="/react/sif">
               <NavItem eventKey={2}>
                 <div className="nav-link">Gacha Roll</div>
@@ -39,9 +34,9 @@ const NavTop = (props) => {
                 <div className="nav-link">Blog</div>
               </NavItem>
             </LinkContainer>
-            <LinkContainer to={loginUrl}>
+            <LinkContainer to="/user">
               <NavItem eventKey={4}>
-                <div className="nav-link">{loginText}</div>
+                <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>
           </Nav>

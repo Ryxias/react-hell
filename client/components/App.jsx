@@ -1,31 +1,33 @@
+'use strict';
+
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
-import NavTop from './Nav/NavTop.jsx';
 import Blog from './Blog/Blog.jsx';
-import User from './User/User.jsx';
+
+import NavAppContainer from './Nav/NavAppContainer.jsx';
+import UserAppContainer from './User/UserAppContainer.jsx';
+import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
 import { Grid } from 'react-bootstrap';
 
-
+/**
+ * DO NOT Extend PureComponent
+ */
 class App extends Component {
 
   render() {
-    const navTopProps = {
-      loginUrl: '/login', // or /dashboard
-      loginText: 'Login', // or username
-    };
-
     return (
       <div>
-        <NavTop {...navTopProps} />
+        <NavAppContainer />
         <Grid fluid>
           <Route path="/" exact component={Home} />
           <Route path="/react" exact component={Home} />
           <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
-          <Route path="/login" component={User} />
+          <Route path="/user" component={UserAppContainer} />
+          <Route path="/register" component={RegisterAppContainer} />
         </Grid>
       </div>
     );

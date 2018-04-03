@@ -31,6 +31,48 @@ function user(state = null, action) {
 
       break;
     }
+
+    case USER_ACTIONS.LOGOUT_START: {
+      return state;
+      break;
+    }
+    case USER_ACTIONS.LOGOUT_SUCCESS:
+    case USER_ACTIONS.LOGOUT_FAILURE: {
+      const newState = Object.assign({}, state);
+      newState.user = {};
+
+      return newState;
+
+      break;
+    }
+    case USER_ACTIONS.REGISTER_START: {
+      const newState = Object.assign({}, state);
+
+      newState.isRegistering = true;
+
+      return newState;
+      break;
+    }
+    case USER_ACTIONS.REGISTER_SUCCESS: {
+      const { user } = action;
+
+      const newState = Object.assign({}, state);
+
+      newState.isRegistering = false;
+      newState.user = user;
+
+      return newState;
+      break;
+    }
+
+    case USER_ACTIONS.REGISTER_FAIL: {
+      const newState = Object.assign({}, state);
+      newState.isRegistering = false;
+
+      return newState;
+
+      break;
+    }
     default:
       return state;
   }

@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import LoginForm from './LoginForm.jsx';
 import { login } from '../../actions/login_action_creators';
@@ -32,9 +33,15 @@ class Login extends PureComponent {
       onClick: this.onLoginClick,
       emailRef: this.setEmailInput,
       passwordRef: this.setPasswordInput,
+      buttonText: 'Login',
     };
     return (
-      <LoginForm {...props} />
+      <section>
+        <LoginForm {...props} />
+        <LinkContainer to="/register">
+          <div className="nav-link">or Register</div>
+        </LinkContainer>
+      </section>
     );
   }
 
