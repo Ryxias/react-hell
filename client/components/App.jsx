@@ -19,16 +19,20 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <NavAppContainer />
-        <Grid fluid>
-          <Route path="/" exact component={Home} />
-          <Route path="/react" exact component={Home} />
-          <Route path="/react/sif" component={Gacha} />
-          <Route path="/react/blog/" component={Blog} />
-          <Route path="/user" component={UserAppContainer} />
-          <Route path="/register" component={RegisterAppContainer} />
-        </Grid>
+      <div className="container">
+        <section>
+          <NavAppContainer />
+        </section>
+        <section>
+          <Grid fluid>
+            <Route path="/" exact component={Home} />
+            <Route path="/react" exact component={Home} />
+            <Route path="/react/sif" component={Gacha} />
+            <Route path="/react/blog/" component={Blog} />
+            <Route path="/user" component={UserAppContainer} />
+            <Route path="/register" component={RegisterAppContainer} />
+          </Grid>
+        </section>
       </div>
     );
   }
