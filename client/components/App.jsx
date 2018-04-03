@@ -9,6 +9,7 @@ import Blog from './Blog/Blog.jsx';
 
 import NavAppContainer from './Nav/NavAppContainer.jsx';
 import UserAppContainer from './User/UserAppContainer.jsx';
+import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
 import { Grid } from 'react-bootstrap';
 
 /**
@@ -26,6 +27,7 @@ class App extends Component {
           <Route path="/react/sif" component={Gacha} />
           <Route path="/react/blog/" component={Blog} />
           <Route path="/user" component={UserAppContainer} />
+          <Route path="/register" component={RegisterAppContainer} />
         </Grid>
       </div>
     );

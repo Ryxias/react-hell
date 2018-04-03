@@ -56,7 +56,7 @@ function register(email, password) {
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.get("/api/register", {
+    return axios.post("/api/register", {
       email,
       password
     })
@@ -70,6 +70,8 @@ function register(email, password) {
       .catch(err => {
         dispatch({
           type: ACTIONS.REGISTER_FAIL,
+          error: response.data.error,
+          message: response.data.message,
         });
       });
   };
