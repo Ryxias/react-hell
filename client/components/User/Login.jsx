@@ -36,12 +36,13 @@ class Login extends PureComponent {
       buttonText: 'Login',
     };
     return (
-      <section>
+      <div>
+        <h1>Login</h1>
         <LoginForm {...props} />
         <LinkContainer to="/register">
-          <div className="nav-link">or Register</div>
+          <a className="nav-link">or register</a>
         </LinkContainer>
-      </section>
+      </div>
     );
   }
 

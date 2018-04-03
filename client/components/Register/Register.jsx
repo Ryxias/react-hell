@@ -32,8 +32,14 @@ class Register extends PureComponent {
       emailRef: this.setEmailInput,
       passwordRef: this.setPasswordInput,
       buttonText: 'Register',
+      disableLastpass: true,
     };
-    return <LoginForm {...props} />
+    return (
+      <div>
+        <h1>Register</h1>
+        <LoginForm {...props} />
+      </div>
+    );
   }
 
   onRegister(e) {

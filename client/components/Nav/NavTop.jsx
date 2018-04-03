@@ -1,4 +1,8 @@
+'use strict';
+
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
@@ -45,6 +49,13 @@ const NavTop = (props) => {
       </Grid>
     </Navbar>
   );
-}
+};
+
+NavTop.propTypes = {
+  userAppText: PropTypes.string,
+};
+NavTop.defaultProps = {
+  userAppText: 'Login',
+};
 
 export default NavTop;
