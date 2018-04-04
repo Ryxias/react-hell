@@ -7,14 +7,23 @@ class AuthenticationController extends Controller {
   login_action(req, res, next) {
     this.get('PassportMiddleware').authenticateThroughPassport(function (error, user, info) {
       if (error) {
-        return next(error);
+        return res.status(400).send({
+          success: false,
+          error,
+        });
       }
       if (!user) {
-        return next(new Error(info.message));
+        return res.status(400).send({
+          success: false,
+          error: info,
+        });
       }
       return req.login(user, err => {
         if (err) {
-          return next(err);
+          return res.status(400).send({
+            success: false,
+            error: err,
+          });
         }
         return res.send({
           success: true,
@@ -26,10 +35,10 @@ class AuthenticationController extends Controller {
 
   whoami_action(req, res, next) {
     if (!req.user) {
-      return {
+      return res.status(404).send({
         user: null,
         message: 'Not logged in',
-      }
+      });
     }
     return res.send({
       user: req.user.publish(),
@@ -59,7 +68,7 @@ class AuthenticationController extends Controller {
             if (answer) {
               return user.setPasswordAndSave(new_password)
                 .then(user => {
-                  return res.send({ success: true, user });
+                  return res.send({ success: true, user: user.publish() });
                 });
             } else {
               return res.status(403).send({ success: false, message: 'Wrong' });
@@ -81,13 +90,22 @@ class AuthenticationController extends Controller {
     const email = req.body.email;
     const password = req.body.password;
 
-    return this.get('UserStore').createUser(email)
-      .then(user => user.setPasswordAndSave(password))
-      .then(user => res.send({
-        success: true,
-        message: 'Successfully registered',
-        user: user.publish(),
-      }))
+    return this.get('UserStore').findUserByEmail(email)
+      .then(user => {
+        if (user) {
+          return res.status(409).send({
+            success: false,
+            message: 'A user with that email already exists',
+          });
+        }
+        return this.get('UserStore').createUser(email)
+          .then(user => user.setPasswordAndSave(password))
+          .then(user => res.send({
+            success: true,
+            message: 'Successfully registered',
+            user: user.publish(),
+          }));
+      })
       .catch(err => res.status(400).send({
         success: false,
         message: err.message,

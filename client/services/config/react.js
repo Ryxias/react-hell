@@ -13,6 +13,8 @@ module.exports = service_container => {
       // This is the initial redux state
       {
         gacha: {},
+        user: {},
+        alert: {},
       },
       false // skip logging
     );

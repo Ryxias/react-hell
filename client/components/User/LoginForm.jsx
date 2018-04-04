@@ -16,10 +16,22 @@ const LoginForm = props => {
   // https://stackoverflow.com/questions/20954944/stop-lastpass-filling-out-a-form
 
   return (
-    <form className="container-fluid" autoComplete={disableLastpass ? 'off' : 'on'}>
+    <form className="container-fluid" autoComplete={disableLastpass ? 'off' : 'on'} data-lpignore={disableLastpass}>
       <div className="form-group">
-        <input className="form-control" type="email" ref={emailRef} name="email" data-lpignore={disableLastpass} />
-        <input className="form-control" type="password" ref={passwordRef} name="password" data-lpignore={disableLastpass} />
+        <input className="form-control"
+               type="email"
+               ref={emailRef}
+               name="email"
+               placeholder="Username"
+               data-lpignore={disableLastpass}
+        />
+        <input className="form-control"
+               type="password"
+               ref={passwordRef}
+               name="password"
+               placeholder="Password"
+               data-lpignore={disableLastpass}
+        />
         <button onClick={onClick} className="btn btn-default">{buttonText}</button>
       </div>
     </form>

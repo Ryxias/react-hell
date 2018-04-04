@@ -3,6 +3,8 @@
 const axios = require('axios');
 const ACTIONS = require('./login_actions');
 
+const { alert } = require('./alert_action_creators');
+
 function login(email, password) {
   return (dispatch, ownState) => {
     dispatch({
@@ -18,12 +20,15 @@ function login(email, password) {
           type: ACTIONS.LOGIN_SUCCESSFUL,
           user: response.data.user,
         });
+        dispatch(alert('Login successful', 'success'));
       })
       .catch(err => {
+        const message = err.response.data.message;
         dispatch({
           type: ACTIONS.LOGIN_FAILURE,
           err,
         });
+        dispatch(alert(message, 'warning'));
       });
   };
 }
@@ -39,11 +44,16 @@ function logout() {
         dispatch({
           type: ACTIONS.LOGOUT_SUCCESS,
         });
+        dispatch(alert('Logout successful', 'success'));
       })
       .catch(err => {
+        const message = err.response.data.message;
         dispatch({
           type: ACTIONS.LOGOUT_FAILURE,
+          error: err,
+          message
         });
+        dispatch(alert(message, 'warning'));
       });
   };
 }
@@ -66,13 +76,15 @@ function register(email, password) {
           user: response.data.user,
           response_data: response.data,
         });
+        dispatch(alert('Registration successful', 'success'));
       })
       .catch(err => {
+        const message = err.response.data.message;
         dispatch({
           type: ACTIONS.REGISTER_FAIL,
-          error: response.data.error,
-          message: response.data.message,
+          error: err,
         });
+        dispatch(alert(message, 'danger'));
       });
   };
 }
