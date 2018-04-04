@@ -16,7 +16,7 @@ module.exports = service_container => {
   });
   service_container.alias('ConfigurationManager', 'app.config');
 
-  service_container.autowire('sif.client', require('../../lib/LoveLiveClient'));
+  service_container.autowire('sif.client', require('../../lib/SchoolIdo.lu/Client'));
 
   // Routes
   service_container.registerFactory('app.route_registry', require('../../server/routing'));

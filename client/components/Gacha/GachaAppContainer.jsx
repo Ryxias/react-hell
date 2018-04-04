@@ -7,7 +7,7 @@ import GachaContent from './GachaContent.jsx';
 import GachaLoadingScreen from './GachaLoadingScreen.jsx';
 import actionCreators from '../../actions/gacha_action_creators';
 
-class Gacha extends PureComponent {
+class GachaAppContainer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -105,11 +105,11 @@ class Gacha extends PureComponent {
   }
 }
 
-Gacha.propTypes = {
+GachaAppContainer.propTypes = {
   card: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
-Gacha.defaultProps = {
+GachaAppContainer.defaultProps = {
   card: {},
 };
 
@@ -128,4 +128,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return { dispatch };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gacha));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GachaAppContainer));
