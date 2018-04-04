@@ -11,7 +11,7 @@ function user(state = null, action) {
       // display sexy megumin or smth
 
       const newState = Object.assign({}, state); // clones the old "state"
-      newState.logging_in = true;
+      newState.isLoggingIn = true;
 
       return newState;
 
@@ -24,7 +24,7 @@ function user(state = null, action) {
 
       const newState = Object.assign({}, state); // clones the old "state"
 
-      newState.logging_in = false;
+      newState.isLoggingIn = false;
       newState.user = user;
 
       return newState;
@@ -33,13 +33,18 @@ function user(state = null, action) {
     }
 
     case USER_ACTIONS.LOGOUT_START: {
-      return state;
+      const newState = Object.assign({}, state);
+      newState.isLoggingOut = true;
+
+      return newState;
+
       break;
     }
     case USER_ACTIONS.LOGOUT_SUCCESS:
     case USER_ACTIONS.LOGOUT_FAILURE: {
       const newState = Object.assign({}, state);
       newState.user = {};
+      newState.isLoggingOut = false;
 
       return newState;
 

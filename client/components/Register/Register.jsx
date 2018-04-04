@@ -33,6 +33,7 @@ class Register extends PureComponent {
       passwordRef: this.setPasswordInput,
       buttonText: 'Register',
       disableLastpass: true,
+      isSubitting: this.props.isRegistering,
     };
     return (
       <div>
@@ -53,11 +54,14 @@ class Register extends PureComponent {
   }
 }
 
-Register.propTypes = {};
+Register.propTypes = {
+  isRegistering: PropTypes.bool.isRequired,
+};
 
 
 function mapStateToProps(state) {
   return {
+    isRegistering: !!state.user.isRegistering,
   };
 }
 

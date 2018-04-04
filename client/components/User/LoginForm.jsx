@@ -10,10 +10,15 @@ import PropTypes from 'prop-types';
  * (such as registration or login)
  */
 const LoginForm = props => {
-  const { onClick, buttonText, emailRef, passwordRef, disableLastpass } = props;
+  const { onClick, buttonText, emailRef, passwordRef, disableLastpass, isSubmitting } = props;
 
   // Note: the lastpass disable doesnt seem to work consistently
   // https://stackoverflow.com/questions/20954944/stop-lastpass-filling-out-a-form
+
+  const classes = [ 'btn', 'btn-default' ];
+  if (isSubmitting) {
+    classes.push('disabled');
+  }
 
   return (
     <form className="container-fluid" autoComplete={disableLastpass ? 'off' : 'on'} data-lpignore={disableLastpass}>
@@ -32,22 +37,44 @@ const LoginForm = props => {
                placeholder="Password"
                data-lpignore={disableLastpass}
         />
-        <button onClick={onClick} className="btn btn-default">{buttonText}</button>
+        <button onClick={onClick} className={classes.join(' ')}>{buttonText}</button>
       </div>
     </form>
   );
 };
 
 LoginForm.propTypes = {
+  /**
+   * Callback function fired when the submit button is clicked
+   */
   onClick: PropTypes.func.isRequired,
+
+  /**
+   * Text to display on the submit button
+   */
   buttonText: PropTypes.string,
+
+  /**
+   * A React ref-attaching function
+   */
   emailRef: PropTypes.func,
   passwordRef: PropTypes.func,
+
+  /**
+   * Boolean; pass true to -attempt- to disable lastpass. False otherwise
+   */
   disableLastpass: PropTypes.bool,
+
+  /**
+   * Boolean; pass true to signal to the form that it is actively submitting (e.g. the submit has been clicked and
+   * maybe the user is on a slow network or something)
+   */
+  isSubmitting: PropTypes.bool,
 };
 LoginForm.defaultProps = {
   buttonText: 'Submit',
   disableLastpass: false,
+  isClicking: false,
 };
 
 export default LoginForm;

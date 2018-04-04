@@ -17,9 +17,13 @@ class Login extends PureComponent {
   }
 
   render() {
+    const classes = [ 'btn', 'btn-default' ];
+    if (this.props.isLoggingOut) {
+      classes.push('disabled');
+    }
     return (
       <div>
-        <button className="btn btn-default" onClick={this.onLogoutClick}>Logout</button>
+        <button className={classes.join(' ')} onClick={this.onLogoutClick}>Logout</button>
       </div>
     );
   }
@@ -32,10 +36,14 @@ class Login extends PureComponent {
   }
 }
 
-Login.propTypes = {};
+Login.propTypes = {
+  isLoggingOut: PropTypes.bool.isRequired,
+};
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    isLoggingOut: !!state.user.isLoggingOut,
+  };
 }
 
 export default connect(
