@@ -26,6 +26,7 @@ function login(email, password) {
         const message = err.response.data.message;
         dispatch({
           type: ACTIONS.LOGIN_FAILURE,
+          message,
           err,
         });
         dispatch(alert(message, 'warning'));

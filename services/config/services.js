@@ -19,7 +19,7 @@ module.exports = service_container => {
   service_container.autowire('sif.client', require('../../lib/SchoolIdo.lu/Client'));
 
   // Routes
-  service_container.registerFactory('app.route_registry', require('../../server/routing'));
+  service_container.registerFactory('app.route_registry', require('../../server/routing/routing'));
   service_container.alias('RouteRegistry', 'app.route_registry');
 
   // Model Stores

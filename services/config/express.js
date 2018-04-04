@@ -49,6 +49,7 @@ module.exports = service_container => {
     };
   });
 
+  // Middleware and stuff
   service_container.registerFactory('express.session_middleware', service_container => {
     const session = service_container.get('express.session');
     const sessionConfig = service_container.get('express.session_config');
@@ -59,6 +60,14 @@ module.exports = service_container => {
   service_container.autowire('express.passport_middleware', require('../../lib/Passport/PassportMiddleware'));
   service_container.alias('PassportMiddleware', 'express.passport_middleware');
 
+  service_container.registerFactory('express.api_requires_logged_in_middleware', service_container => {
+    return service_container.get('express._.authentication_middleware.provider').apiRequiresLoggedInUser();
+  });
+
+  service_container.autowire('express._.authentication_middleware.provider', require('../../server/middleware/AuthenticationMiddlewareProvider'));
+
+
+  // The expressJS server!
   service_container.registerFactory('express.server', service_container => {
     // Setup middleware
     const { redirectHttpToHttps } = require('../../init/custom_app_redirects');
