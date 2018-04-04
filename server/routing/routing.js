@@ -14,6 +14,8 @@ module.exports = service_container => {
 
   // Middleware
   const apiRequiresLoggedIn = service_container.get('express.api_requires_logged_in_middleware');
+  const gossipApiParameterConverter = service_container.get('express.gossip_api_parameter_converter');
+
 
   // Routes
   registry.routeBuilder({
@@ -50,6 +52,19 @@ module.exports = service_container => {
         post: [ 'app.controllers.auth', 'change_password_action' ]
       },
     }
+  });
+
+  registry.routeBuilder({
+    '/api': {
+      '/gossip': {
+        get: [ 'app.controllers.gossip_api', 'index_action' ],
+        '/:gossip_id(\\d+)': {
+          param: [ 'gossip_id', gossipApiParameterConverter ],
+          get: [ 'app.controllers.gossip_api', 'get_single_gossip_action' ],
+          patch: [ 'app.controllers.gossip_api', 'edit_single_gossip_action' ],
+        }
+      },
+    },
   });
 
   registry.routeBuilder({

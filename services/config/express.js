@@ -66,6 +66,11 @@ module.exports = service_container => {
 
   service_container.autowire('express._.authentication_middleware.provider', require('../../server/middleware/AuthenticationMiddlewareProvider'));
 
+  // Parameter converters
+  service_container.registerFactory('express.gossip_api_parameter_converter', service_container => {
+    return service_container.get('GossipStore').parameterConverter();
+  });
+
 
   // The expressJS server!
   service_container.registerFactory('express.server', service_container => {

@@ -37,7 +37,7 @@ module.exports = service_container => {
     const { ControllerCompilerPass } = require('express-route-registry');
 
     service_container.autowire('app.controllers.helloworld', require('../../server/controllers/HelloWorldController')).addTag('controller');
-
+    service_container.autowire('app.controllers.gossip_api', require('../../server/controllers/GossipApiController')).addTag('controller');
     service_container.autowire('app.controllers.debug', require('../../server/controllers/DebugController')).addTag('controller');
     service_container.autowire('app.controllers.sif_api', require('../../server/controllers/SifApiController')).addTag('controller');
     service_container.autowire('app.controllers.react', require('../../server/controllers/ReactController')).addTag('controller');
