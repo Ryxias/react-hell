@@ -1,7 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
+
 import { Route } from 'react-router-dom';
+import { Grid } from 'react-bootstrap';
 
 import Home from './Home/Home.jsx';
 import Gacha from './Gacha/Gacha.jsx';
@@ -10,7 +12,8 @@ import Blog from './Blog/Blog.jsx';
 import NavAppContainer from './Nav/NavAppContainer.jsx';
 import UserAppContainer from './User/UserAppContainer.jsx';
 import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
-import { Grid } from 'react-bootstrap';
+import AlertContainer from './Alert/AlertContainer.jsx';
+
 
 /**
  * DO NOT Extend PureComponent
@@ -22,6 +25,9 @@ class App extends Component {
       <div className="container">
         <section>
           <NavAppContainer />
+        </section>
+        <section>
+          <AlertContainer/>
         </section>
         <section>
           <Grid fluid>
