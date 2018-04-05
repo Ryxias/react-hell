@@ -13,7 +13,7 @@ const GossipCell = ({ id, text }) => {
 
 GossipCell.propTypes = {
   id: PropTypes.number.isRequired,
-  text: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
 
   //
   // openEditAction: PropTypes.func.isRequired,

@@ -22,16 +22,16 @@ class GossipIndex extends React.PureComponent {
     const cell_matrix = this.matrixifyGossips(this.props.gossips);
 
     return (
-      <div className="container">
+      <div className="container-fluid">
         {cell_matrix.map(row =>
-          <div className="row">
+          <div key={row[0].id} className="row">
             {row.map(gossip => {
               const props = {
                 id: gossip.id,
                 text: gossip.text,
               };
               return (
-                <div className="col-sm">
+                <div key={gossip.id} className="col-sm">
                   <GossipCell {...props} />
                 </div>
               );

@@ -4,18 +4,25 @@ const { Controller } = require('express-route-registry');
 
 class GossipApiController extends Controller {
 
+  /**
+   * Gets all gossips with no filter, paginated by "page" and "page_size"
+   */
   index_action(req, res, next) {
     const page = parseInt(req.query.page) || 1;
     const page_size = parseInt(req.query.page_size) || 20;
 
-    return this.get('GossipStore').findAllPaginated(page, page_size)
-      .then(gossips => {
+    const getGossips = this.get('GossipStore').findAllPaginated(page, page_size);
+    const getCount = this.get('GossipStore').getCount();
+
+    return Promise.all([ getGossips, getCount ])
+      .spread((gossips, count) => {
         const result = {
           success: true,
           message: 'Found the gossips',
           system_code: '2000201804040316POIUYTEFVBNJD',
           page,
           page_size,
+          page_count: Math.ceil(count / page_size),
           items: [],
         };
 
@@ -35,6 +42,9 @@ class GossipApiController extends Controller {
       });
   }
 
+  /**
+   * Get a single gossip
+   */
   get_single_gossip_action(req, res, next) {
     const gossip = req.gossip;
 
@@ -46,6 +56,9 @@ class GossipApiController extends Controller {
     });
   }
 
+  /**
+   * Modify a single gossip's text
+   */
   edit_single_gossip_action(req, res, next) {
     const gossip = req.gossip;
 
@@ -75,6 +88,9 @@ class GossipApiController extends Controller {
       });
   }
 
+  /**
+   * Delete a single gossip
+   */
   delete_single_gossip_action(req, res, next) {
     const gossip = req.gossip;
     const id = gossip.id;
