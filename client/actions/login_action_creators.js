@@ -20,7 +20,7 @@ function login(email, password) {
           type: ACTIONS.LOGIN_SUCCESSFUL,
           user: response.data.user,
         });
-        dispatch(alert('Login successful', 'success'));
+        dispatch(alert(response.data.message, 'success'));
       })
       .catch(err => {
         const message = err.response.data.message;
@@ -45,7 +45,7 @@ function logout() {
         dispatch({
           type: ACTIONS.LOGOUT_SUCCESS,
         });
-        dispatch(alert('Logout successful', 'success'));
+        dispatch(alert(response.data.message, 'success'));
       })
       .catch(err => {
         const message = err.response.data.message;
@@ -77,7 +77,7 @@ function register(email, password) {
           user: response.data.user,
           response_data: response.data,
         });
-        dispatch(alert('Registration successful', 'success'));
+        dispatch(alert(response.data.message, 'success'));
       })
       .catch(err => {
         const message = err.response.data.message;

@@ -13,6 +13,7 @@ import NavAppContainer from './Nav/NavAppContainer.jsx';
 import UserAppContainer from './User/UserAppContainer.jsx';
 import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
 import AlertContainer from './Alert/AlertContainer.jsx';
+import GossipAppContainer from './Gossip/GossipAppContainer.jsx';
 
 
 /**
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path="/react/blog/" component={Blog} />
             <Route path="/user" component={UserAppContainer} />
             <Route path="/register" component={RegisterAppContainer} />
+            <Route path="/gossip" component={GossipAppContainer} />
           </Grid>
         </section>
       </div>

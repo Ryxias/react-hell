@@ -56,12 +56,14 @@ module.exports = service_container => {
 
   registry.routeBuilder({
     '/api': {
-      '/gossip': {
+      '/gossips': {
+        middleware: apiRequiresLoggedIn,
         get: [ 'app.controllers.gossip_api', 'index_action' ],
         '/:gossip_id(\\d+)': {
           param: [ 'gossip_id', gossipApiParameterConverter ],
           get: [ 'app.controllers.gossip_api', 'get_single_gossip_action' ],
           patch: [ 'app.controllers.gossip_api', 'edit_single_gossip_action' ],
+          delete: [ 'app.controllers.gossip_api', 'delete_single_gossip_action' ],
         }
       },
     },

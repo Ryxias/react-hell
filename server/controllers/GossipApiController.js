@@ -75,5 +75,28 @@ class GossipApiController extends Controller {
       });
   }
 
+  delete_single_gossip_action(req, res, next) {
+    const gossip = req.gossip;
+    const id = gossip.id;
+
+    return gossip.destroy()
+      .then(() => {
+        return res.status(200).send({
+          success: true,
+          message: 'Gossip successfully deleted',
+          system_code: '2000201804040336PLWLBUUGIRIRIRR',
+          id,
+        });
+      })
+      .catch(error => {
+        return res.status(500).send({
+          success: false,
+          message: 'Whoops, something went wrong!',
+          system_code: '5000201804040338YRTWVQWDWDWOUH',
+          error,
+        });
+      });
+  }
+
 }
 module.exports = GossipApiController;

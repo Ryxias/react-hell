@@ -133,7 +133,7 @@ class AuthenticationController extends Controller {
           .then(user => user.setPasswordAndSave(password))
           .then(user => res.send({
             success: true,
-            message: 'Successfully registered',
+            message: 'Registration successful',
             system_code: '2000201804040229YYQBWBWNWQPQP',
             user: user.publish(),
           }));

@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import GossipIndex from './GossipIndex.jsx';
 
 class GossipAppContainer extends React.PureComponent {
   constructor(props) {
@@ -12,9 +13,7 @@ class GossipAppContainer extends React.PureComponent {
 
   render() {
     return (
-      <div>
-        Stuff goes here?
-      </div>
+      <GossipIndex/>
     );
   }
 }
