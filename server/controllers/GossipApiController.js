@@ -98,5 +98,22 @@ class GossipApiController extends Controller {
       });
   }
 
+  /**
+   * This is middleware, not a route action
+   */
+  requiresGossipMiddleware() {
+    const requiresGossipMiddleware = (req, res, next) => {
+      if (!req.gossip) {
+        return res.status(404).send({
+          success: false,
+          message: 'No gossip found',
+          system_code: '4000201804040320UEUPEWWQBQWDW',
+          id: req.params.gossip_id,
+        });
+      }
+      next();
+    };
+    return requiresGossipMiddleware;
+  }
 }
 module.exports = GossipApiController;

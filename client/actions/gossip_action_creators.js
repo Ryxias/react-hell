@@ -15,7 +15,7 @@ function loadGossipIndex(page_number, page_size) {
       .then(response => {
         dispatch({
           type: ACTIONS.LOAD_MANY_GOSSIPS_SUCCESS,
-          gossips: response.data.gossips,
+          gossips: response.data.items,
         });
       })
       .catch(err => {

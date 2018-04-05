@@ -53,7 +53,7 @@ function gossip(state = null, action) {
     case GOSSIP_ACTIONS.LOAD_MANY_GOSSIPS_SUCCESS: {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isLoadingIndex = false;
-      newState.gossips = action.items;
+      newState.gossips = action.gossips;
 
       return newState;
       break;

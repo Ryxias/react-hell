@@ -65,6 +65,9 @@ module.exports = service_container => {
   });
 
   service_container.autowire('express._.authentication_middleware.provider', require('../../server/middleware/AuthenticationMiddlewareProvider'));
+  service_container.registerFactory('express.requires_gossip_middleware', service_container => {
+    return service_container.get('app.controllers.gossip_api').requiresGossipMiddleware();
+  });
 
   // Parameter converters
   service_container.registerFactory('express.gossip_api_parameter_converter', service_container => {
