@@ -34,6 +34,7 @@ class Login extends PureComponent {
       emailRef: this.setEmailInput,
       passwordRef: this.setPasswordInput,
       buttonText: 'Login',
+      isSubmitting: this.props.isLoggingIn,
     };
     return (
       <div>
@@ -57,10 +58,14 @@ class Login extends PureComponent {
   }
 }
 
-Login.propTypes = {};
+Login.propTypes = {
+  isLoggingIn: PropTypes.bool.isRequired,
+};
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    isLoggingIn: !!state.user.isLoggingIn,
+  };
 }
 
 export default connect(

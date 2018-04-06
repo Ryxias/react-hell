@@ -15,6 +15,7 @@ module.exports = service_container => {
         gacha: {},
         user: {},
         alert: {},
+        gossip: {},
       },
       false // skip logging
     );

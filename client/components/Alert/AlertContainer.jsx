@@ -54,9 +54,11 @@ class AlertContainer extends PureComponent {
     //
     // This way is annoying because it's really hard to get the Fade to work properly.
     //
+
+    // onExited={this.handleDismiss} why doesnt that work?
     return (
       <Fade in={this.state.fading}>
-        <Alert bsStyle={this.props.severity} onDismiss={this.startFadeout} onExited={this.handleDismiss}>
+        <Alert bsStyle={this.props.severity} onDismiss={this.startFadeout}>
           {/*<h4>Oh snap!</h4>*/}
           <p>
             {this.props.message}
