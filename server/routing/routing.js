@@ -12,6 +12,12 @@ module.exports = service_container => {
   const registry = new RouteRegistry();
   registry.setContainer(service_container);
 
+  // Middleware
+  const apiRequiresLoggedIn = service_container.get('express.api_requires_logged_in_middleware');
+  const gossipApiParameterConverter = service_container.get('express.gossip_api_parameter_converter');
+  const requiresGossipMiddleware = service_container.get('express.requires_gossip_middleware');
+
+  // Routes
   registry.routeBuilder({
     '/api': {
       '/sif/': {
@@ -32,6 +38,7 @@ module.exports = service_container => {
         post: [ 'app.controllers.auth', 'login_action' ]
       },
       '/logout': {
+        middleware: [ apiRequiresLoggedIn ],
         post: [ 'app.controllers.auth', 'logout_action' ]
       },
       '/whoami': {
@@ -41,9 +48,36 @@ module.exports = service_container => {
         post: [ 'app.controllers.auth', 'register_action' ]
       },
       '/change_password': {
+        middleware: [ apiRequiresLoggedIn ],
         post: [ 'app.controllers.auth', 'change_password_action' ]
       },
     }
+  });
+
+  registry.routeBuilder({
+    '/api': {
+      '/gossips': {
+        middleware: [ apiRequiresLoggedIn ],
+        get: [ 'app.controllers.gossip_api', 'index_action' ],
+        '/:gossip_id(\\d+)': {
+          param: [ 'gossip_id', gossipApiParameterConverter ],
+          middleware: [ requiresGossipMiddleware ],
+          get: [ 'app.controllers.gossip_api', 'get_single_gossip_action' ],
+          patch: [ 'app.controllers.gossip_api', 'edit_single_gossip_action' ],
+          delete: [ 'app.controllers.gossip_api', 'delete_single_gossip_action' ],
+        }
+      },
+    },
+  });
+
+  registry.routeBuilder({
+    '/api': {
+      '/*': {
+        get: (req, res, next) => {
+          return res.status(404).send({ message: 'Bwuh? Where in the world am I??' });
+        }
+      }
+    },
   });
 
   registry.routeBuilder({

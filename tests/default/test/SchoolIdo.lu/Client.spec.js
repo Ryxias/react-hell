@@ -3,8 +3,8 @@
 const assert = require('assert');
 
 describe('SchoolIdo.lu Client', function() {
-  const LoveLiveClient = require('../../../lib/SchoolIdo.lu/Client');
-  const client = new LoveLiveClient();
+  const Client = require('../../../lib/SchoolIdo.lu/Client');
+  const client = new Client();
 
   it('should be able to getCard', function() {
     return client.getCard(1220).then(card => {

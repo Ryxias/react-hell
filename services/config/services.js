@@ -16,10 +16,10 @@ module.exports = service_container => {
   });
   service_container.alias('ConfigurationManager', 'app.config');
 
-  service_container.autowire('sif.client', require('../../lib/LoveLiveClient'));
+  service_container.autowire('sif.client', require('../../lib/SchoolIdo.lu/Client'));
 
   // Routes
-  service_container.registerFactory('app.route_registry', require('../../server/routing'));
+  service_container.registerFactory('app.route_registry', require('../../server/routing/routing'));
   service_container.alias('RouteRegistry', 'app.route_registry');
 
   // Model Stores
@@ -37,7 +37,7 @@ module.exports = service_container => {
     const { ControllerCompilerPass } = require('express-route-registry');
 
     service_container.autowire('app.controllers.helloworld', require('../../server/controllers/HelloWorldController')).addTag('controller');
-
+    service_container.autowire('app.controllers.gossip_api', require('../../server/controllers/GossipApiController')).addTag('controller');
     service_container.autowire('app.controllers.debug', require('../../server/controllers/DebugController')).addTag('controller');
     service_container.autowire('app.controllers.sif_api', require('../../server/controllers/SifApiController')).addTag('controller');
     service_container.autowire('app.controllers.react', require('../../server/controllers/ReactController')).addTag('controller');

@@ -1,7 +1,6 @@
 'use strict';
 
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
-const bcrypt = require('bcryptjs');
 
 module.exports = sequelize => {
   const Gossip = sequelize.define('gossip', {
@@ -27,6 +26,13 @@ module.exports = sequelize => {
     },
   });
 
+  Gossip.prototype.publish = function() {
+    return {
+      class: 'gossip',
+      id: this.id,
+      text: this.text,
+    }
+  };
 
   return Gossip;
 };
