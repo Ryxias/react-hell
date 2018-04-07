@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   gacha: require('./gacha_reducer'),
   user: require('./user_reducer'),
   alert: require('./alert_reducer'),
+  clock: require('./clock_reducer'),
 });
 
 module.exports = rootReducer;

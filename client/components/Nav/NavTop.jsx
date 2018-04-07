@@ -8,6 +8,8 @@ import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import WorldClockSelection from '../WorldClock/WorldClockSelection.jsx';
+
 const NavTop = (props) => {
   const { userAppText } = props;
 
@@ -43,6 +45,9 @@ const NavTop = (props) => {
                 <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>
+          </Nav>
+          <Nav pullRight>
+            <WorldClockSelection/>
           </Nav>
         </Navbar.Collapse>
 
