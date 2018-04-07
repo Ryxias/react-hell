@@ -10,35 +10,59 @@ function changeLocation(location) {
 }
 
 function increaseHour() {
- return;
+ return {
+   type: ACTIONS.INCREASE_HOUR,
+   hour: hour + 1,
+ };
 }
 
 function increaseMinute() {
- return;
+ return {
+   type: ACTIONS.INCREASE_MINUTE,
+   minute: minute + 1,
+ };
 }
 
 function increaseSecond() {
-  return;
+  return {
+    type: ACTIONS.INCREASE_SECOND,
+    second: second + 1,
+  };
 }
 
 function increaseYear() {
-  return;
+  return {
+    type: ACTIONS.INCREASE_YEAR,
+    year: year + 1,
+  };
 }
 
 function increaseMonth() {
-  return;
+  return {
+    type: ACTIONS.INCREASE_MONTH,
+    month: month + 1,
+  };
 }
 
 function increaseDay() {
-  return;
+  return {
+    type: ACTIONS.INCREASE_DAY,
+    day: day + 1,
+  };
 }
 
 function resetMonth() {
-  return;
+  return {
+    type: ACTIONS.RESET_MONTH,
+    month: 1,
+  };
 }
 
 function resetDay() {
-  return;
+  return {
+    type: ACTIONS.RESET_DAY,
+    day: 1,
+  };
 }
 
 

@@ -13,8 +13,6 @@ class WorldClockSelection extends PureComponent {
   }
 
   onSelectLocation(eventKey = 'San Francisco') {
-    console.log('What is this.props before?', this.props);
-    console.log('Location selected:', eventKey);
     this.props.dispatch(changeLocation(eventKey));
     console.log('What is this.props now?', this.props);
   }
@@ -50,7 +48,7 @@ WorldClockSelection.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    location: state.clock.location,
+    location: state.clockReducer.location,
   };
 }
 
