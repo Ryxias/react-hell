@@ -63,7 +63,7 @@ function deleteGossip(id) {
       type: ACTIONS.DELETE_GOSSIP_START,
     });
 
-    return axios.get(`/api/gossips/${id}`)
+    return axios.delete(`/api/gossips/${id}`)
       .then(response => {
         dispatch({
           type: ACTIONS.DELETE_GOSSIP_SUCCESS,

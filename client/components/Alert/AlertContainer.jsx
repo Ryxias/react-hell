@@ -3,8 +3,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { Alert, Fade } from 'react-bootstrap';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import { dismissAlert } from '../../actions/alert_action_creators';
 
@@ -18,58 +17,47 @@ class AlertContainer extends PureComponent {
     super(props);
 
     this.handleDismiss = this.handleDismiss.bind(this);
-    this.startFadeout = this.startFadeout.bind(this);
-
-    this.state = { fading: true };
   }
 
   render() {
-    if (!this.props.hasAlert) {
-      return null;
-    }
+    const items = (() => {
+      if (!this.props.hasAlert) {
+        return null;
+      }
 
-    // One way of doing it... without react-bootstrap
-    // const alertSeverityClass = ((severity) => {
-    //   switch (severity) {
-    //     case 'success':
-    //       return 'alert-success';
-    //     case 'info':
-    //       return 'alert-info';
-    //     case 'warning':
-    //       return 'alert-warning';
-    //     case 'danger':
-    //       return 'alert-danger';
-    //   }
-    // })(this.props.severity);
-    //
-    // const classNames = `alert ${alertSeverityClass} alert-dismissible fade in`;
-    // return (
-    //   <div className={classNames}>
-    //     <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
-    //     {this.props.message}
-    //   </div>
-    // );
+      const alertSeverityClass = ((severity) => {
+        switch (severity) {
+          case 'success':
+            return 'alert-success';
+          case 'info':
+            return 'alert-info';
+          case 'warning':
+            return 'alert-warning';
+          case 'danger':
+            return 'alert-danger';
+        }
+      })(this.props.severity);
+      const classnames = `alert ${alertSeverityClass}`;
 
-    // Another way of doing this, using the react-bootstrap Alert component
-    //
-    // This way is annoying because it's really hard to get the Fade to work properly.
-    //
-
-    // onExited={this.handleDismiss} why doesnt that work?
-    return (
-      <Fade in={this.state.fading}>
-        <Alert bsStyle={this.props.severity} onDismiss={this.startFadeout}>
-          {/*<h4>Oh snap!</h4>*/}
+      return (
+        <div key={"the-alert"} className={classnames}>
           <p>
             {this.props.message}
+            <a href="#" className="close" onClick={this.handleDismiss} aria-label="close">&times;</a>
           </p>
-        </Alert>
-      </Fade>
-    );
-  }
+        </div>
+      );
+    })();
 
-  startFadeout() {
-    this.setState({ fading: false });
+    return (
+      <CSSTransitionGroup
+        transitionName="alert"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}>
+
+        {items}
+      </CSSTransitionGroup>
+    );
   }
 
   handleDismiss(e) {

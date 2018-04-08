@@ -41,7 +41,7 @@ module.exports = service_container => {
       cookie: {
         // expires: null,  // this will automatically be set via maxAge
         // httpOnly: production,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
-        maxAge: 300000,  // 5 minutes (in milliseconds)
+        maxAge: 900000,  // Cookie timeout. 15 minutes (in milliseconds)
         // path: '/',  // Designates a path that should exist in the requested source when sending the cookie header
         // secure: production,  // Does not necessarily encrypt cookie data as cookies are inherently insecure, see MDN documentation
         // sameSite: 'strict', // Protection against Cross-Site Request Forgery attacks if set to 'strict'
