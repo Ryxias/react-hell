@@ -65,7 +65,7 @@ class AuthenticationController extends Controller {
 
   logout_action(req, res, next) {
     req.logout();
-    res.send({ success: true });
+    res.send({ success: true, message: 'Logged out', system_code: '20000128POWIUHRBNSMSS' });
   }
 
   /**
