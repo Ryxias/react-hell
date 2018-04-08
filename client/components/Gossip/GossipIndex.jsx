@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadGossipIndex } from '../../actions/gossip_action_creators';
+import { loadGossipIndex, deleteGossip } from '../../actions/gossip_action_creators';
 import GossipCell from './GossipCell.jsx';
 
 class GossipIndex extends React.PureComponent {
@@ -29,9 +29,10 @@ class GossipIndex extends React.PureComponent {
               const props = {
                 id: gossip.id,
                 text: gossip.text,
+                onRemoveClick: this.deleteGossip.bind(this, gossip.id),
               };
               return (
-                <div key={gossip.id} className="col-sm">
+                <div key={gossip.id} className="col-md-4">
                   <GossipCell {...props} />
                 </div>
               );
@@ -40,6 +41,10 @@ class GossipIndex extends React.PureComponent {
         )}
       </div>
     );
+  }
+
+  deleteGossip(id) {
+    this.props.dispatch(deleteGossip(id));
   }
 
   matrixifyGossips(gossips) {
