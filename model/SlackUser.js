@@ -1,8 +1,12 @@
 'use strict';
 
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
-const bcrypt = require('bcryptjs');
 
+/**
+ * A SlackUser is a row that extends the User object with information about their
+ * associated Slack account. It enables seamless integration between the website
+ * and slack by connecting the two identities.
+ */
 module.exports = sequelize => {
   const SlackUser = sequelize.define('slack_user', {
     id: {
