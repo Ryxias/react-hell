@@ -5,6 +5,7 @@ const USER_ACTIONS = require('../actions/login_actions');
 
 function user(state = null, action) {
   switch (action.type) {
+    // Login
     case USER_ACTIONS.LOGIN_START: {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isLoggingIn = true;
@@ -31,6 +32,7 @@ function user(state = null, action) {
       break;
     }
 
+    // Logout
     case USER_ACTIONS.LOGOUT_START: {
       const newState = Object.assign({}, state);
       newState.isLoggingOut = true;
@@ -48,6 +50,8 @@ function user(state = null, action) {
 
       break;
     }
+
+    // Register
     case USER_ACTIONS.REGISTER_START: {
       const newState = Object.assign({}, state);
 
@@ -76,6 +80,31 @@ function user(state = null, action) {
 
       break;
     }
+
+    // Synchronize
+    case USER_ACTIONS.SYNCHRONIZE_LOGIN_STATE_START: {
+      const newState = Object.assign({}, state);
+      newState.isSynchronizing = true;
+
+      return newState;
+    }
+    case USER_ACTIONS.SYNCHRONIZE_LOGIN_STATE_SUCCESS: {
+      const newState = Object.assign({}, state);
+      newState.isSynchronizing = false;
+      newState.user = action.user;
+
+      return newState;
+    }
+    case USER_ACTIONS.SYNCHRONIZE_LOGIN_STATE_FAILURE: {
+      const newState = Object.assign({}, state);
+      newState.isSynchronizing = false;
+      newState.user = {}; // Assume they're just not logged in... they can synchronize again later
+
+      return newState;
+    }
+
+
+    // Defaults
     default:
       return state;
   }
