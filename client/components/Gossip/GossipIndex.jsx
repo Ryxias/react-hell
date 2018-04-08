@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { loadGossipIndex, deleteGossip } from '../../actions/gossip_action_creators';
 import GossipCell from './GossipCell.jsx';
+import GossipIndexPaginator from './GossipIndexPaginator.jsx';
 
 const PAGE_SIZE = 21;
 
@@ -26,7 +27,7 @@ class GossipIndex extends React.PureComponent {
 
     const pages = (new Array(page_count)).fill().map((_, i) => {
       const page_number = i + 1;
-      const title = page_number;
+      const title = page_number.toString();
       const active = page === page_number;
       const disabled = false;
 
@@ -35,31 +36,20 @@ class GossipIndex extends React.PureComponent {
         title,
         active,
         disabled,
+        onClick: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.setState({ page_number }); // might be able to use redux state instead .. hm
+          this.handleLoadGossips(page_number);
+        },
       };
     });
+    const paginatorProps = { pages };
 
     return (
       <div className="container-fluid">
-        <nav aria-label="Gossips">
-          <ul className="pagination">
-            {
-              pages.map(row => {
-                const onClick = (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  this.setState({ page_number: row.page_number });
-                  this.handleLoadGossips(row.page_number);
-                };
-                const classes = `page-item ${row.active ? 'active' : ''} ${row.disabled ?  'disabled' : ''}`;
-                return (
-                  <li className={classes}>
-                    <a className="page-link" href="#" onClick={onClick}>{row.title}</a>
-                  </li>
-                );
-              })
-            }
-          </ul>
-        </nav>
+        <GossipIndexPaginator {...paginatorProps}/>
+
         {cell_matrix.map(row =>
           <div key={row[0].id} className="row">
             {row.map(gossip => {
