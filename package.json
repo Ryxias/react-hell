@@ -38,6 +38,8 @@
     "express-route-registry": "Ryxias/express-route-registry#v1.0.1",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.10",
+    "moment": "^2.22.0",
+    "moment-timezone": "^0.5.14",
     "mysql2": "^1.4.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

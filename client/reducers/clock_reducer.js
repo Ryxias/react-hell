@@ -3,28 +3,21 @@
 import { CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT } from '../actions/clock_actions';
 
 const stateDefault = {
-  time_active: false,
-  hour: null,
-  minute: null,
-  second: null,
-  meridian: '',
+  timezone: null,
 };
 
 const handleChangeTimezone = (state, action) => ({
   ...state,
-  time_active: action.time_active,
-  hour: action.hour,
-  minute: action.minute,
-  second: action.second,
-  meridian: action.meridian,
+  time_active: true,
+  timezone: action.timezone,
 });
 
 const handleClearTimezoneText = (state, action) => ({
   ...state,
-  time_active: action.time_active,
+  time_active: false,
 });
 
-function clockReducer (state = stateDefault, action) {
+export function clockReducer(state = stateDefault, action) {
   switch(action.type) {
     case CHANGE_TIMEZONE:
       return handleChangeTimezone(state, action);
@@ -33,6 +26,5 @@ function clockReducer (state = stateDefault, action) {
     default:
       return state;
   }
-};
+}
 
-module.exports = clockReducer;

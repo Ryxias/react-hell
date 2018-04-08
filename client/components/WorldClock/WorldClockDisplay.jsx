@@ -1,30 +1,29 @@
+'use strict';
+
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Navbar } from 'react-bootstrap';
 
-class WorldClockDisplay extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
+import moment from 'moment-timezone';
 
-    render() {
-        return (
-            <Navbar.Text
-                className="navbar-text"
-            >
-                Time is now {this.props.hour}:{this.props.minute}:{this.props.second} {this.props.meridian} at
-            </Navbar.Text>
-        );
-    }
-}
+/**
+ * Stateless component
+ *
+ *  - function
+ */
+const WorldClockDisplay = ({ timezone, unixtimestamp }) => {
+  const now = moment(unixtimestamp).tz(timezone);
 
-function mapStateToProps(state) {
-    return {
-        hour: state.clockReducer.hour,
-        minute: state.clockReducer.minute,
-        second: state.clockReducer.second,
-        meridian: state.clockReducer.meridian,
-    };
-}
+  return (
+    <Navbar.Text className="navbar-text">
+      Time is now {now.format('LTS')} at
+    </Navbar.Text>
+  );
+};
 
-export default connect(mapStateToProps)(WorldClockDisplay);
+WorldClockDisplay.propTypes = {
+  timezone: PropTypes.string.isRequired,
+  unixtimestamp: PropTypes.number.isRequired,
+};
+
+export default WorldClockDisplay;
