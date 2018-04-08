@@ -11,7 +11,6 @@ class WorldClockDisplay extends PureComponent {
         return (
             <Navbar.Text
                 className="navbar-text"
-                pullRight
             >
                 Time is now {this.props.hour}:{this.props.minute}:{this.props.second} {this.props.meridian} at
             </Navbar.Text>

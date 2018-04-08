@@ -2,14 +2,14 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
-import { Nav } from 'react-bootstrap';
+import { Nav, NavItem } from 'react-bootstrap';
 
 class WorldClockContainer extends PureComponent {
   render() {
     return (
       <Nav pullRight>
-        <WorldClockSelection/>
-        { this.props.time_active ? <WorldClockDisplay/> : null }
+          { this.props.time_active ? <WorldClockDisplay/> : null }
+          <WorldClockSelection/>
       </Nav>
     );
   }
