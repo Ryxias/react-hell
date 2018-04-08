@@ -5,6 +5,8 @@ const GOSSIP_ACTIONS = require('../actions/gossip_actions');
 
 function gossip(state = null, action) {
   switch (action.type) {
+    // Add Gossip
+    // FIXME (underconstruction)
     case GOSSIP_ACTIONS.ADD_GOSSIP_START: {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isAdding = true;
@@ -26,6 +28,7 @@ function gossip(state = null, action) {
       break;
     }
 
+    // Delete Gossip
     case GOSSIP_ACTIONS.DELETE_GOSSIP_START: {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isDeleting = true;
@@ -43,6 +46,7 @@ function gossip(state = null, action) {
       break;
     }
 
+    // Load whole page of gossips
     case GOSSIP_ACTIONS.LOAD_MANY_GOSSIPS_START: {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isLoadingIndex = true;
@@ -54,6 +58,8 @@ function gossip(state = null, action) {
       const newState = Object.assign({}, state); // clones the old "state"
       newState.isLoadingIndex = false;
       newState.gossips = action.gossips;
+      newState.page = action.page;
+      newState.page_count = action.page_count;
 
       return newState;
       break;
