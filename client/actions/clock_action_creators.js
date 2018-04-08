@@ -2,10 +2,10 @@
 
 const ACTIONS = require('./clock_actions');
 
-function changeLocation(location) {
+function changeLocation(offset) {
   return {
     type: ACTIONS.CHANGE_LOCATION,
-    location: location,
+    offset: offset,
   };
 }
 

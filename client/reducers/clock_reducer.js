@@ -3,12 +3,12 @@
 import { CHANGE_LOCATION, INCREASE_HOUR, INCREASE_MINUTE, INCREASE_SECOND } from '../actions/clock_actions';
 
 const stateDefault = {
-  location: 'Choose your nearest city/region here',
+  offset: null,
 };
 
 const handleChangeLocation = (state, action) => ({
   ...state,
-  location: action.location,
+  offset: action.offset,
 });
 
 function clockReducer (state = stateDefault, action) {

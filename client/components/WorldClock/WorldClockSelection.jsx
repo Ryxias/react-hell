@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { NavDropdown, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, NavDropdown, MenuItem} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { changeLocation } from '../../actions/clock_action_creators'
@@ -12,43 +12,37 @@ class WorldClockSelection extends PureComponent {
     this.onSelectLocation = this.onSelectLocation.bind(this);
   }
 
-  onSelectLocation(eventKey = 'San Francisco') {
-    this.props.dispatch(changeLocation(eventKey));
-    console.log('What is this.props now?', this.props);
+  onSelectLocation(e) {
+    this.props.dispatch(changeLocation(e.target.value));
   }
 
   render() {
     return (
-      <div>
-        <NavDropdown
-          eventKey="5"
-          title={this.props.location}
-          id="clock-list"
-          className="nav-link"
-          onSelect={this.onSelectLocation}
-        >
-          <MenuItem eventKey="San Francisco">San Francisco</MenuItem>
-          <MenuItem eventKey="New York">New York</MenuItem>
-          <MenuItem eventKey="Japan">Japan</MenuItem>
-          <MenuItem eventKey="Hong Kong">Hong Kong</MenuItem>
-          <MenuItem eventKey="United Kingdom">United Kingdom</MenuItem>
-          <MenuItem eventKey="France">France</MenuItem>
-          <MenuItem eventKey="India">India</MenuItem>
-          <MenuItem eventKey="Philippines">Philippines</MenuItem>
-          <MenuItem eventKey="Malaysia">Malaysia</MenuItem>
-        </NavDropdown>
-      </div>
+        <Navbar.Form pullRight>
+          <FormGroup controlId="formControlsSelectMultiple">
+            <FormControl
+              className="nav-dropdown"
+              componentClass="select"
+              onChange={this.onSelectLocation}
+            >
+              <option value={null}>Choose your city/region here</option>
+              <option value={-7}>San Francisco</option>
+              <option value={-5}>New York</option>
+              <option value={9}>Japan</option>
+              <option value={8}>Hong Kong</option>
+              <option value={1}>London</option>
+              <option value={2}>France</option>
+              <option value={5}>India</option>
+            </FormControl>
+          </FormGroup>
+        </Navbar.Form>
     );
   }
 }
 
-WorldClockSelection.propTypes = {
-  location: PropTypes.string,
-}
-
 function mapStateToProps(state) {
   return {
-    location: state.clockReducer.location,
+    offset: state.clockReducer.offset,
   };
 }
 

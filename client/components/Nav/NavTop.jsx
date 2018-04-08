@@ -19,15 +19,15 @@ const NavTop = (props) => {
     <Navbar fixedTop fluid collapseOnSelect bsStyle="dark" className="top-navbar">
       <Grid fluid>
 
-      {/* Main Logo button */}
-      <Navbar.Header>
-        <Navbar.Brand>
-          <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
+        {/* Main Logo button */}
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-      {/* Collapsible content */}
+        {/* Collapsible content */}
         <Navbar.Collapse>
           <Nav>
             <LinkContainer to="/react/sif">
@@ -45,15 +45,14 @@ const NavTop = (props) => {
                 <div className="nav-link">Gossip</div>
               </NavItem>
             </LinkContainer>
-
+          </Nav>
             {/* Eventually we want to float this guy allllllll ----> the way right */}
+          <Nav pullRight>
             <LinkContainer to="/user">
               <NavItem eventKey={4}>
                 <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>
-          </Nav>
-          <Nav pullRight>
             <WorldClockSelection/>
           </Nav>
         </Navbar.Collapse>

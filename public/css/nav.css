@@ -14,8 +14,11 @@
     background-color: white;
 }
 
-#clock-list {
+.nav-dropdown {
     color: white;
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
