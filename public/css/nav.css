@@ -21,6 +21,10 @@
     margin-bottom: 0;
 }
 
+.navbar-text {
+    color: white;
+}
+
 .nav>li>a:focus, .nav>li>a:hover {
     background-color: transparent;
 }

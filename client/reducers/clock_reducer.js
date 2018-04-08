@@ -1,6 +1,6 @@
 'use strict';
 
-import { CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT, INCREASE_HOUR, INCREASE_MINUTE, INCREASE_SECOND } from '../actions/clock_actions';
+import { CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT } from '../actions/clock_actions';
 
 const stateDefault = {
   time_active: false,
@@ -30,12 +30,6 @@ function clockReducer (state = stateDefault, action) {
       return handleChangeTimezone(state, action);
     case CLEAR_TIMEZONETEXT:
       return handleClearTimezoneText(state, action);
-    case INCREASE_HOUR:
-      return;
-    case INCREASE_MINUTE:
-      return;
-    case INCREASE_SECOND:
-      return;
     default:
       return state;
   }
