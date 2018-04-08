@@ -13,6 +13,7 @@ class NavTopContainer extends PureComponent {
   render() {
     const props = {
       userAppText: this.props.isLoggedIn ? this.props.username : 'Login',
+      time_active: this.props.time_active,
     };
     return (
       <NavTop {...props} />
@@ -30,6 +31,7 @@ function mapStateToProps(state) {
   return {
     isLoggedIn: !!(state.user && state.user.user && state.user.user.id),
     username: state.user && state.user.user && (state.user.user.username || state.user.user.email),
+    time_active: state.clockReducer.time_active,
   };
 }
 

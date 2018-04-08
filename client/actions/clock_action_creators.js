@@ -1,6 +1,6 @@
 'use strict';
 
-const { CHANGE_TIMEZONE } = require('./clock_actions');
+const { CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT } = require('./clock_actions');
 
 function changeTimezone(offset) {
   let time = new Date();  // local time object
@@ -30,11 +30,19 @@ function changeTimezone(offset) {
 
   return {
     type: CHANGE_TIMEZONE,
+    time_active: true,
     hour: hour,
     minute: minute,
     second: second,
     meridian: meridian,
   };
+}
+
+function clearTimezoneText() {
+  return {
+    type: CLEAR_TIMEZONETEXT,
+    time_active: false,
+  }
 }
 
 
@@ -98,6 +106,7 @@ function changeTimezone(offset) {
 
 module.exports = {
   changeTimezone,
+  clearTimezoneText,
   // increaseHour,
   // increaseMinute,
   // increaseSecond,

@@ -9,9 +9,10 @@ import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import WorldClockSelection from '../WorldClock/WorldClockSelection.jsx';
+import WorldClockDisplay from '../WorldClock/WorldClockDisplay.jsx';
 
 const NavTop = (props) => {
-  const { userAppText } = props;
+  const { userAppText, time_active } = props;
 
   // Adds MD-Bootstrap's style variant of 'dark' to React-Bootstrap
   bootstrapUtils.addStyle(Navbar, 'dark');
@@ -54,6 +55,7 @@ const NavTop = (props) => {
               </NavItem>
             </LinkContainer>
             <WorldClockSelection/>
+            { time_active ? <WorldClockDisplay/> : null }
           </Nav>
         </Navbar.Collapse>
 

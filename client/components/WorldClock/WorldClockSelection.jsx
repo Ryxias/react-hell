@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, FormGroup, FormControl} from 'react-bootstrap';;
+import { Navbar, FormGroup, FormControl} from 'react-bootstrap';
 
-import { changeTimezone } from '../../actions/clock_action_creators'
+import { changeTimezone, clearTimezoneText } from '../../actions/clock_action_creators'
 
 class WorldClockSelection extends PureComponent {
   constructor(props) {
@@ -12,7 +12,11 @@ class WorldClockSelection extends PureComponent {
   }
 
   onSelectLocation(e) {
-    this.props.dispatch(changeTimezone(e.target.value));
+    if (e.target.value !== "unselected") {
+      this.props.dispatch(changeTimezone(e.target.value));
+    } else {
+      this.props.dispatch(clearTimezoneText());
+    }
   }
 
   render() {
@@ -24,7 +28,7 @@ class WorldClockSelection extends PureComponent {
               componentClass="select"
               onChange={this.onSelectLocation}
             >
-              <option value={null}>Choose your city/region here</option>
+              <option value={"unselected"}>Choose your city/region here</option>
               <option value={-7}>San Francisco</option>
               <option value={-4}>New York</option>
               <option value={9}>Japan</option>
