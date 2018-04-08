@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 import NavTop from './NavTop.jsx';
 
+import { synchronizeLoginState } from '../../actions/login_action_creators';
+
 /**
  * Containing component for the header navbar
  */
@@ -17,6 +19,13 @@ class NavTopContainer extends PureComponent {
     return (
       <NavTop {...props} />
     );
+  }
+
+  /**
+   * On first mount, we make a stateful API call to see if the user is currently logged in
+   */
+  componentDidMount() {
+    this.props.dispatch(synchronizeLoginState());
   }
 }
 
