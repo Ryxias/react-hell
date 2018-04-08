@@ -5,11 +5,15 @@ import PropTypes from 'prop-types';
 
 const GossipCell = ({ id, text, onRemoveClick }) => {
   return (
-    <div>
-      [{id}] {text}
-      <button type="button" onClick={onRemoveClick} className="btn btn-default btn-sm">
-        <span className="glyphicon glyphicon-remove"></span> Remove
-      </button>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-sm-8 well">{text}</div>
+        <div className="col-sm-4">
+          <button type="button" onClick={onRemoveClick} className="btn btn-danger btn-sm">
+            <span className="glyphicon glyphicon-remove"></span> Remove
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

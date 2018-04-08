@@ -13,9 +13,13 @@ function loadGossipIndex(page_number, page_size) {
 
     return axios.get('/api/gossips' + '?' + `page=${page_number}` + '&' + `page_size=${page_size}`)
       .then(response => {
+        const data = response.data;
         dispatch({
           type: ACTIONS.LOAD_MANY_GOSSIPS_SUCCESS,
-          gossips: response.data.items,
+          gossips: data.items,
+          page: data.page,
+          page_size: data.page_size,
+          page_count: data.page_count,
         });
       })
       .catch(err => {
