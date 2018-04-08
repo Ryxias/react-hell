@@ -6,6 +6,7 @@ const stateDefault = {
   hour: null,
   minute: null,
   second: null,
+  meridian: '',
 };
 
 const handleChangeTimezone = (state, action) => ({
@@ -13,6 +14,7 @@ const handleChangeTimezone = (state, action) => ({
   hour: action.hour,
   minute: action.minute,
   second: action.second,
+  meridian: action.meridian,
 });
 
 function clockReducer (state = stateDefault, action) {

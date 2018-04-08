@@ -5,17 +5,27 @@ const { CHANGE_TIMEZONE } = require('./clock_actions');
 function changeTimezone(offset) {
   let time = new Date();  // local time object
   let second = time.getUTCSeconds();
-  let hour = time.getUTCHours() + parseInt(Math.floor(offset)) < 0 ? time.getUTCHours() + parseInt(Math.floor(offset)) + 24 : time.getUTCHours() + parseInt(Math.floor(offset));
+  let militaryHour = time.getUTCHours() + parseInt(Math.floor(offset)) < 0 ? time.getUTCHours() + parseInt(Math.floor(offset)) + 24 : time.getUTCHours() + parseInt(Math.floor(offset));
   let minute = time.getUTCMinutes();
 
   // Check for India time
   if (offset === "5.5") {
     if (time.getUTCMinutes() + 30 > 60) {
       minute = time.getUTCMinutes() - 30;
-      hour += 1;
+      militaryHour += 1;
     } else {
       minute = time.getUTCMinutes() + 30;
     }
+  }
+
+  // adjust for meridian time
+  let meridian = '';
+  let hour = militaryHour;
+  if (militaryHour > 11) {
+    meridian = 'PM';
+    hour = militaryHour !== 12 ? hour - 12 : hour;
+  } else {
+    meridian = 'AM';
   }
 
   return {
@@ -23,6 +33,7 @@ function changeTimezone(offset) {
     hour: hour,
     minute: minute,
     second: second,
+    meridian: meridian,
   };
 }
 
