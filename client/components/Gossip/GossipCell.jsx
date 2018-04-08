@@ -3,10 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GossipCell = ({ id, text }) => {
+const GossipCell = ({ id, text, onRemoveClick }) => {
   return (
     <div>
       [{id}] {text}
+      <button type="button" onClick={onRemoveClick} className="btn btn-default btn-sm">
+        <span className="glyphicon glyphicon-remove"></span> Remove
+      </button>
     </div>
   );
 };
@@ -20,6 +23,8 @@ GossipCell.propTypes = {
   // completeEditAction: PropTypes.func.isRequired,
   //
   // isEditing: PropTypes.bool.isRequired,
+
+  onRemoveClick: PropTypes.func.isRequired,
 };
 
 export default GossipCell;
