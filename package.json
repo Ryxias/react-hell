@@ -49,6 +49,7 @@
     "react-redux": "^5.0.4",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
+    "react-transition-group": "^2.3.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-test-utils": "^0.2.2",
