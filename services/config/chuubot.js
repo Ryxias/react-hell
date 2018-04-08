@@ -18,18 +18,15 @@ module.exports = service_container => {
     const verbose = true;
     const nico = new Slackbot(bot_token, bot_user_id, verbose);
 
-    // const MimicScript = require('../../lib/Slack/BotScripts/MimicScript');
-    // nico.addScript(new MimicScript());
-
     nico.addScript(service_container.get('slackbot.scripts.gossip'));
 
     return nico;
   });
 
-  service_container.autowire('slackbot.scripts.gossip', require('../../lib/Slack/BotScripts/Gossip'));
-
+  //
+  // chuubot configuration
+  //
   service_container.set('chuubot.config', service_container.get('ConfigurationManager').getObject('slack'));
-
   service_container.registerFactory('chuubot', service_container => {
     const slack_config = service_container.get('chuubot.config');
 
@@ -38,34 +35,17 @@ module.exports = service_container => {
     const verbose = true;
     const chuu = new Slackbot(bot_token, bot_user_id, verbose);
 
-    const GachaScript = require('../../lib/Slack/BotScripts/Gacha');
-    chuu.addScript(new GachaScript());
-
-    // Dumb sanity check
-    chuu.on(/^chuu$/, (message, output) => { output.reply('baaaaaaaaaa'); });
-
-    // // Setting up Chuu to recognize your private channel
-    // chuu.on(/^!chuuconfig private$/, (message, send) => {
-    //   let private_channel_id = message.channel;
-    //   let user_id = message.user;
-    //
-    //   chuu.registerPrivateChannelMapping(user_id, private_channel_id)
-    //     .then(() => {
-    //       send(`Understood!  I will now message this channel, ${private_channel_id}, when private messaging you!`);
-    //     });
-    // });
-    // chuu.on(/^!private$/, (message, send) => {
-    //   let user_id = message.user;
-    //   chuu.getPrivateMessageChannel(user_id)
-    //     .then(private_channel_id => {
-    //       if (private_channel_id === undefined) {
-    //         send(`You don't seem to have private messaging configured!  Please send me a *_private message_* with the command: \`!chuuconfig private\``);
-    //       }
-    //       send('Psst!  Over here!', private_channel_id);
-    //     })
-    //     .catch(err => send(`Whoops, something went wrong: ${err.message} [0035HQPWCLA]`));
-    // });
+    chuu.addScript(service_container.get('slackbot.scripts.baaachuu'));
+    chuu.addScript(service_container.get('slackbot.scripts.gacha'));
+    chuu.addScript(service_container.get('slackbot.scripts.user_connector'));
 
     return chuu;
   });
+
+  // Scripts go down here
+  service_container.autowire('slackbot.scripts.baaachuu', require('../../lib/Slack/BotScripts/Baaachuu'));
+  service_container.autowire('slackbot.scripts.gacha', require('../../lib/Slack/BotScripts/Gacha'));
+  service_container.autowire('slackbot.scripts.mimic', require('../../lib/Slack/BotScripts/MimicScript'));
+  service_container.autowire('slackbot.scripts.user_connector', require('../../lib/Slack/BotScripts/SlackUserConnector'));
+  service_container.autowire('slackbot.scripts.gossip', require('../../lib/Slack/BotScripts/Gossip'));
 };

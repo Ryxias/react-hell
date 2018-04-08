@@ -16,7 +16,6 @@ module.exports = sequelize => {
     },
     email: {
       type: STRING(180),
-      unique: true,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -32,12 +31,14 @@ module.exports = sequelize => {
     createdAt: 'created',
     updatedAt: 'modified',
     indexes: [
+      { fields: ['email'], unique: true },
       { fields: ['created'] },
     ],
     hooks: {},
     instanceMethods: {
       // WARNING INSTANCE METHODS REMOVED IN v4!!!!
     },
+    underscored: true,
   });
 
   //Return a Promise to return true or false

@@ -29,6 +29,7 @@ module.exports = service_container => {
 
     service_container.autowire('UserStore', require('../../lib/ModelStores/UserStore'));
     service_container.autowire('GossipStore', require('../../lib/ModelStores/GossipStore'));
+    service_container.autowire('SlackUserStore', require('../../lib/ModelStores/SlackUserStore'));
   }
 
 
