@@ -1,10 +1,11 @@
 'use strict';
 
-const ADD_DICE = 'ADD_DICE';
-
-const DO_DICE_ROLL = 'DO_DICE_ROLL';
+const DICE_ADDED = 'DICE_ADDED';
+const DICE_CLEARED = 'DICE_CLEARED';
+const DICE_ROLLED = 'DICE_ROLLED';
 
 module.exports = {
-  ADD_DICE,
-  DO_DICE_ROLL,
+  DICE_ADDED,
+  DICE_CLEARED,
+  DICE_ROLLED,
 };

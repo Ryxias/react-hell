@@ -11,6 +11,7 @@ class DiceAppContainer extends React.PureComponent {
   render() {
     return (
       <div>
+        <h1>d20 Dice Bag</h1>
         <section className="container-fluid">
           <DicePicker/>
         </section>
