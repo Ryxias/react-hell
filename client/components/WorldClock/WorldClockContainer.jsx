@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 
 class WorldClockContainer extends PureComponent {
   constructor(props) {
@@ -32,10 +32,14 @@ class WorldClockContainer extends PureComponent {
       timezone: this.props.timezone,
     };
     return (
-      <Nav pullRight>
-          { this.props.time_active ? <WorldClockDisplay {...clockProps} /> : null }
+      <div>
+        <h1>World Clock</h1>
+        <WorldClockButtons/>
+        <Col>
           <WorldClockSelection/>
-      </Nav>
+          { this.props.time_active ? <WorldClockDisplay {...clockProps} /> : null }
+        </Col>
+      </div>
     );
   }
 }

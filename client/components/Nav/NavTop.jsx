@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
@@ -8,8 +8,6 @@ import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import WorldClockSelection from '../WorldClock/WorldClockSelection.jsx';
-import WorldClockDisplay from '../WorldClock/WorldClockDisplay.jsx';
 import WorldClockContainer from '../WorldClock/WorldClockContainer.jsx';
 
 const NavTop = (props) => {
@@ -48,7 +46,6 @@ const NavTop = (props) => {
               </NavItem>
             </LinkContainer>
           </Nav>
-            {/* Eventually we want to float this guy allllllll ----> the way right */}
           <Nav pullRight>
             <LinkContainer to="/user">
               <NavItem eventKey={4}>
@@ -56,7 +53,6 @@ const NavTop = (props) => {
               </NavItem>
             </LinkContainer>
           </Nav>
-          <WorldClockContainer/>
         </Navbar.Collapse>
 
       </Grid>
