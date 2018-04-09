@@ -125,6 +125,14 @@ function user(state = null, action) {
 
       return newState;
     }
+    case USER_ACTIONS.DISMISS_SLACK_TOKEN: {
+      const newState = Object.assign({}, state);
+      newState.slackToken = '';
+      newState.useCommand = '';
+      newState.isFetchingSlackToken = false;
+
+      return newState;
+    }
 
     // Defaults
     default:

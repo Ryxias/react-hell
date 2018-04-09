@@ -43,7 +43,7 @@ const NavTop = (props) => {
                 <div className="nav-link">Gossip</div>
               </NavItem>
             </LinkContainer>
-            <LinkContainer to="/gossip">
+            <LinkContainer to="/dice">
               <NavItem eventKey={4}>
                 <div className="nav-link">Dice</div>
               </NavItem>
