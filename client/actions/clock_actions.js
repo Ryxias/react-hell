@@ -1,0 +1,10 @@
+'use strict';
+
+const CHANGE_TIMEZONE = 'CHANGE_TIMEZONE';
+
+const CLEAR_TIMEZONETEXT = 'CLEAR_TIMEZONETEXT';
+
+module.exports = {
+  CHANGE_TIMEZONE,
+  CLEAR_TIMEZONETEXT,
+};
