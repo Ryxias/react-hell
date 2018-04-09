@@ -12,7 +12,7 @@ class Dashboard extends PureComponent {
     return (
       <div>
         <section>
-          <span>{this.props.username}'s Dashboard</span>
+          <h1>{this.props.username}'s Dashboard</h1>
         </section>
         <section>
           <ConnectSlackContainer/>
