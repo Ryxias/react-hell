@@ -57,6 +57,7 @@
     "sequelize": "^4.8.0",
     "service-container": "Ryxias/service-container#v1.0.1",
     "showdown": "^1.7.4",
+    "uuid": "^3.2.1",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },

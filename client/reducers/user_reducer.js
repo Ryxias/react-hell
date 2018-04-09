@@ -103,6 +103,28 @@ function user(state = null, action) {
       return newState;
     }
 
+    // Slack connector
+    case USER_ACTIONS.REQUEST_SLACK_TOKEN_START: {
+      const newState = Object.assign({}, state);
+      newState.isFetchingSlackToken = true;
+      newState.slackToken = '';
+
+      return newState;
+    }
+    case USER_ACTIONS.REQUEST_SLACK_TOKEN_SUCCESS: {
+      const newState = Object.assign({}, state);
+      newState.isFetchingSlackToken = false;
+      newState.slackToken = action.slack_token;
+      newState.useCommand = action.use_command;
+
+      return newState;
+    }
+    case USER_ACTIONS.REQUEST_SLACK_TOKEN_FAIL: {
+      const newState = Object.assign({}, state);
+      newState.isFetchingSlackToken = false;
+
+      return newState;
+    }
 
     // Defaults
     default:
