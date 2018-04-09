@@ -45,5 +45,10 @@ module.exports = sequelize => {
     underscored: true,
   });
 
+  Token.prototype.isExpired = function() {
+    // FIXME
+    return false;
+  };
+
   return Token;
 };

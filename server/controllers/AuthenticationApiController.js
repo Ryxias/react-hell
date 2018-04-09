@@ -146,5 +146,28 @@ class AuthenticationController extends Controller {
       }));
   }
 
+  /**
+   *
+   *
+   */
+  request_slack_connector_token_action(req, res, next) {
+    const user = req.user;
+
+    // FIXME wrong level of abstraction, maybe put into the script instead
+    return this.get('TokenStore').newToken('slack_connector_handoff_token', { user_id: user.id })
+      .then(token => res.send({
+        success: true,
+        message: 'Token successfully generated; use via slack to connect',
+        system_code: '200007818UWYBQYWNWL',
+        slack_token: token.token,
+        use_command: `!connect-me ${token.token}`, // FIXME programmatically gen?
+      }))
+      .catch(err => res.status(500).send({
+        success: false,
+        message: err.message,
+        system_code: '5000018298LWOEBNQPWOWD',
+        error: err,
+      }));
+  }
 }
 module.exports = AuthenticationController;

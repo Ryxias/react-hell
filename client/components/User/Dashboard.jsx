@@ -5,13 +5,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Logout from './Logout.jsx';
+import ConnectSlackContainer from './ConnectSlackContainer.jsx';
 
 class Dashboard extends PureComponent {
   render() {
     return (
       <div>
-        <span>Hello, {this.props.username}!</span>
-        <Logout/>
+        <section>
+          <span>{this.props.username}'s Dashboard</span>
+        </section>
+        <section>
+          <ConnectSlackContainer/>
+        </section>
+        <section>
+          <Logout/>
+        </section>
       </div>
     );
   }
