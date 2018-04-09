@@ -51,6 +51,10 @@ module.exports = service_container => {
         middleware: [ apiRequiresLoggedIn ],
         post: [ 'app.controllers.auth', 'change_password_action' ]
       },
+      '/slack_token': {
+        middleware: [ apiRequiresLoggedIn ],
+        post: [ 'app.controllers.auth', 'request_slack_connector_token_action' ]
+      },
     }
   });
 

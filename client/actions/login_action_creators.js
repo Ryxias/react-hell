@@ -117,9 +117,38 @@ function synchronizeLoginState() {
   };
 }
 
+function requestSlackToken() {
+  return (dispatch, ownState) => {
+    dispatch({
+      type: ACTIONS.REQUEST_SLACK_TOKEN_START,
+    });
+
+    const axios = require('axios'); // FIXME (derek) refactor with the Api Client
+    return axios.post("/api/slack_token")
+      .then(response => {
+        dispatch({
+          type: ACTIONS.REQUEST_SLACK_TOKEN_SUCCESS,
+          slack_token: response.data.slack_token,
+          use_command: response.data.use_command,
+          response_data: response.data,
+        });
+        //dispatch(alert(response.data.message, 'success'));
+      })
+      .catch(err => {
+        const message = err.response.data.message;
+        dispatch({
+          type: ACTIONS.REQUEST_SLACK_TOKEN_FAIL,
+          error: err,
+        });
+        dispatch(alert(message, 'danger'));
+      });
+  };
+}
+
 module.exports = {
   login,
   logout,
   register,
   synchronizeLoginState,
+  requestSlackToken,
 };
