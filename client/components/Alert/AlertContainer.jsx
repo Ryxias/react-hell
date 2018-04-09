@@ -60,6 +60,19 @@ class AlertContainer extends PureComponent {
     );
   }
 
+  componentDidUpdate() {
+    if (this.alert_automatic_timeout) {
+      clearTimeout(this.alert_automatic_timeout);
+    }
+
+    if (this.props.hasAlert) {
+      console.log('setting time bomb!');
+      this.alert_automatic_timeout = setTimeout(() => {
+        this.props.dispatch(dismissAlert());
+      }, 4000); // after 4 seconds dismiss it the alert banner anyway
+    }
+  }
+
   handleDismiss(e) {
     e.preventDefault();
     e.stopPropagation();

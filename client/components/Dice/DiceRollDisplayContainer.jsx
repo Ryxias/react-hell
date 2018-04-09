@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 class DiceRollDisplayContainer extends React.PureComponent {
   render() {
     return (
-
+      <div>foo</div>
     );
   }
 }
