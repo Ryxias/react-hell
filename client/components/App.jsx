@@ -14,6 +14,7 @@ import UserAppContainer from './User/UserAppContainer.jsx';
 import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
 import AlertContainer from './Alert/AlertContainer.jsx';
 import GossipAppContainer from './Gossip/GossipAppContainer.jsx';
+import WorldClockContainer from './WorldClock/WorldClockContainer.jsx';
 
 
 /**
@@ -39,6 +40,7 @@ class App extends Component {
             <Route path="/user" component={UserAppContainer} />
             <Route path="/register" component={RegisterAppContainer} />
             <Route path="/gossip" component={GossipAppContainer} />
+            <Route path="/clock" component={WorldClockContainer} />
           </Grid>
         </section>
       </div>

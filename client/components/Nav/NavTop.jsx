@@ -45,10 +45,15 @@ const NavTop = (props) => {
                 <div className="nav-link">Gossip</div>
               </NavItem>
             </LinkContainer>
+            <LinkContainer to="/clock">
+              <NavItem eventKey={4}>
+                <div className="nav-link">World Clock</div>
+              </NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
             <LinkContainer to="/user">
-              <NavItem eventKey={4}>
+              <NavItem eventKey={5}>
                 <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>

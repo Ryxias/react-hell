@@ -15,9 +15,9 @@ const WorldClockDisplay = ({ timezone, unixtimestamp }) => {
   const now = moment(unixtimestamp).tz(timezone);
 
   return (
-    <Navbar.Text className="navbar-text">
-      Time is now {now.format('LTS')} at
-    </Navbar.Text>
+    <div>
+      Time is now {now.format('LTS')}.
+    </div>
   );
 };
 

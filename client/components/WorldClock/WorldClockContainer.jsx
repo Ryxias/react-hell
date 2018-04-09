@@ -4,7 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
-import { Nav } from 'react-bootstrap';
+import WorldClockButtons from './WorldClockButtons.jsx';
+import { Row, Col } from 'react-bootstrap';
 
 class WorldClockContainer extends PureComponent {
   constructor(props) {

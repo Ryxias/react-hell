@@ -23,10 +23,10 @@ class WorldClockSelection extends PureComponent {
 
   render() {
     return (
-        <Navbar.Form pullRight>
+        <form>
           <FormGroup>
             <FormControl
-              className="nav-dropdown"
+              className="clock-dropdown"
               componentClass="select"
               onChange={this.onSelectLocation}
             >
@@ -37,10 +37,10 @@ class WorldClockSelection extends PureComponent {
               <option value={"Asia/Hong_Kong"}>Hong Kong</option>
               <option value={"Europe/London"}>London</option>
               <option value={"Europe/Paris"}>Paris</option>
-              <option value={"India/Delhi"}>India</option>
+              <option value={"Asia/Kolkata"}>India</option>
             </FormControl>
           </FormGroup>
-        </Navbar.Form>
+        </form>
     );
   }
 }
