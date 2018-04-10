@@ -103,11 +103,8 @@ module.exports = service_container => {
   });
 
   registry.routeBuilder({
-    '/': {
-      get: [ 'app.controllers.react', 'index_action' ]
-    },
     '/*': {
-      get: [ 'app.controllers.react', 'redirect_back_to_index_action' ]
+      get: [ 'app.controllers.react', 'index_action' ]
     },
   });
 
