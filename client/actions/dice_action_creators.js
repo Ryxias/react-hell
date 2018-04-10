@@ -21,6 +21,7 @@ function rollDice(dice) {
 
   return {
     type: ACTIONS.DICE_ROLLED,
+    dice,
     rolls,
   };
 }

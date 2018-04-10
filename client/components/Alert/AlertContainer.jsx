@@ -72,6 +72,12 @@ class AlertContainer extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    if (this.alert_automatic_timeout) {
+      clearTimeout(this.alert_automatic_timeout);
+    }
+  }
+
   handleDismiss(e) {
     e.preventDefault();
     e.stopPropagation();

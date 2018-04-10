@@ -18,7 +18,7 @@ class DicePicker extends React.PureComponent {
   render() {
     const dice = this.props.dice.map((die, index) => {
       return (
-        <span key={index}>d{die}</span>
+        <code key={index}>d{die}</code>
       )
     });
     return (
@@ -32,6 +32,7 @@ class DicePicker extends React.PureComponent {
           <button className="btn btn-small btn-info" onClick={() => this.handleAddDice(20)}>d20</button>
         </section>
         <section>
+          <h3>Your dice:</h3>
           {dice}
         </section>
         <section>
@@ -40,6 +41,10 @@ class DicePicker extends React.PureComponent {
         </section>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(clearDice());
   }
 
   handleAddDice(size) {
