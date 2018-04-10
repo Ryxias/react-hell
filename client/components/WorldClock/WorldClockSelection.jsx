@@ -15,9 +15,10 @@ class WorldClockSelection extends PureComponent {
 
   onSelectLocation(e) {
     if (e.target.value !== null) {
-      this.props.dispatch(changeTimezone(e.target.value));
+      console.log('what is this.props.selectIndex in onselectlocation?', this.props.selectIndex);
+      this.props.dispatch(changeTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex, e.target.value));
     } else {
-      this.props.dispatch(clearTimezoneText());
+      this.props.dispatch(clearTimezoneText(this.props.selectIndex));
     }
   }
 
@@ -45,8 +46,11 @@ class WorldClockSelection extends PureComponent {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
+    selectIndex: 0,
+    time_actives: state.clock.time_actives,
+    timezones: state.clock.timezones,
   };
 }
 
