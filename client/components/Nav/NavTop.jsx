@@ -50,6 +50,11 @@ const NavTop = (props) => {
                 <div className="nav-link">World Clock</div>
               </NavItem>
             </LinkContainer>
+            <LinkContainer to="/dice">
+              <NavItem eventKey={4}>
+                <div className="nav-link">Dice</div>
+              </NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
             <LinkContainer to="/user">

@@ -8,6 +8,7 @@ const rootReducer = combineReducers({
   alert: require('./alert_reducer'),
   gossip: require('./gossip_reducer'),
   clock: require('./clock_reducer').clockReducer,
+  dice: require('./dice_reducer'),
 });
 
 module.exports = rootReducer;

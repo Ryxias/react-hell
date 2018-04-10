@@ -76,6 +76,7 @@ class GossipIndex extends React.PureComponent {
 
   handleDeleteGossip(id) {
     this.props.dispatch(deleteGossip(id));
+    this.handleLoadGossips(this.state.page_number);
   }
 
   _matrixifyGossips(gossips) {
