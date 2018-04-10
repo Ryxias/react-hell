@@ -43,10 +43,15 @@ const NavTop = (props) => {
                 <div className="nav-link">Gossip</div>
               </NavItem>
             </LinkContainer>
+            <LinkContainer to="/dice">
+              <NavItem eventKey={4}>
+                <div className="nav-link">Dice</div>
+              </NavItem>
+            </LinkContainer>
 
             {/* Eventually we want to float this guy allllllll ----> the way right */}
             <LinkContainer to="/user">
-              <NavItem eventKey={4}>
+              <NavItem eventKey={5}>
                 <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>

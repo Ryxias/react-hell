@@ -145,10 +145,17 @@ function requestSlackToken() {
   };
 }
 
+function dismissSlackToken() {
+  return {
+    type: ACTIONS.DISMISS_SLACK_TOKEN,
+  };
+}
+
 module.exports = {
   login,
   logout,
   register,
   synchronizeLoginState,
   requestSlackToken,
+  dismissSlackToken,
 };

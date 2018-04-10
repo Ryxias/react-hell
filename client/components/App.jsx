@@ -6,14 +6,16 @@ import { Route } from 'react-router-dom';
 import { Grid } from 'react-bootstrap';
 
 import Home from './Home/Home.jsx';
-import GachaAppContainer from './Gacha/GachaAppContainer.jsx';
 import Blog from './Blog/Blog.jsx';
 
 import NavAppContainer from './Nav/NavAppContainer.jsx';
+
+import GachaAppContainer from './Gacha/GachaAppContainer.jsx';
 import UserAppContainer from './User/UserAppContainer.jsx';
 import RegisterAppContainer from './Register/RegisterAppContainer.jsx';
 import AlertContainer from './Alert/AlertContainer.jsx';
 import GossipAppContainer from './Gossip/GossipAppContainer.jsx';
+import DiceAppContainer from './Dice/DiceAppContainer.jsx';
 
 
 /**
@@ -39,6 +41,7 @@ class App extends Component {
             <Route path="/user" component={UserAppContainer} />
             <Route path="/register" component={RegisterAppContainer} />
             <Route path="/gossip" component={GossipAppContainer} />
+            <Route path="/dice" component={DiceAppContainer} />
           </Grid>
         </section>
       </div>
