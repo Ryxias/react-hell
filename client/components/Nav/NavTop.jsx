@@ -1,12 +1,14 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
+
+import WorldClockContainer from '../WorldClock/WorldClockContainer.jsx';
 
 const NavTop = (props) => {
   const { userAppText } = props;
@@ -17,15 +19,15 @@ const NavTop = (props) => {
     <Navbar fixedTop fluid collapseOnSelect bsStyle="dark" className="top-navbar">
       <Grid fluid>
 
-      {/* Main Logo button */}
-      <Navbar.Header>
-        <Navbar.Brand>
-          <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
+        {/* Main Logo button */}
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-      {/* Collapsible content */}
+        {/* Collapsible content */}
         <Navbar.Collapse>
           <Nav>
             <LinkContainer to="/react/sif">
@@ -43,13 +45,18 @@ const NavTop = (props) => {
                 <div className="nav-link">Gossip</div>
               </NavItem>
             </LinkContainer>
+            <LinkContainer to="/clock">
+              <NavItem eventKey={4}>
+                <div className="nav-link">World Clock</div>
+              </NavItem>
+            </LinkContainer>
             <LinkContainer to="/dice">
               <NavItem eventKey={4}>
                 <div className="nav-link">Dice</div>
               </NavItem>
             </LinkContainer>
-
-            {/* Eventually we want to float this guy allllllll ----> the way right */}
+          </Nav>
+          <Nav pullRight>
             <LinkContainer to="/user">
               <NavItem eventKey={5}>
                 <div className="nav-link">{userAppText}</div>
