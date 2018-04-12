@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, FormGroup, FormControl} from 'react-bootstrap';
+import { FormGroup, FormControl} from 'react-bootstrap';
 
 import { changeTimezone, clearTimezoneText } from '../../actions/clock_action_creators';
 
@@ -48,7 +48,6 @@ class WorldClockSelection extends PureComponent {
 
 function mapStateToProps(state, ownProps) {
   return {
-    selectIndex: 0,
     time_actives: state.clock.time_actives,
     timezones: state.clock.timezones,
   };

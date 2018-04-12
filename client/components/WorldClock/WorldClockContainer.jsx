@@ -34,26 +34,29 @@ class WorldClockContainer extends PureComponent {
   }
 
   render() {
-    // const clockProps = {
-    //   unixtimestamp: this.state.unixtimestamp,
-    //   timezone: this.props.timezone,
-    // };
     return (
       <div>
         <h1>World Clock</h1>
         <WorldClockButtons addClock={this.addClock}/>
         <Col>
-          {/*<WorldClockSelection/>*/}
-          {/*{ this.props.time_active ? <WorldClockDisplay {...clockProps} /> : null } // []*/}
           { this.props.timezones.map((timezone, index) => {
             const clockProps = {
               unixtimestamp: this.state.unixtimestamp,
               timezone: timezone,
               index: index,
             };
-            return this.props.time_actives[index] ?
-              [<WorldClockSelection key={index} selectIndex={index}/>, <WorldClockDisplay {...clockProps}/>]
-              : <WorldClockSelection key={index}/>;
+            return this.props.time_actives[index]
+              ? (
+                  <div key={index}>
+                    <WorldClockSelection selectIndex={index}/>
+                    <WorldClockDisplay {...clockProps}/>
+                  </div>
+              )
+              : (
+                <div key={index}>
+                  <WorldClockSelection selectIndex={index}/>
+                </div>
+              );
           }) }
         </Col>
       </div>
