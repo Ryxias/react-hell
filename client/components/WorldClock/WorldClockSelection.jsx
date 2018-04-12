@@ -14,11 +14,10 @@ class WorldClockSelection extends PureComponent {
   }
 
   onSelectLocation(e) {
-    if (e.target.value !== null) {
-      console.log('what is this.props.selectIndex in onselectlocation?', this.props.selectIndex);
+    if (e.target.value !== "None") {
       this.props.dispatch(changeTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex, e.target.value));
     } else {
-      this.props.dispatch(clearTimezoneText(this.props.selectIndex));
+      this.props.dispatch(clearTimezoneText(this.props.timezones, this.props.time_actives, this.props.selectIndex));
     }
   }
 
@@ -31,7 +30,7 @@ class WorldClockSelection extends PureComponent {
               componentClass="select"
               onChange={this.onSelectLocation}
             >
-              <option value={null}>Choose your city/region here</option>
+              <option value={"None"}>Choose your city/region here</option>
               <option value={"America/Los_Angeles"}>San Francisco</option>
               <option value={"America/New_York"}>New York</option>
               <option value={"Asia/Tokyo"}>Japan</option>

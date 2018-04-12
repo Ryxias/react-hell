@@ -21,6 +21,7 @@ const handleChangeTimezone = (state, action) => ({
 
 const handleClearTimezoneText = (state, action) => ({
   ...state,
+  timezones: action.timezones,
   time_actives: action.time_actives,
 });
 
