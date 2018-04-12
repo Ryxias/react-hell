@@ -51,8 +51,9 @@ class WorldClockContainer extends PureComponent {
               timezone: timezone,
               index: index,
             };
-            return this.props.time_actives[index] ? [ <WorldClockSelection key={index} selectIndex={index}/>,
-                                                      <WorldClockDisplay key={index} {...clockProps}/> ] : <WorldClockSelection key={index}/> ;
+            return this.props.time_actives[index] ?
+              [<WorldClockSelection key={index} selectIndex={index}/>, <WorldClockDisplay {...clockProps}/>]
+              : <WorldClockSelection key={index}/>;
           }) }
         </Col>
       </div>
