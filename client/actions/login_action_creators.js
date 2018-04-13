@@ -3,7 +3,7 @@
 const axios = require('axios');
 const ACTIONS = require('./login_actions');
 
-const { alert } = require('./alert_action_creators');
+const { alert } = require('../modules/alert');
 
 function login(email, password) {
   return (dispatch, ownState) => {

@@ -1,10 +1,30 @@
 'use strict';
 
-const ALERT_ACTIONS = require('../actions/alert_actions');
+// Actions
 
-function alert(state = {}, action) {
+const ALERT_RECIEVED = 'ALERT_RECEIVED';
+const ALERT_CLOSED = 'ALERT_CLOSED';
+
+// Action Creators
+
+export function alert(message, severity = 'info') {
+  return {
+    type: ALERT_RECIEVED,
+    severity,
+    message,
+  };
+}
+
+export function dismissAlert() {
+  return {
+    type: ALERT_CLOSED,
+  }
+}
+
+// Reducer
+export default function reducer(state = {}, action = {}) {
   switch (action.type) {
-    case ALERT_ACTIONS.ALERT_RECIEVED: {
+    case ALERT_RECIEVED: {
       const newState = Object.assign({}, state);
       newState.hasAlert = true;
       newState.message = action.message;
@@ -12,7 +32,7 @@ function alert(state = {}, action) {
 
       return newState;
     }
-    case ALERT_ACTIONS.ALERT_CLOSED: {
+    case ALERT_CLOSED: {
       const newState = Object.assign({}, state);
       newState.hasAlert = false;
       newState.message = null;
@@ -24,5 +44,3 @@ function alert(state = {}, action) {
       return state;
   }
 }
-
-module.exports = alert;

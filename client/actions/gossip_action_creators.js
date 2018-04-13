@@ -3,7 +3,7 @@
 const axios = require('axios');
 
 const ACTIONS = require('./gossip_actions');
-const { alert } = require('./alert_action_creators');
+const { alert } = require('../modules/alert');
 
 function loadGossipIndex(page_number, page_size) {
   return (dispatch, ownState) => {
