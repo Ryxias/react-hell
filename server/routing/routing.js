@@ -99,6 +99,9 @@ module.exports = service_container => {
   registry.routeBuilder({
     '/helloworld': {
       get: [ 'app.controllers.helloworld', 'index_action' ],
+    },
+    '/health': {
+      get: [ 'app.controllers.helloworld', 'health_check_action' ],
     }
   });
 
