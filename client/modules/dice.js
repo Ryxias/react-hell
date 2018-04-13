@@ -30,13 +30,6 @@ export function rollDice(dice) {
   };
 }
 
-module.exports = {
-  addDice,
-  rollDice,
-  clearDice,
-};
-
-
 // Reducer
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {

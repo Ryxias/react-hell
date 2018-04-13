@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import NavTop from './NavTop.jsx';
 
-import { synchronizeLoginState } from '../../actions/login_action_creators';
+import { synchronizeLoginState } from '../../modules/auth';
 
 /**
  * Containing component for the header navbar
