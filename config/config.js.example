@@ -10,7 +10,7 @@ module.exports = {
   secret: '',
   slack: {
     bot_user_id: '',
-    bot_token: ',
+    bot_token: '',
   },
   nicobot: {
     bot_user_id: '',
