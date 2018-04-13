@@ -1,8 +1,16 @@
+'use strict';
+
 import React from 'react';
 
 import GachaButtons from './GachaButtons.jsx';
 
-const GachaContent = ({ card, getGacha }) => {
+const GachaContent = ({ card, getGacha, handleShareWaifu }) => {
+
+  const buttonProps = {
+    getGacha,
+    handleShareWaifu,
+  };
+
   return (
     <div className="gacha-container">
       <div className="envelope-image-container">
@@ -14,7 +22,7 @@ const GachaContent = ({ card, getGacha }) => {
           <a href={card.card_ext_link}>{card.card_title}</a>
         </span>
         <img className="aidoru-image" src={card.card_image_url}/>
-        <GachaButtons getGacha={getGacha} />
+        <GachaButtons getGacha={...buttonProps} />
       </div>
       <div className="data" data-open-sound-url={"/statics/sound/" + card.open_sound}></div>
     </div>

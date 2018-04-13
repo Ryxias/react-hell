@@ -46,6 +46,10 @@ class GachaAppContainer extends PureComponent {
     this.props.dispatch(actionCreators.startGachaRoll());
   }
 
+  handleShareWaifu() {
+
+  }
+
   // Put an onclick listener on the close envelope that replaces it
   // with the open envelope, which then animates itself to grow fat as fuck
   // before exploding in disappointment for all you gacha fools
@@ -94,11 +98,16 @@ class GachaAppContainer extends PureComponent {
   }
 
   render() {
+    const contentProps = {
+      card: this.props.card,
+      getGacha: this.getGacha,
+      handleShareWaifu: this.handleShareWaifu,
+    };
     return (
       <div>
         { this.props.isLoading
           ? <GachaLoadingScreen />
-          : <GachaContent card={this.props.card} getGacha={this.getGacha} />
+          : <GachaContent {...contentProps} />
         }
       </div>
     );
