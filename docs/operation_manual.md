@@ -42,6 +42,8 @@ To check if they are installed, you can always use the `which` command.
 $ which npm
 /usr/local/bin/npm
 ```
+If not installed, nothing will return
+
 
 ## Get the code
 Use git to clone the repository locally. We recommend putting all git repositories in a local folder under `~/repos`
@@ -69,7 +71,21 @@ Copy paste it to a new file named `config.js` in the same directory.
 
 ## Setup your Database
 Chuuni is powered by MySQL for its database. You will need the `mysql-server` process running on your local machine.
-First, install `mysql`:
+First, make sure `homebrew` is installed:
+
+```bash
+$ which brew
+/usr/local/bin/brew
+```
+If not installed, nothing will return.
+To install `homebrew`, copy/paste and run:
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+...and follow installation prompt.
+
+Second, install `mysql`:
 
 ```bash
 $ brew install mysql
