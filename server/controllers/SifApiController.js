@@ -14,7 +14,7 @@ class SifApiController extends Controller {
   }
 
   share_roll_action(req, res, next) {
-    const card_id = req.query.card_id;
+    const card_id = req.body.card_id;
 
     if (!card_id) {
       return res.status(400).send({
@@ -77,6 +77,7 @@ class SifApiController extends Controller {
   _renderJSON(card, res) {
     const { envelope_image_closed, envelope_image_open, open_sound } = this._mapRarityToAssets(card.getRarity());
     const data = {
+      id: card.getId(),
       card_title: "[" + card.getId() + "] " + card.getName(),
       card_ext_link: card.getWebsiteUrl(),
       card_image_url: card.getImageUrl(),

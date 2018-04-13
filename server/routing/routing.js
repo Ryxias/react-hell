@@ -30,7 +30,7 @@ module.exports = service_container => {
         },
         '/share': {
           middleware: [ apiRequiresLoggedIn ],
-          get: { // FIXME POST
+          post: {
             service_id: 'app.controllers.sif_api',
             action: 'share_roll_action',
           }
