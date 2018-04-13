@@ -73,5 +73,9 @@ module.exports = sequelize => {
     }
   };
 
+  User.prototype.getUsername = function() {
+    return this.username || this.email;
+  };
+
   return User;
 };

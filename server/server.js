@@ -11,3 +11,5 @@ const app_kernel = new AppKernel('production');
 app_kernel.boot();
 
 app_kernel.getContainer().get('express.server').start();
+
+app_kernel.getContainer().get('chuubot').connect();

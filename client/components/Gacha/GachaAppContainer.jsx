@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import GachaContent from './GachaContent.jsx';
 import GachaLoadingScreen from './GachaLoadingScreen.jsx';
-import actionCreators from '../../actions/gacha_action_creators';
+import { resetGacha, startGachaRoll, shareCard } from '../../modules/gacha';
 
 class GachaAppContainer extends PureComponent {
   constructor(props) {
@@ -14,12 +14,13 @@ class GachaAppContainer extends PureComponent {
     this.resetGacha = this.resetGacha.bind(this);
     this.getGacha = this.getGacha.bind(this);
     this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
+    this.handleShareWaifu = this.handleShareWaifu.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
   resetGacha() {
-    this.props.dispatch(actionCreators.resetGacha());
+    this.props.dispatch(resetGacha());
   }
 
   // GETS a random gacha from schoolido.lu's LLSIF API and replaces
@@ -43,7 +44,13 @@ class GachaAppContainer extends PureComponent {
       $open_envelope.addClass("hide");
     }
 
-    this.props.dispatch(actionCreators.startGachaRoll());
+    this.props.dispatch(startGachaRoll());
+  }
+
+  handleShareWaifu() {
+    if (this.props.card.id) {
+      this.props.dispatch(shareCard(this.props.card.id));
+    }
   }
 
   // Put an onclick listener on the close envelope that replaces it
@@ -94,11 +101,16 @@ class GachaAppContainer extends PureComponent {
   }
 
   render() {
+    const contentProps = {
+      card: this.props.card,
+      getGacha: this.getGacha,
+      handleShareWaifu: this.handleShareWaifu,
+    };
     return (
       <div>
         { this.props.isLoading
           ? <GachaLoadingScreen />
-          : <GachaContent card={this.props.card} getGacha={this.getGacha} />
+          : <GachaContent {...contentProps} />
         }
       </div>
     );
