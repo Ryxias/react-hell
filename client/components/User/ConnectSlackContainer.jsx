@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { requestSlackToken, dismissSlackToken } from '../../actions/login_action_creators';
+import { requestSlackToken, dismissSlackToken } from '../../modules/auth';
 
 class ConnectSlackContainer extends React.PureComponent {
   constructor(props) {

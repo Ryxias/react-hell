@@ -8,8 +8,6 @@ import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import WorldClockContainer from '../WorldClock/WorldClockContainer.jsx';
-
 const NavTop = (props) => {
   const { userAppText } = props;
 

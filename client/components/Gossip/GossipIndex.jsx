@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadGossipIndex, deleteGossip } from '../../actions/gossip_action_creators';
+import { loadGossipIndex, deleteGossip } from '../../modules/gossip';
 import GossipCell from './GossipCell.jsx';
 import GossipIndexPaginator from './GossipIndexPaginator.jsx';
 

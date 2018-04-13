@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import LoginForm from '../User/LoginForm.jsx';
 
-import { register } from '../../actions/login_action_creators';
+import { register } from '../../modules/auth';
 
 /**
  * Containing component under all routes for /user
