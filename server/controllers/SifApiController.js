@@ -13,6 +13,63 @@ class SifApiController extends Controller {
       });
   }
 
+  share_roll_action(req, res, next) {
+    const card_id = req.body.card_id;
+
+    if (!card_id) {
+      return res.status(400).send({
+        success: false,
+        message: 'No card provided',
+        system_code: '40498072POLMWUYBW',
+      });
+    }
+
+    this._ll_client().getCard(card_id)
+      .then(card => {
+        if (!card) {
+          return res.status(404).send({
+            success: false,
+            message: 'No such card found',
+            system_code: '404738236VYBEOMDW',
+            card_id,
+          });
+        }
+
+        const getPersonString = this.get('SlackUserStore').findSlackUserByUserId(req.user.id)
+          .then(slack_user => {
+            if (!slack_user) {
+              return req.user.getUsername();
+            }
+            return `<@${slack_user.slack_user_id}>`;
+          })
+          .catch(err => '... someone');
+
+        return Promise.resolve(getPersonString)
+          .then(person => {
+            const sif_channel_id = require('../../lib/Slack/SlackChannels').schoolidolfestival;
+            const card_string = '[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl();
+
+            const text = `Look! ${person} rolled a ${card_string}`;
+            return this.get('chuubot').sendMessage(text, sif_channel_id)
+              .then(message_result => {
+                return res.send({
+                  success: true,
+                  message: 'Shared!',
+                  system_code: '2007493PUEBNEWQSJSA',
+                  card,
+                  res: message_result,
+                });
+              });
+          });
+      })
+      .catch(err => res.status(500).send({
+        success: false,
+        message: err.message,
+        system_code: '500007182BUENQLW',
+        error: err,
+      }));
+  }
+
   _ll_client() {
     return this.get('sif.client');
   }
@@ -20,6 +77,7 @@ class SifApiController extends Controller {
   _renderJSON(card, res) {
     const { envelope_image_closed, envelope_image_open, open_sound } = this._mapRarityToAssets(card.getRarity());
     const data = {
+      id: card.getId(),
       card_title: "[" + card.getId() + "] " + card.getName(),
       card_ext_link: card.getWebsiteUrl(),
       card_image_url: card.getImageUrl(),

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const GachaButtons = ({ getGacha }) => {
+const GachaButtons = ({ getGacha, handleShareWaifu }) => {
   return (
     <div className="aidoru-buttons">
       <Button className="gacha-button" onClick={getGacha}>Re-roll</Button>
-      <Button className="gacha-button">Share this waifu</Button>
+      <Button className="gacha-button" onClick={handleShareWaifu}>Share this waifu</Button>
     </div>
   );
 };
