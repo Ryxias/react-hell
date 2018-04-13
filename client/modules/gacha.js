@@ -1,5 +1,7 @@
 'use strict';
 
+import { alert } from './alert';
+
 // A module file for gacha. Inspired by ducks
 // https://medium.com/@scbarrus/the-ducks-file-structure-for-redux-d63c41b7035c
 // And the futuristic:
@@ -55,6 +57,7 @@ export function shareCard(card_id) {
           type: SHARE_FAILURE,
           data: err.response.data,
         });
+        dispatch(alert(err.response.data.message));
       });
   };
 }
