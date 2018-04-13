@@ -131,6 +131,17 @@ class AuthenticationController extends Controller {
         }
         return this.get('UserStore').createUser(email)
           .then(user => user.setPasswordAndSave(password))
+          .then(user => {
+            // We immediately log in the user after they register
+            return new Promise(function(resolve, reject) {
+              req.login(user, err => {
+                if (err) {
+                  reject(err);
+                }
+                resolve(user);
+              });
+            });
+          })
           .then(user => res.send({
             success: true,
             message: 'Registration successful',
