@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { rollDice, addDice, clearDice } from '../../actions/dice_action_creators';
+import { rollDice, addDice, clearDice } from '../../modules/dice';
 
 class DicePicker extends React.PureComponent {
   constructor(props) {
