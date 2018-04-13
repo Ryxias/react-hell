@@ -1,9 +1,9 @@
 'use strict';
 
 // Actions
-const DICE_ADDED = 'DICE_ADDED';
-const DICE_CLEARED = 'DICE_CLEARED';
-const DICE_ROLLED = 'DICE_ROLLED';
+const DICE_ADDED = 'dice/DICE_ADDED';
+const DICE_CLEARED = 'dice/DICE_CLEARED';
+const DICE_ROLLED = 'dice/DICE_ROLLED';
 
 // Action Creators
 export function addDice(die_size) {

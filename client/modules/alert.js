@@ -2,8 +2,8 @@
 
 // Actions
 
-const ALERT_RECIEVED = 'ALERT_RECEIVED';
-const ALERT_CLOSED = 'ALERT_CLOSED';
+const ALERT_RECIEVED = 'alert/ALERT_RECEIVED';
+const ALERT_CLOSED = 'alert/ALERT_CLOSED';
 
 // Action Creators
 
