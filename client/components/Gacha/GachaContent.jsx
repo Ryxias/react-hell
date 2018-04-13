@@ -22,7 +22,7 @@ const GachaContent = ({ card, getGacha, handleShareWaifu }) => {
           <a href={card.card_ext_link}>{card.card_title}</a>
         </span>
         <img className="aidoru-image" src={card.card_image_url}/>
-        <GachaButtons getGacha={...buttonProps} />
+        <GachaButtons {...buttonProps} />
       </div>
       <div className="data" data-open-sound-url={"/statics/sound/" + card.open_sound}></div>
     </div>

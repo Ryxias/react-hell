@@ -28,6 +28,13 @@ module.exports = service_container => {
             action: 'get_roll_gacha_action',
           },
         },
+        '/share': {
+          middleware: [ apiRequiresLoggedIn ],
+          get: { // FIXME POST
+            service_id: 'app.controllers.sif_api',
+            action: 'share_roll_action',
+          }
+        },
       },
     },
   });
