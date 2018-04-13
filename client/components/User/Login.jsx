@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import LoginForm from './LoginForm.jsx';
-import { login } from '../../actions/login_action_creators';
+import { login } from '../../modules/auth';
 
 /**
  * Containing component under all routes for /user

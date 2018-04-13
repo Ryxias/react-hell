@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { logout } from '../../actions/login_action_creators';
+import { logout } from '../../modules/auth';
 
 /**
  * Containing component under all routes for /user

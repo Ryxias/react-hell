@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-import { dismissAlert } from '../../actions/alert_action_creators';
+import { dismissAlert } from '../../modules/alert';
 
 /**
  * Containing component for alert banners

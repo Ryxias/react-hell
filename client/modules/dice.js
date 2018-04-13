@@ -1,10 +1,39 @@
 'use strict';
 
-const DICE_ACTIONS = require('../actions/dice_actions');
+// Actions
+const DICE_ADDED = 'dice/DICE_ADDED';
+const DICE_CLEARED = 'dice/DICE_CLEARED';
+const DICE_ROLLED = 'dice/DICE_ROLLED';
 
-function dice(state = {}, action) {
+// Action Creators
+export function addDice(die_size) {
+  return {
+    type: DICE_ADDED,
+    dieSize: die_size,
+  };
+}
+
+export function clearDice() {
+  return {
+    type: DICE_CLEARED,
+  }
+}
+
+export function rollDice(dice) {
+  // We have an impure action creator here... no big deal I guess
+  const rolls = dice.map(die_size => Math.floor((Math.random() * die_size)) + 1);
+
+  return {
+    type: DICE_ROLLED,
+    dice,
+    rolls,
+  };
+}
+
+// Reducer
+export default function reducer(state = {}, action = {}) {
   switch (action.type) {
-    case DICE_ACTIONS.DICE_ADDED: {
+    case DICE_ADDED: {
       const newState = Object.assign({}, state);
       const { dieSize } = action;
 
@@ -13,13 +42,13 @@ function dice(state = {}, action) {
 
       return newState;
     }
-    case DICE_ACTIONS.DICE_CLEARED: {
+    case DICE_CLEARED: {
       const newState = Object.assign({}, state);
       newState.dice = [];
       newState.rolls = [];
       return newState;
     }
-    case DICE_ACTIONS.DICE_ROLLED: {
+    case DICE_ROLLED: {
       const newState = Object.assign({}, state);
       const dice = action.dice;
       newState.rolls = action.rolls || [];
@@ -100,4 +129,3 @@ function dice(state = {}, action) {
   }
 }
 
-module.exports = dice;

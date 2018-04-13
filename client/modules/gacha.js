@@ -6,33 +6,33 @@
 //   https://github.com/erikras/ducks-modular-redux
 
 // ACTIONS
-const SHARE_STARTED = 'GACHA/SHARE_STARTED';
-const SHARE_SUCCESS = 'GACHA/SHARE_SUCCESS';
-const SHARE_FAILURE = 'GACHA/SHARE_FAILURE';
+const SHARE_STARTED = 'gacha/SHARE_STARTED';
+const SHARE_SUCCESS = 'gacha/SHARE_SUCCESS';
+const SHARE_FAILURE = 'gacha/SHARE_FAILURE';
 /**
  * ???
  */
-const RESET_GACHA = 'GACHA/RESET_GACHA';
+const RESET_GACHA = 'gacha/RESET_GACHA';
 
 /**
  * Start API call to server to load the next card.
  */
-const START_GACHA_ROLL = 'GACHA/START_GACHA_ROLL';
+const START_GACHA_ROLL = 'gacha/START_GACHA_ROLL';
 
 /**
  * Get this when the API call returns.
  */
-const RECEIVE_GACHA_ROLL = 'GACHA/RECIEVE_GACHA_ROLL';
+const RECEIVE_GACHA_ROLL = 'gacha/RECIEVE_GACHA_ROLL';
 
 /**
  * User clicks on the envelope and begins the opening animation
  */
-const START_OPEN_CARD = 'GACHA/START_OPEN_CARD';
+const START_OPEN_CARD = 'gacha/START_OPEN_CARD';
 
 /**
  * The envelope finishes opening and renders the Aidorus
  */
-const CARD_OPENED = 'GACHA/CARD_OPENED';
+const CARD_OPENED = 'gacha/CARD_OPENED';
 
 
 // ACTION CREATORS
