@@ -3,7 +3,7 @@
 import { TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED } from '../actions/clock_actions';
 
 const stateDefault = {
-  timezones: [null],
+  timezones: [""],
   time_actives: [false],
 };
 

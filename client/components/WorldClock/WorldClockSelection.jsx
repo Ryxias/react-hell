@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, FormControl} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import { changeTimezone, clearTimezone } from '../../actions/clock_action_creators';
 
@@ -11,6 +12,17 @@ class WorldClockSelection extends PureComponent {
     super(props);
 
     this.onSelectLocation = this.onSelectLocation.bind(this);
+
+    this.regions = [
+      ["None", "Choose your city/region here"],
+      ["America/Los_Angeles", "San Francisco"],
+      ["America/New_York", "New York"],
+      ["Asia/Tokyo", "Japan"],
+      ["Asia/Hong_Kong", "Hong Kong"],
+      ["Europe/London", "London"],
+      ["Europe/Paris", "Paris"],
+      ["Asia/Kolkata", "India"],
+    ];
   }
 
   onSelectLocation(e) {
@@ -30,14 +42,11 @@ class WorldClockSelection extends PureComponent {
               componentClass="select"
               onChange={this.onSelectLocation}
             >
-              <option value={"None"}>Choose your city/region here</option>
-              <option value={"America/Los_Angeles"}>San Francisco</option>
-              <option value={"America/New_York"}>New York</option>
-              <option value={"Asia/Tokyo"}>Japan</option>
-              <option value={"Asia/Hong_Kong"}>Hong Kong</option>
-              <option value={"Europe/London"}>London</option>
-              <option value={"Europe/Paris"}>Paris</option>
-              <option value={"Asia/Kolkata"}>India</option>
+              {
+                this.regions.map((region, i) => {
+                  return (<option value={region[0]} key={i}>{region[1]}</option>);
+                })
+              }
             </FormControl>
           </FormGroup>
         </form>
@@ -45,7 +54,13 @@ class WorldClockSelection extends PureComponent {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+WorldClockSelection.propTypes = {
+  time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectIndex: PropTypes.number.isRequired,
+};
+
+function mapStateToProps(state) {
   return {
     time_actives: state.clock.time_actives,
     timezones: state.clock.timezones,

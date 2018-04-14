@@ -6,6 +6,7 @@ import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
 import WorldClockButtons from './WorldClockButtons.jsx';
 import { Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { addTimezone } from '../../actions/clock_action_creators';
 
 class WorldClockContainer extends PureComponent {
@@ -63,6 +64,11 @@ class WorldClockContainer extends PureComponent {
     );
   }
 }
+
+WorldClockContainer.propTypes = {
+  time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 function mapStateToProps(state) {
   return {
