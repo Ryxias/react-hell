@@ -1,6 +1,6 @@
 'use strict';
 
-import { ADD_TIMEZONE, CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT } from '../actions/clock_actions';
+import { TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED } from '../actions/clock_actions';
 
 const stateDefault = {
   timezones: [null],
@@ -19,7 +19,7 @@ const handleChangeTimezone = (state, action) => ({
   time_actives: action.time_actives,
 });
 
-const handleClearTimezoneText = (state, action) => ({
+const handleClearTimezone = (state, action) => ({
   ...state,
   timezones: action.timezones,
   time_actives: action.time_actives,
@@ -27,12 +27,12 @@ const handleClearTimezoneText = (state, action) => ({
 
 export function clockReducer(state = stateDefault, action) {
   switch(action.type) {
-    case ADD_TIMEZONE:
+    case TIMEZONE_ADDED:
       return handleAddTimezone(state, action);
-    case CHANGE_TIMEZONE:
+    case TIMEZONE_CHANGED:
       return handleChangeTimezone(state, action);
-    case CLEAR_TIMEZONETEXT:
-      return handleClearTimezoneText(state, action);
+    case TIMEZONE_NOT_SELECTED:
+      return handleClearTimezone(state, action);
     default:
       return state;
   }

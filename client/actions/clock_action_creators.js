@@ -1,10 +1,10 @@
 'use strict';
 
-const { ADD_TIMEZONE, CHANGE_TIMEZONE, CLEAR_TIMEZONETEXT } = require('./clock_actions');
+const { TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED } = require('./clock_actions');
 
 function addTimezone(timezones, time_actives, new_timezone) {
   return {
-    type: ADD_TIMEZONE,
+    type: TIMEZONE_ADDED,
     timezones: timezones.concat([new_timezone]),
     time_actives: time_actives.concat([false]),
   };
@@ -16,19 +16,19 @@ function changeTimezone(timezones, time_actives, index, new_timezone) {
   const newTime_actives = time_actives.concat();
   newTime_actives[index] = true;
   return {
-    type: CHANGE_TIMEZONE,
+    type: TIMEZONE_CHANGED,
     timezones: newTimezones,
     time_actives: newTime_actives,
   };
 }
 
-function clearTimezoneText(timezones, time_actives, index) {
+function clearTimezone(timezones, time_actives, index) {
   const newTimezones = timezones.concat();
   newTimezones[index] = null;
   const newTime_actives = time_actives.concat();
   newTime_actives[index] = false;
   return {
-    type: CLEAR_TIMEZONETEXT,
+    type: TIMEZONE_NOT_SELECTED,
     timezones: newTimezones,
     time_actives: newTime_actives,
   }
@@ -37,5 +37,5 @@ function clearTimezoneText(timezones, time_actives, index) {
 module.exports = {
   addTimezone,
   changeTimezone,
-  clearTimezoneText,
+  clearTimezone,
 };

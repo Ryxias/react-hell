@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, FormControl} from 'react-bootstrap';
 
-import { changeTimezone, clearTimezoneText } from '../../actions/clock_action_creators';
+import { changeTimezone, clearTimezone } from '../../actions/clock_action_creators';
 
 class WorldClockSelection extends PureComponent {
   constructor(props) {
@@ -17,7 +17,7 @@ class WorldClockSelection extends PureComponent {
     if (e.target.value !== "None") {
       this.props.dispatch(changeTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex, e.target.value));
     } else {
-      this.props.dispatch(clearTimezoneText(this.props.timezones, this.props.time_actives, this.props.selectIndex));
+      this.props.dispatch(clearTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex));
     }
   }
 
