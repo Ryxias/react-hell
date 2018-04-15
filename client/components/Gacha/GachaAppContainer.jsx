@@ -13,17 +13,19 @@ class GachaAppContainer extends PureComponent {
 
     this.state = {
       animationPhase: 'closed',
+      idolized: false,
     };
 
     this.handleShareWaifu = this.handleShareWaifu.bind(this);
     this.handleEnvelopeOpen = this.handleEnvelopeOpen.bind(this);
     this.handleRerollGacha = this.handleRerollGacha.bind(this);
+    this.handleIdolCardClick = this.handleIdolCardClick.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
   resetGacha() {
-    this.setState({ animationPhase: 'closed' });
+    this.setState({ animationPhase: 'closed', idolized: false });
     this.props.dispatch(resetGacha());
   }
 
@@ -65,6 +67,15 @@ class GachaAppContainer extends PureComponent {
     }
   }
 
+  handleIdolCardClick() {
+    if (!!this.props.card.card_idolized_image_url
+      && this.props.card.card_idolized_image_url !== this.props.card.card_image_url) {
+      if (!this.state.idolized) {
+        this.setState({ idolized: true });
+      }
+    }
+  }
+
   // Retrieves data before presentation of the virtual DOM
 
   componentWillMount() {
@@ -77,10 +88,13 @@ class GachaAppContainer extends PureComponent {
       handleRerollGacha: this.handleRerollGacha,
       handleShareWaifu: this.handleShareWaifu,
       handleEnvelopeOpen: this.handleEnvelopeOpen,
+      handleIdolCardClick: this.handleIdolCardClick,
       animationPhase: this.state.animationPhase,
+      idolized: this.state.idolized,
     };
     return (
       <div>
+        <link rel="stylesheet" href="/statics/css/sif.css"/>
         { this.props.isLoading
           ? <GachaLoadingScreen />
           : <GachaContent {...contentProps} />

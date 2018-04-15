@@ -81,6 +81,7 @@ class SifApiController extends Controller {
       card_title: "[" + card.getId() + "] " + card.getName(),
       card_ext_link: card.getWebsiteUrl(),
       card_image_url: card.getImageUrl(),
+      card_idolized_image_url: card.getIdolizedImageUrl(),
       rarity: card.getRarity(),
       envelope_image_closed: envelope_image_closed,
       envelope_image_open: envelope_image_open,

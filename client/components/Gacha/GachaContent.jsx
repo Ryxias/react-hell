@@ -5,7 +5,13 @@ import { CSSTransition } from 'react-transition-group';
 
 import GachaButtons from './GachaButtons.jsx';
 
-const GachaContent = ({ animationPhase, card, handleRerollGacha, handleEnvelopeOpen, handleShareWaifu }) => {
+const GachaContent = (props) => {
+  const {
+    animationPhase,
+    idolized,
+    card,
+    handleRerollGacha, handleEnvelopeOpen, handleShareWaifu, handleIdolCardClick
+  } = props;
 
   const buttonProps = {
     handleRerollGacha,
@@ -16,6 +22,8 @@ const GachaContent = ({ animationPhase, card, handleRerollGacha, handleEnvelopeO
     ? '/statics/i/' + card.envelope_image_open
     : '/statics/i/' + card.envelope_image_closed;
 
+  const has_idolized_image = !!card.card_idolized_image_url && card.card_idolized_image_url !== card.card_image_url;
+
   return (
     <div className="gacha-container">
       {animationPhase !== 'open_finished'
@@ -24,8 +32,7 @@ const GachaContent = ({ animationPhase, card, handleRerollGacha, handleEnvelopeO
             <CSSTransition
               in={animationPhase === 'opening'}
               classNames="envelope"
-              timeout={{ enter: 450, exit: 300 }}
-              onEntered={() => console.log('WOOHOOO!!!!!')}>
+              timeout={{ enter: 450, exit: 300 }}>
 
               <img className="envelope-image" src={imageUrl} />
             </CSSTransition>
@@ -42,7 +49,24 @@ const GachaContent = ({ animationPhase, card, handleRerollGacha, handleEnvelopeO
         <span className="aidoru-name">
           <a href={card.card_ext_link}>{card.card_title}</a>
         </span>
-          <img className="aidoru-image" src={card.card_image_url}/>
+          <CSSTransition
+            in={idolized}
+            classNames="normal-card"
+            timeout={{ enter: 300, exit: 100 }}>
+
+            <img onClick={handleIdolCardClick} className="aidoru-image" src={card.card_image_url}/>
+          </CSSTransition>
+          { has_idolized_image
+            ? (
+              <CSSTransition
+                in={idolized}
+                classNames="idolized-card"
+                timeout={{ enter: 300, exit: 100 }}>
+                <img className="aidoru-image idolized" src={card.card_idolized_image_url}/>
+              </CSSTransition>
+            )
+            : null
+          }
           <GachaButtons {...buttonProps} />
         </div>
       </CSSTransition>

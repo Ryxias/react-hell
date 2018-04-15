@@ -65,6 +65,30 @@
   height: 75%;
   padding: 15px;
 }
+.aidoru-image.idolized {
+  width: 0;
+}
+
+.normal-card-enter {
+  width: 370px;
+}
+.normal-card-enter.normal-card-enter-active {
+  width: 0;
+  transition: width 300ms;
+}
+.normal-card-enter-done {
+  width: 0;
+}
+.idolized_card-enter {
+  width: 0;
+}
+.idolized-card-enter.idolized-card-enter-active {
+  width: 370px;
+  transition: width 300ms 300ms;
+}
+.idolized-card-enter-done {
+  width: 370px !important;
+}
 
 .gacha-button {
   background-color: royalblue;
