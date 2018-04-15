@@ -38,14 +38,14 @@ const CARD_OPENED = 'gacha/CARD_OPENED';
 
 
 // ACTION CREATORS
-export function shareCard(card_id) {
+export function shareCard(card_id, idolized = false) {
   return (dispatch, getState) => {
     dispatch({
       type: SHARE_STARTED,
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.post("/api/sif/share", { card_id })
+    return axios.post("/api/sif/share", { card_id, idolized })
       .then(received => {
         dispatch({
           type: SHARE_SUCCESS,
