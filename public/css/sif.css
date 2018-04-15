@@ -13,7 +13,17 @@
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
   transform: rotate(7deg);
   max-width: 50%;
+}
 
+.envelope-enter {
+  width: 270px;
+}
+.envelope-enter.envelope-enter-active {
+  width: 280px;
+  transition: width 450ms;
+}
+.envelope-enter-done {
+  width: 280px;
 }
 
 .aidoru-name a {
@@ -24,6 +34,17 @@
 .opened-card-container {
   text-align: center;
   height: inherit;
+  opacity: 0;
+}
+.opened-card-enter {
+  opacity: 0.01;
+}
+.opened-card-enter.opened-card-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.opened-card-enter-done {
+  opacity: 1;
 }
 
 .aidoru-name {
@@ -43,6 +64,30 @@
 .aidoru-image {
   height: 75%;
   padding: 15px;
+}
+.aidoru-image.idolized {
+  width: 0;
+}
+
+.normal-card-enter {
+  width: 370px;
+}
+.normal-card-enter.normal-card-enter-active {
+  width: 0;
+  transition: width 300ms;
+}
+.normal-card-enter-done {
+  width: 0;
+}
+.idolized_card-enter {
+  width: 0;
+}
+.idolized-card-enter.idolized-card-enter-active {
+  width: 370px;
+  transition: width 300ms 300ms;
+}
+.idolized-card-enter-done {
+  width: 370px !important;
 }
 
 .gacha-button {

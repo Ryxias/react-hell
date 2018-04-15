@@ -112,6 +112,7 @@ export default function reducer(state = {}, action) {
           card_title: card.card_title,
           card_ext_link: card.card_ext_link,
           card_image_url: card.card_image_url,
+          card_idolized_image_url: card.card_idolized_image_url,
           rarity: card.rarity,
           envelope_image_closed: card.envelope_image_closed,
           envelope_image_open: card.envelope_image_open,
