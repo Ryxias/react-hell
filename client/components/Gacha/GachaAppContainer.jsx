@@ -126,10 +126,6 @@ GachaAppContainer.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-
-  console.log(state); // see the whole redux state everything EVERYTHING
-
-  // gets set into "this.props"
   return {
     card: state.gacha.card,
     isLoading: !!state.gacha.loading,
