@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { dismissAlert } from '../../modules/alert';
 
@@ -40,23 +40,25 @@ class AlertContainer extends PureComponent {
       const classnames = `alert ${alertSeverityClass}`;
 
       return (
-        <div key={"the-alert"} className={classnames}>
-          <p>
-            {this.props.message}
-            <a href="#" className="close" onClick={this.handleDismiss} aria-label="close">&times;</a>
-          </p>
-        </div>
+        <CSSTransition
+          key={"the-alert"}
+          classNames="alert"
+          timeout={{ enter: 500, exit: 300 }}>
+
+          <div className={classnames}>
+            <p>
+              {this.props.message}
+              <a href="#" className="close" onClick={this.handleDismiss} aria-label="close">&times;</a>
+            </p>
+          </div>
+        </CSSTransition>
       );
     })();
 
     return (
-      <CSSTransitionGroup
-        transitionName="alert"
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}>
-
+      <TransitionGroup>
         {items}
-      </CSSTransitionGroup>
+      </TransitionGroup>
     );
   }
 

@@ -11,40 +11,33 @@ class GachaAppContainer extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.resetGacha = this.resetGacha.bind(this);
-    this.getGacha = this.getGacha.bind(this);
-    this.enableGachaAnimation = this.enableGachaAnimation.bind(this);
+    this.state = {
+      animationPhase: 'closed',
+      idolized: false,
+    };
+
     this.handleShareWaifu = this.handleShareWaifu.bind(this);
+    this.handleEnvelopeOpen = this.handleEnvelopeOpen.bind(this);
+    this.handleRerollGacha = this.handleRerollGacha.bind(this);
+    this.handleIdolCardClick = this.handleIdolCardClick.bind(this);
   }
 
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
   resetGacha() {
+    this.setState({ animationPhase: 'closed', idolized: false });
     this.props.dispatch(resetGacha());
   }
 
   // GETS a random gacha from schoolido.lu's LLSIF API and replaces
   // the states with the obtained data
-
   getGacha() {
     this.resetGacha();
-
-    const $opened_card_container = $(".opened-card-container");
-    const $envelope_image_container = $(".envelope-image-container");
-    const $closed_envelope = $(".envelope-closed");
-    const $open_envelope = $(".envelope-open");
-
-    if (!$opened_card_container.hasClass("hide")) {
-      $opened_card_container.addClass("hide");
-    }
-
-    if ($envelope_image_container.hasClass("hide")) {
-      $envelope_image_container.removeClass("hide");
-      $closed_envelope.removeClass("hide");
-      $open_envelope.addClass("hide");
-    }
-
     this.props.dispatch(startGachaRoll());
+  }
+
+  handleRerollGacha() {
+    this.getGacha();
   }
 
   handleShareWaifu() {
@@ -53,39 +46,34 @@ class GachaAppContainer extends PureComponent {
     }
   }
 
-  // Put an onclick listener on the close envelope that replaces it
-  // with the open envelope, which then animates itself to grow fat as fuck
-  // before exploding in disappointment for all you gacha fools
+  handleEnvelopeOpen() {
+    if (this.state.animationPhase === 'closed') {
+      const audio = new Audio('/statics/sound/' + this.props.card.open_sound);
 
-  enableGachaAnimation() {
-    const $closed_envelope = $(".envelope-closed");
-    const $open_envelope = $(".envelope-open");
-    let $data_blob = $(".data");
-    $data_blob.data("open-sound-url", "/statics/sound/" + this.props.card.open_sound);
-    let audio = new Audio($data_blob.data("open-sound-url"));
+      // Play kinky music
+      //   Putting the animation crap in here ensures the audio begins to play before
+      //   the animations, making the UI "feel" more snappy.
+      return audio.play()
+        .then(() => {
+          this.setState({
+            animationPhase: 'opening',
+          });
 
-    const animateOpeningBox = () => {
-      // Replace the closed envelope with the open one
-      $closed_envelope.addClass("hide");
-      $open_envelope.removeClass("hide");
+          // FIXME (derek) right now we align this perfectly with the animation
+          // speed in the GachaContent component, but in the future we should use
+          // the transition group events to fire this as a callback.
+          setTimeout((() => this.setState({ animationPhase: 'open_finished' })), 450);
+        });
+    }
+  }
 
-      // Do some stupid ass animation of the open envelope
-      $open_envelope.animate({width:'275px'}, 450, () => {
-        //do stuff after animation
-        $(".envelope-image-container").addClass("hide");
-        let $container = $(".opened-card-container");
-        $container.css("display", "none").removeClass("hide");
-        $container.stop().fadeIn("slow");
-      });
-    };
-
-    // Play kinky music
-    //   Putting the animation crap in here ensures the audio begins to play before
-    //   the animations, making the UI "feel" more snappy.
-
-    $closed_envelope.off().on("click", () => {
-      audio.play().then(animateOpeningBox);
-    });
+  handleIdolCardClick() {
+    if (!!this.props.card.card_idolized_image_url
+      && this.props.card.card_idolized_image_url !== this.props.card.card_image_url) {
+      if (!this.state.idolized) {
+        this.setState({ idolized: true });
+      }
+    }
   }
 
   // Retrieves data before presentation of the virtual DOM
@@ -94,20 +82,19 @@ class GachaAppContainer extends PureComponent {
     this.getGacha();
   }
 
-  // Attaches the jQuery events once the virtual DOM has been fully mounted and onClick event has been triggered
-
-  componentDidUpdate() {
-    this.enableGachaAnimation();
-  }
-
   render() {
     const contentProps = {
       card: this.props.card,
-      getGacha: this.getGacha,
+      handleRerollGacha: this.handleRerollGacha,
       handleShareWaifu: this.handleShareWaifu,
+      handleEnvelopeOpen: this.handleEnvelopeOpen,
+      handleIdolCardClick: this.handleIdolCardClick,
+      animationPhase: this.state.animationPhase,
+      idolized: this.state.idolized,
     };
     return (
       <div>
+        <link rel="stylesheet" href="/statics/css/sif.css"/>
         { this.props.isLoading
           ? <GachaLoadingScreen />
           : <GachaContent {...contentProps} />
@@ -126,10 +113,6 @@ GachaAppContainer.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-
-  console.log(state); // see the whole redux state everything EVERYTHING
-
-  // gets set into "this.props"
   return {
     card: state.gacha.card,
     isLoading: !!state.gacha.loading,

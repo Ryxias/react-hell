@@ -12,4 +12,6 @@ app_kernel.boot();
 
 app_kernel.getContainer().get('express.server').start();
 
-app_kernel.getContainer().get('chuubot').connect();
+if ('production' === app_kernel.getContainer().get('ConfigurationManager').getValue('NODE_ENV')) {
+  app_kernel.getContainer().get('chuubot').connect();
+}
