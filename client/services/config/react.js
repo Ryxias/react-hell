@@ -1,5 +1,8 @@
 'use strict';
 
+import GossipApiClient from '../../lib/GossipApiClient';
+import AuthApiClient from '../../lib/AuthApiClient';
+
 //
 //
 //
@@ -17,8 +20,17 @@ module.exports = service_container => {
         dice: {},
         gacha: {},
         gossip: {},
+        getContainer: () => service_container,
       },
-      false // skip logging
+      false // true = skip logging, false = do logging
     );
   });
+
+  service_container
+    .register('gossip_api_client', GossipApiClient)
+    .setArguments([ '' ]);
+
+  service_container
+    .register('auth_api_client', AuthApiClient)
+    .setArguments([ '' ]);
 };

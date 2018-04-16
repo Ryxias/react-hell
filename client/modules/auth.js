@@ -1,6 +1,5 @@
 'use strict';
 
-const axios = require('axios');
 const { alert } = require('../modules/alert');
 
 
@@ -44,26 +43,20 @@ export function login(email, password) {
       return Promise.resolve(false);
     }
 
+    const AuthApiClient = getState().getContainer().get('auth_api_client');
+
     dispatch({ type: LOGIN_START });
 
-    return axios.post("/api/login", {
-      email,
-      password,
-    })
-      .then(response => {
+    return AuthApiClient.login(email, password)
+      .then(({ data, message }) => {
         dispatch({
           type: LOGIN_SUCCESSFUL,
-          user: response.data.user,
+          user: data.user,
         });
-        dispatch(alert(response.data.message, 'success'));
+        dispatch(alert(message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({
-          type: LOGIN_FAILURE,
-          message,
-          err,
-        });
+      .catch(({ message }) => {
+        dispatch({ type: LOGIN_FAILURE });
         dispatch(alert(message, 'warning'));
       });
   };
@@ -75,20 +68,17 @@ export function logout() {
       return Promise.resolve(false);
     }
 
+    const AuthApiClient = getState().getContainer().get('auth_api_client');
+
     dispatch({ type: LOGOUT_START });
 
-    return axios.post('/api/logout')
-      .then(response => {
+    return AuthApiClient.logout()
+      .then(({ message }) => {
         dispatch({ type: LOGOUT_SUCCESS });
-        dispatch(alert(response.data.message, 'success'));
+        dispatch(alert(message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({
-          type: LOGOUT_FAILURE,
-          error: err,
-          message
-        });
+      .catch(({ message }) => {
+        dispatch({ type: LOGOUT_FAILURE });
         dispatch(alert(message, 'warning'));
       });
   };
@@ -100,27 +90,20 @@ export function register(email, password) {
       return Promise.resolve(false);
     }
 
+    const AuthApiClient = getState().getContainer().get('auth_api_client');
+
     dispatch({ type: REGISTER_START });
 
-    const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.post("/api/register", {
-      email,
-      password
-    })
-      .then(response => {
+    return AuthApiClient.register(email, password)
+      .then(({ data, message }) => {
         dispatch({
           type: REGISTER_SUCCESS,
-          user: response.data.user,
-          response_data: response.data,
+          user: data.user,
         });
-        dispatch(alert(response.data.message, 'success'));
+        dispatch(alert(message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({
-          type: REGISTER_FAIL,
-          error: err,
-        });
+      .catch(({ message }) => {
+        dispatch({ type: REGISTER_FAIL });
         dispatch(alert(message, 'danger'));
       });
   };
@@ -132,25 +115,21 @@ export function synchronizeLoginState() {
       return Promise.resolve(false);
     }
 
+    const AuthApiClient = getState().getContainer().get('auth_api_client');
+
     dispatch({ type: SYNCHRONIZE_LOGIN_STATE_START });
 
-    const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.get("/api/whoami")
-      .then(response => {
+    return AuthApiClient.whoami()
+      .then(({ data }) => {
         dispatch({
           type: SYNCHRONIZE_LOGIN_STATE_SUCCESS,
-          user: response.data.user,
-          response_data: response.data,
+          user: data.user,
           ts: Date.now(),
         });
         //dispatch(alert(response.data.message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({
-          type: SYNCHRONIZE_LOGIN_STATE_FAILURE,
-          error: err,
-        });
+      .catch((error) => {
+        dispatch({ type: SYNCHRONIZE_LOGIN_STATE_FAILURE });
         //dispatch(alert(message, 'danger'));
       });
   };
@@ -162,25 +141,21 @@ export function requestSlackToken() {
       return Promise.resolve(false);
     }
 
+    const AuthApiClient = getState().getContainer().get('auth_api_client');
+
     dispatch({ type: REQUEST_SLACK_TOKEN_START });
 
-    const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.post("/api/slack_token")
-      .then(response => {
+    return AuthApiClient.requestSlackToken()
+      .then(({ data }) => {
         dispatch({
           type: REQUEST_SLACK_TOKEN_SUCCESS,
-          slack_token: response.data.slack_token,
-          use_command: response.data.use_command,
-          response_data: response.data,
+          slack_token: data.slack_token,
+          use_command: data.use_command,
         });
         //dispatch(alert(response.data.message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({
-          type: REQUEST_SLACK_TOKEN_FAIL,
-          error: err,
-        });
+      .catch(({ message }) => {
+        dispatch({ type: REQUEST_SLACK_TOKEN_FAIL });
         dispatch(alert(message, 'danger'));
       });
   };

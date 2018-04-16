@@ -9,6 +9,9 @@ const rootReducer = combineReducers({
   dice: require('../modules/dice').default,
   gacha: require('../modules/gacha').default,
   gossip: require('../modules/gossip').default,
+
+  // FIXME (derek) hacky?
+  getContainer: (state = {}, action = {}) => state,
 });
 
 module.exports = rootReducer;
