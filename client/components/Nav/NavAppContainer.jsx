@@ -31,11 +31,11 @@ class NavTopContainer extends PureComponent {
     // Set up recurring synchronization as long as the window is alive
     this.ticker = setInterval(() => {
       // FIXME (derek) this seems kinda hacky?
-      if (document.hasFocus()) {
-        this.props.synchronizeLoginState();
-      } else {
-        //console.log('Not synchronizing; not focused');
-      }
+      // if (document.hasFocus()) {
+      this.props.synchronizeLoginState();
+      // } else {
+      //   console.log('Not synchronizing; not focused');
+      // }
     // Check to synchronize once every 5 minutes
     }, 5 * 60 * 1000);
   }
