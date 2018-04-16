@@ -3,12 +3,12 @@
 const { combineReducers } = require('redux');
 
 const rootReducer = combineReducers({
-  gacha: require('../modules/gacha').default,
-  user: require('../modules/auth').default, // FIXME in the future, refactor this to be "auth" instead of "user"
   alert: require('../modules/alert').default,
-  gossip: require('../modules/gossip').default,
+  auth: require('../modules/auth').default,
   clock: require('./clock_reducer').clockReducer,
   dice: require('../modules/dice').default,
+  gacha: require('../modules/gacha').default,
+  gossip: require('../modules/gossip').default,
 });
 
 module.exports = rootReducer;

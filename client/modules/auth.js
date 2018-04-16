@@ -39,7 +39,11 @@ const DISMISS_SLACK_TOKEN = 'auth/DISMISS_SLACK_TOKEN';
 
 // Action creators
 export function login(email, password) {
-  return (dispatch, ownState) => {
+  return (dispatch, getState) => {
+    if (getState().auth.isLoggingIn) {
+      return Promise.resolve(false);
+    }
+
     dispatch({ type: LOGIN_START });
 
     return axios.post("/api/login", {
@@ -66,16 +70,16 @@ export function login(email, password) {
 }
 
 export function logout() {
-  return (dispatch, ownState) => {
-    dispatch({
-      type: LOGOUT_START,
-    });
+  return (dispatch, getState) => {
+    if (getState().auth.isLoggingOut) {
+      return Promise.resolve(false);
+    }
+
+    dispatch({ type: LOGOUT_START });
 
     return axios.post('/api/logout')
       .then(response => {
-        dispatch({
-          type: LOGOUT_SUCCESS,
-        });
+        dispatch({ type: LOGOUT_SUCCESS });
         dispatch(alert(response.data.message, 'success'));
       })
       .catch(err => {
@@ -92,10 +96,11 @@ export function logout() {
 
 export function register(email, password) {
   return (dispatch, getState) => {
+    if (getState().auth.isRegistering) {
+      return Promise.resolve(false);
+    }
 
-    dispatch({
-      type: REGISTER_START,
-    });
+    dispatch({ type: REGISTER_START });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
     return axios.post("/api/register", {
@@ -122,10 +127,12 @@ export function register(email, password) {
 }
 
 export function synchronizeLoginState() {
-  return (dispatch, ownState) => {
-    dispatch({
-      type: SYNCHRONIZE_LOGIN_STATE_START,
-    });
+  return (dispatch, getState) => {
+    if (getState().auth.isSynchronizing) {
+      return Promise.resolve(false);
+    }
+
+    dispatch({ type: SYNCHRONIZE_LOGIN_STATE_START });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
     return axios.get("/api/whoami")
@@ -134,6 +141,7 @@ export function synchronizeLoginState() {
           type: SYNCHRONIZE_LOGIN_STATE_SUCCESS,
           user: response.data.user,
           response_data: response.data,
+          ts: Date.now(),
         });
         //dispatch(alert(response.data.message, 'success'));
       })
@@ -149,10 +157,12 @@ export function synchronizeLoginState() {
 }
 
 export function requestSlackToken() {
-  return (dispatch, ownState) => {
-    dispatch({
-      type: REQUEST_SLACK_TOKEN_START,
-    });
+  return (dispatch, getState) => {
+    if (getState().auth.isFetchingSlackToken) {
+      return Promise.resolve(false);
+    }
+
+    dispatch({ type: REQUEST_SLACK_TOKEN_START });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
     return axios.post("/api/slack_token")
@@ -177,13 +187,10 @@ export function requestSlackToken() {
 }
 
 export function dismissSlackToken() {
-  return {
-    type: DISMISS_SLACK_TOKEN,
-  };
+  return { type: DISMISS_SLACK_TOKEN };
 }
 
 // Reducer
-
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
     // Login
@@ -263,6 +270,7 @@ export default function reducer(state = {}, action = {}) {
       const newState = Object.assign({}, state);
       newState.isSynchronizing = false;
       newState.user = action.user;
+      newState.lastChecked = action.ts;
 
       return newState;
     }

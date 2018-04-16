@@ -12,9 +12,10 @@ module.exports = service_container => {
     return service_container.get('redux.configure_store')(
       // This is the initial redux state
       {
-        gacha: {},
-        user: {},
         alert: {},
+        auth: {},
+        dice: {},
+        gacha: {},
         gossip: {},
       },
       false // skip logging

@@ -36,9 +36,17 @@ NavTopContainer.propTypes = {
 
 
 function mapStateToProps(state) {
+  const auth = state.auth;
+
   return {
-    isLoggedIn: !!(state.user && state.user.user && state.user.user.id),
-    username: state.user && state.user.user && (state.user.user.username || state.user.user.email),
+    isLoggedIn: !!(auth && auth.user && auth.user.id),
+    username: auth && auth.user && (auth.user.username || auth.user.email),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    synchronizeLoginState: () => dispatch(synchronizeLoginState()),
   };
 }
 

@@ -61,7 +61,7 @@ Register.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isRegistering: !!state.user.isRegistering,
+    isRegistering: !!state.auth.isRegistering,
   };
 }
 

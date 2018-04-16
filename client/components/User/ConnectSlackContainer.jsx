@@ -63,10 +63,11 @@ ConnectSlackContainer.defaultProps = {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth;
   return {
-    requestedToken: !!state.user.slackToken,
-    slackToken: state.user.slackToken,
-    useCommand: state.user.useCommand,
+    requestedToken: !!auth.slackToken,
+    slackToken: auth.slackToken,
+    useCommand: auth.useCommand,
   };
 };
 export default connect(mapStateToProps)(ConnectSlackContainer);
