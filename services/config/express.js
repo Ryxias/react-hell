@@ -38,6 +38,9 @@ module.exports = service_container => {
       saveUninitialized: false, // Forces a session that is "uninitialized" to be saved to the store if set to 'true'.
       secret: service_container.get('ConfigurationManager').getValue('secret'),
       store: service_container.get('express.session_store'),
+      // Session keep-alive
+      // https://stackoverflow.com/questions/20387554/how-to-keep-alive-an-nodejs-passport-session
+      rolling: true,
       cookie: {
         // expires: null,  // this will automatically be set via maxAge
         // httpOnly: production,  // Allows the use of Document.cookie in development mode, protects against Cross-Site Scripting (XSS) attacks
