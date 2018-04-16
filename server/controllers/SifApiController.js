@@ -15,6 +15,7 @@ class SifApiController extends Controller {
 
   share_roll_action(req, res, next) {
     const card_id = req.body.card_id;
+    const idolized = !!req.body.idolized;
 
     if (!card_id) {
       return res.status(400).send({
@@ -47,7 +48,9 @@ class SifApiController extends Controller {
         return Promise.resolve(getPersonString)
           .then(person => {
             const sif_channel_id = require('../../lib/Slack/SlackChannels').schoolidolfestival;
-            const card_string = '[' + card.getId() + '] ' + card.getName() + ' - ' + card.getImageUrl();
+            const card_string = '[' + card.getId() + '] '
+              + card.getName() + ' - '
+              + (idolized ? card.getIdolizedImageUrl() : card.getImageUrl());
 
             const text = `Look! ${person} rolled a ${card_string}`;
             return this.get('chuubot').sendMessage(text, sif_channel_id)

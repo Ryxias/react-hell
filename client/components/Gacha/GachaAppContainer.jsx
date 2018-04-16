@@ -42,7 +42,7 @@ class GachaAppContainer extends PureComponent {
 
   handleShareWaifu() {
     if (this.props.card.id) {
-      this.props.dispatch(shareCard(this.props.card.id));
+      this.props.dispatch(shareCard(this.props.card.id, this.state.idolized));
     }
   }
 

@@ -28,13 +28,13 @@ const GachaContent = (props) => {
     <div className="gacha-container">
       {animationPhase !== 'open_finished'
         ? (
-          <div onClick={handleEnvelopeOpen} className="envelope-image-container">
+          <div className="envelope-image-container">
             <CSSTransition
               in={animationPhase === 'opening'}
               classNames="envelope"
               timeout={{ enter: 450, exit: 300 }}>
 
-              <img className="envelope-image" src={imageUrl} />
+              <img onClick={handleEnvelopeOpen} className="envelope-image" src={imageUrl} />
             </CSSTransition>
           </div>
         )
