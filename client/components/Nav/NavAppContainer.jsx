@@ -25,7 +25,23 @@ class NavTopContainer extends PureComponent {
    * On first mount, we make a stateful API call to see if the user is currently logged in
    */
   componentDidMount() {
-    this.props.dispatch(synchronizeLoginState());
+    // Synchronize right away
+    this.props.synchronizeLoginState();
+
+    // Set up recurring synchronization as long as the window is alive
+    this.ticker = setInterval(() => {
+      // FIXME (derek) this seems kinda hacky?
+      // if (document.hasFocus()) {
+      this.props.synchronizeLoginState();
+      // } else {
+      //   console.log('Not synchronizing; not focused');
+      // }
+    // Check to synchronize once every 5 minutes
+    }, 5 * 60 * 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.ticker);
   }
 }
 
@@ -36,12 +52,21 @@ NavTopContainer.propTypes = {
 
 
 function mapStateToProps(state) {
+  const auth = state.auth;
+
   return {
-    isLoggedIn: !!(state.user && state.user.user && state.user.user.id),
-    username: state.user && state.user.user && (state.user.user.username || state.user.user.email),
+    isLoggedIn: !!(auth && auth.user && auth.user.id),
+    username: auth && auth.user && (auth.user.username || auth.user.email),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    synchronizeLoginState: () => dispatch(synchronizeLoginState()),
   };
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(NavTopContainer);

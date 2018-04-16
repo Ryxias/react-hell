@@ -17,17 +17,17 @@ const LOAD_MANY_GOSSIPS_START = 'gossip/LOAD_MANY_GOSSIPS_START';
 const LOAD_MANY_GOSSIPS_SUCCESS = 'gossip/LOAD_MANY_GOSSIPS_SUCCESS';
 const LOAD_MANY_GOSSIPS_FAIL = 'gossip/LOAD_MANY_GOSSIPS_FAIL';
 
-
+//
 // Action Creators
+//
 export function loadGossipIndex(page_number, page_size) {
-  return (dispatch, ownState) => {
-    dispatch({
-      type: LOAD_MANY_GOSSIPS_START
-    });
+  return (dispatch, getState) => {
+    dispatch({ type: LOAD_MANY_GOSSIPS_START });
 
-    return axios.get('/api/gossips' + '?' + `page=${page_number}` + '&' + `page_size=${page_size}`)
-      .then(response => {
-        const data = response.data;
+    const GossipApiClient = getState().getContainer().get('gossip_api_client');
+
+    return GossipApiClient.getGossipIndex(page_number, page_size)
+      .then(({ data })=> {
         dispatch({
           type: LOAD_MANY_GOSSIPS_SUCCESS,
           gossips: data.items,
@@ -36,12 +36,10 @@ export function loadGossipIndex(page_number, page_size) {
           page_count: data.page_count,
         });
       })
-      .catch(err => {
-        const message = err.response.data.message;
+      .catch(result => {
         dispatch({
           type: LOAD_MANY_GOSSIPS_FAIL,
-          message,
-          err,
+          message: result.message,
         });
         // What do we do?
       });
@@ -49,26 +47,25 @@ export function loadGossipIndex(page_number, page_size) {
 }
 
 export function loadGossip(id) {
-  return (dispatch, ownState) => {
+  return (dispatch, getState) => {
     dispatch({
       type: ADD_GOSSIP_START,
     });
 
-    return axios.get(`/api/gossips/${id}`)
-      .then(response => {
+    const GossipApiClient = getState().getContainer().get('gossip_api_client');
+
+    return GossipApiClient.getGossip(id)
+      .then(({ data }) => {
         dispatch({
           type: ADD_GOSSIP_SUCCESS,
-          gossip: response.data.gossip,
+          gossip: data.gossip,
           id,
         });
       })
-      .catch(err => {
-        const message = err.response.data.message;
+      .catch(result => {
         dispatch({
           type: ADD_GOSSIP_FAIL,
           id,
-          message,
-          err,
         });
         // What do we do?
       });
@@ -76,33 +73,33 @@ export function loadGossip(id) {
 }
 
 export function deleteGossip(id) {
-  return (dispatch, ownState) => {
-    dispatch({
-      type: DELETE_GOSSIP_START,
-    });
+  return (dispatch, getState) => {
+    dispatch({ type: DELETE_GOSSIP_START });
 
-    return axios.delete(`/api/gossips/${id}`)
-      .then(response => {
+    const GossipApiClient = getState().getContainer().get('gossip_api_client');
+
+    return GossipApiClient.deleteGossip(id)
+      .then(({ message }) => {
         dispatch({
           type: DELETE_GOSSIP_SUCCESS,
           id,
         });
-        dispatch(alert(response.data.message, 'success'));
+        dispatch(alert(message, 'success'));
       })
-      .catch(err => {
-        const message = err.response.data.message;
+      .catch(({ message }) => {
         dispatch({
           type: DELETE_GOSSIP_FAIL,
           id,
           message,
-          err,
         });
         dispatch(alert(message, 'warning'));
       });
   };
 }
 
+//
 // Reducer
+//
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
     // Add Gossip

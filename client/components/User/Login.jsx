@@ -64,7 +64,7 @@ Login.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isLoggingIn: !!state.user.isLoggingIn,
+    isLoggingIn: !!state.auth.isLoggingIn,
   };
 }
 

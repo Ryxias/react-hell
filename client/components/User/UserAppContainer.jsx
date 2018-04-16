@@ -33,7 +33,7 @@ UserAppContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: !!(state.user.user && state.user.user.id),
+    isLoggedIn: !!(state.auth.user && state.auth.user.id),
   };
 }
 

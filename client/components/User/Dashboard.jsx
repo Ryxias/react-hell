@@ -32,7 +32,7 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    username: state.user.user.username || state.user.user.email,
+    username: state.auth.user.username || state.auth.user.email,
   };
 }
 
