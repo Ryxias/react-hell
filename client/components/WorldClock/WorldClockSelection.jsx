@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormGroup, FormControl} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import { changeTimezone, clearTimezone } from '../../actions/clock_action_creators';
+import { changeTimezone, clearTimezone } from '../../modules/clock';
 
 class WorldClockSelection extends PureComponent {
   constructor(props) {

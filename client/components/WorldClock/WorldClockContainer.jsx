@@ -7,7 +7,7 @@ import WorldClockSelection from './WorldClockSelection.jsx';
 import WorldClockButtons from './WorldClockButtons.jsx';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { addTimezone } from '../../actions/clock_action_creators';
+import { addTimezone } from '../../modules/clock';
 
 class WorldClockContainer extends PureComponent {
   constructor(props) {
