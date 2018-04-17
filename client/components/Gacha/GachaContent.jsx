@@ -16,6 +16,7 @@ const GachaContent = (props) => {
   const buttonProps = {
     handleRerollGacha,
     handleShareWaifu,
+    card_stats: card.card_stats,
   };
 
   const imageUrl = animationPhase === 'opening'

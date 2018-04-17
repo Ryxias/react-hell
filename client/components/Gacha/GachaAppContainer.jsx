@@ -16,9 +16,9 @@ class GachaAppContainer extends PureComponent {
       idolized: false,
     };
 
+    this.handleRerollGacha = this.handleRerollGacha.bind(this);
     this.handleShareWaifu = this.handleShareWaifu.bind(this);
     this.handleEnvelopeOpen = this.handleEnvelopeOpen.bind(this);
-    this.handleRerollGacha = this.handleRerollGacha.bind(this);
     this.handleIdolCardClick = this.handleIdolCardClick.bind(this);
   }
 

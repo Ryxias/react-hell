@@ -117,7 +117,7 @@ export default function reducer(state = {}, action) {
           envelope_image_closed: card.envelope_image_closed,
           envelope_image_open: card.envelope_image_open,
           open_sound: new Audio('/statics/sound/' + card.open_sound),
-
+          card_stats: card.card_stats,
         },
       });
       newState.loading = false;

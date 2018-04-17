@@ -89,6 +89,7 @@ class SifApiController extends Controller {
       envelope_image_closed: envelope_image_closed,
       envelope_image_open: envelope_image_open,
       open_sound: open_sound,
+      card_stats: card.getCardStats(),
     };
     res.send(data);
   }
