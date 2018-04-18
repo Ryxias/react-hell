@@ -21,6 +21,14 @@
     margin-bottom: 0;
 }
 
+.nav-link {
+    color: white;
+}
+
+a.nav-link.waves-effect.waves-light.navbar-brand {
+    color: white;
+}
+
 .navbar-text {
     color: white;
 }

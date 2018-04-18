@@ -20,7 +20,7 @@ const NavTop = (props) => {
         {/* Main Logo button */}
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/" className="waves-effect waves-light">Chuuni.me</Link>
+            <Link to="/" className="nav-link waves-effect waves-light">Chuuni.me</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
