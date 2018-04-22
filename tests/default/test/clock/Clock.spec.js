@@ -47,6 +47,11 @@ describe('WorldClockContainer component (initial state)', () => {
     expect(container.find(WorldClockDisplay).length).toEqual(0);
   });
 
+  it('should have selectIndex prop properly passed into WorldClockSelection', () => {
+    expect(typeof container.find(WorldClockSelection).prop('selectIndex') === "number").toBe(true);
+  });
+
+
   it('should have addClock method prop properly passed into WorldClockButtons', () => {
     expect(typeof container.find(WorldClockButtons).prop('addClock') === "function").toBe(true);
   });
