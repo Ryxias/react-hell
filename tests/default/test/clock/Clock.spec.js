@@ -18,7 +18,7 @@ test('Stub function for testing jest functionality', () => {
   expect(true).toBe(true);
 });
 
-describe('WorldClockContainer component', () => {
+describe('WorldClockContainer component (initial state)', () => {
   const stateDefault = {
     timezones: [""],
     time_actives: [false],
@@ -35,15 +35,49 @@ describe('WorldClockContainer component', () => {
     expect(container.length).toEqual(1);
   });
 
-  it('should have ClockSelection child component when it is initially rendered', () => {
+  it('should have WorldClockSelection child component when it is initially rendered', () => {
     expect(container.find(WorldClockSelection).length).toEqual(1);
   });
 
-  it('should have ClockButtons child component when it is initially rendered', () => {
+  it('should have WorldClockButtons child component when it is initially rendered', () => {
     expect(container.find(WorldClockButtons).length).toEqual(1);
   });
 
-  it('should NOT have ClockDisplay child component when it is initially rendered', () => {
+  it('should NOT have WorldClockDisplay child component when it is initially rendered', () => {
     expect(container.find(WorldClockDisplay).length).toEqual(0);
+  });
+
+  it('should have addClock method prop properly passed into WorldClockButtons', () => {
+    expect(typeof container.find(WorldClockButtons).prop('addClock') === "function").toBe(true);
+  });
+});
+
+describe('WorldClockContainer component (active state)', () => {
+  const stateDefault = {
+    timezones: ["America/Los_Angeles"],
+    time_actives: [true],
+  };
+  const mockStore = configureStore();
+  let store, container, connectedContainer;
+
+  beforeEach(() => {
+    store = mockStore(stateDefault);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.timezones} time_actives={stateDefault.time_actives} />);
+  });
+
+  it('should render the WorldClockContainer component', () => {
+    expect(container.length).toEqual(1);
+  });
+
+  it('should have WorldClockDisplay child component when states are active', () => {
+    expect(container.find(WorldClockDisplay).length).toEqual(1);
+  });
+
+  it('should have timezone prop properly passed into WorldClockDisplay', () => {
+    expect(container.find(WorldClockDisplay).prop('timezone')).toEqual(stateDefault.timezones[0]);
+  });
+
+  it('should have unixtimestamp prop properly passed into WorldClockDisplay', () => {
+    expect(typeof container.find(WorldClockDisplay).prop('unixtimestamp') === "number").toBe(true);
   });
 });
