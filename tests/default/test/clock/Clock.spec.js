@@ -4,7 +4,8 @@ import configureStore from 'redux-mock-store'; // mock Redux store
 import { configure, shallow } from 'enzyme';  // shallow rendering to only render top level
 import Adapter from 'enzyme-adapter-react-16';  // for Enzyme
 
-import { WorldClockContainer } from '../../../../client/components/WorldClock/WorldClockContainer'; // to test as dumb component
+import ConnectedWorldClockContainer,
+      { WorldClockContainer } from '../../../../client/components/WorldClock/WorldClockContainer';
 import WorldClockSelection from '../../../../client/components/WorldClock/WorldClockSelection';
 import WorldClockButtons from '../../../../client/components/WorldClock/WorldClockButtons';
 import WorldClockDisplay from '../../../../client/components/WorldClock/WorldClockDisplay';
@@ -23,26 +24,26 @@ describe('WorldClockContainer component', () => {
     time_actives: [false],
   };
   const mockStore = configureStore();
-  let store, container;
+  let store, container, connectedContainer;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={[""]} time_actives={[false]} />);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.timezones} time_actives={stateDefault.time_actives} />);
   });
 
-  it('should render the connected WorldClockContainer component', () => {
-    expect(container.length).toEqual(1)
+  it('should render the WorldClockContainer component', () => {
+    expect(container.length).toEqual(1);
   });
 
-  // it('should have ClockSelection child component when it is initially rendered', () => {
-  //   expect(container.contains(<WorldClockSelection />)).toBe(true);
-  // });
+  it('should have ClockSelection child component when it is initially rendered', () => {
+    expect(container.find(WorldClockSelection).length).toEqual(1);
+  });
 
-  // it('should have ClockButtons child component when it is initially rendered', () => {
-  //   expect(container.contains(<WorldClockButtons />)).toBe(true);
-  // });
+  it('should have ClockButtons child component when it is initially rendered', () => {
+    expect(container.find(WorldClockButtons).length).toEqual(1);
+  });
 
-  // it('should NOT have ClockDisplay child component when it is initially rendered', () => {
-  //   expect(container.contains(<WorldClockDisplay />)).toBe(false);
-  // });
+  it('should NOT have ClockDisplay child component when it is initially rendered', () => {
+    expect(container.find(WorldClockDisplay).length).toEqual(0);
+  });
 });
