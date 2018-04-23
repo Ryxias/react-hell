@@ -6,6 +6,7 @@
   "scripts": {
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
+    "jest": "jest",
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
     "sync_models": "sudo NODE_ENV=production node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
@@ -36,7 +37,7 @@
     "connect-session-sequelize": "^5.0.1",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
-    "express-route-registry": "Ryxias/express-route-registry#v1.0.1",
+    "express-route-registry": "github:ryxias/express-route-registry#v1.0.1",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.10",
     "moment": "^2.22.0",
@@ -46,9 +47,9 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.5.10",
-    "react": "^15.6.1",
+    "react": "^16.3.2",
     "react-bootstrap": "^0.31.5",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.3.2",
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.4",
     "react-router-bootstrap": "^0.24.4",
@@ -59,13 +60,19 @@
     "redux-test-utils": "^0.2.2",
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.8.0",
-    "service-container": "Ryxias/service-container#v1.0.2",
+    "service-container": "github:ryxias/service-container#v1.0.2",
     "showdown": "^1.7.4",
     "uuid": "^3.2.1",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },
   "devDependencies": {
-    "mocha": "^3.5.3"
+    "babel-jest": "^22.4.3",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "mocha": "^3.5.3",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.3.2",
+    "redux-mock-store": "^1.5.1"
   }
 }

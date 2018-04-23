@@ -9,7 +9,7 @@ import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { addTimezone } from '../../modules/clock';
 
-class WorldClockContainer extends PureComponent {
+export class WorldClockContainer extends PureComponent {
   constructor(props) {
     super(props);
 
