@@ -20,15 +20,17 @@ test('Stub function for testing jest functionality', () => {
 
 describe('WorldClockContainer component (initial state)', () => {
   const stateDefault = {
-    timezones: [""],
-    time_actives: [false],
+    clock: {
+      timezones: [""],
+      time_actives: [false],
+    },
   };
   const mockStore = configureStore();
   let store, container, connectedContainer;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.timezones} time_actives={stateDefault.time_actives} />);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {
@@ -59,15 +61,17 @@ describe('WorldClockContainer component (initial state)', () => {
 
 describe('WorldClockContainer component (active state)', () => {
   const stateDefault = {
-    timezones: ["America/Los_Angeles"],
-    time_actives: [true],
+    clock: {
+      timezones: ["America/Los_Angeles"],
+      time_actives: [true],
+    },
   };
   const mockStore = configureStore();
   let store, container, connectedContainer;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.timezones} time_actives={stateDefault.time_actives} />);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {
@@ -79,7 +83,7 @@ describe('WorldClockContainer component (active state)', () => {
   });
 
   it('should have timezone prop properly passed into WorldClockDisplay', () => {
-    expect(container.find(WorldClockDisplay).prop('timezone')).toEqual(stateDefault.timezones[0]);
+    expect(container.find(WorldClockDisplay).prop('timezone')).toEqual(stateDefault.clock.timezones[0]);
   });
 
   it('should have unixtimestamp prop properly passed into WorldClockDisplay', () => {
