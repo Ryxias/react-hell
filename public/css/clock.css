@@ -16,9 +16,13 @@
 }
 
 .world-clock {
+    margin: 15px 0px 15px 0px;
     min-width: 235px;
-    margin: 10px;
     border: 2px solid gray;
     border-radius: 5px;
     padding: 5px;
+}
+
+div.world-clock-container.row > div.col-xs-6:nth-of-type(odd) {
+    clear: both;
 }

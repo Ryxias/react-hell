@@ -14,7 +14,7 @@ const WorldClockDisplay = ({ unixtimestamp, timezone, region }) => {
   const now = moment(unixtimestamp).tz(timezone);
 
   return (
-    <div>
+    <div className="animated fadeInDown">
       The time is now {now.format('LTS')} in {region}.
     </div>
   );
