@@ -1,15 +1,17 @@
 'use strict';
 
 //
-const { ServiceContainer } = require('service-container');
+const { ServiceContainer, FactoryLoader } = require('service-container');
 require('express-route-registry').useContainer(require('service-container'));
 
 const service_container = new ServiceContainer();
 
-require('./config/database_connection')(service_container);
-require('./config/services')(service_container);
-require('./config/express')(service_container);
-require('./config/chuubot')(service_container);
+const loader = new FactoryLoader(service_container);
+
+loader.load(require('./config/database_connection'));
+loader.load(require('./config/services'));
+loader.load(require('./config/express'));
+loader.load(require('./config/chuubot'));
 
 // Freezing the container prevents downstream code from registering new services or modifying the container.
 service_container.freeze();

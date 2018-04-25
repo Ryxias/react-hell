@@ -5,10 +5,6 @@ module.exports = service_container => {
   const bcrypt = require('bcryptjs');
   Promise.promisifyAll(bcrypt);
 
-  //
-  service_container.set('service_container', service_container);
-  service_container.alias('ServiceContainer', 'service_container');
-
   // Configuration manager
   service_container.registerFactory('app.config', service_container => {
     const ConfigurationManager = require('../../lib/Configuration/ConfigurationManager');
