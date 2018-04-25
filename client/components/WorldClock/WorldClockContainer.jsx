@@ -7,7 +7,7 @@ import WorldClockSelection from './WorldClockSelection.jsx';
 import WorldClockButtons from './WorldClockButtons.jsx';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { addTimezone } from '../../modules/clock';
+import { addTimezone, deleteTimezone } from '../../modules/clock';
 
 export class WorldClockContainer extends PureComponent {
   constructor(props) {
@@ -18,10 +18,15 @@ export class WorldClockContainer extends PureComponent {
       unixtimestamp: Date.now(), // set up initial unix timestamp
     };
     this.addClock = this.addClock.bind(this);
+    this.deleteClock = this.deleteClock.bind(this);
   }
 
   addClock() {
-    this.props.dispatch(addTimezone(this.props.timezones, this.props.time_actives, null));
+    this.props.dispatch(addTimezone(this.props.timezones, this.props.regions, this.props.time_actives));
+  }
+
+  deleteClock(index) {
+    this.props.dispatch(deleteTimezone(this.props.timezones, this.props.regions, this.props.time_actives, index));
   }
 
   componentDidMount() {
@@ -44,6 +49,8 @@ export class WorldClockContainer extends PureComponent {
             const clockProps = {
               unixtimestamp: this.state.unixtimestamp,
               timezone: timezone,
+              region: this.props.regions[index],
+              deleteClock: this.deleteClock,
               index: index,
             };
             return this.props.time_actives[index]
@@ -68,12 +75,14 @@ export class WorldClockContainer extends PureComponent {
 WorldClockContainer.propTypes = {
   time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
   timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
+  regions: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     time_actives: state.clock.time_actives,
     timezones: state.clock.timezones,
+    regions: state.clock.regions,
   };
 }
 
