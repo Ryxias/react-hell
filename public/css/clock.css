@@ -1,8 +1,24 @@
+.clock-button-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .clock-button {
+    margin: 10px;
     background-color: royalblue;
 }
 
 .clock-dropdown {
     width: auto;
     padding: 0rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.world-clock {
+    min-width: 235px;
+    margin: 10px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 5px;
 }

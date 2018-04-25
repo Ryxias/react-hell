@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
 
 import moment from 'moment-timezone';
 
@@ -11,12 +10,12 @@ import moment from 'moment-timezone';
  *
  *  - function
  */
-const WorldClockDisplay = ({ unixtimestamp, timezone, region, deleteClock, index }) => {
+const WorldClockDisplay = ({ unixtimestamp, timezone, region }) => {
   const now = moment(unixtimestamp).tz(timezone);
 
   return (
     <div>
-      The time is now {now.format('LTS')} in {region}.  <Button bsStyle="danger" bsSize="small" onClick={() => deleteClock(index)}>X</Button>
+      The time is now {now.format('LTS')} in {region}.
     </div>
   );
 };
@@ -25,7 +24,6 @@ WorldClockDisplay.propTypes = {
   unixtimestamp: PropTypes.number.isRequired,
   timezone: PropTypes.string.isRequired,
   region: PropTypes.string.isRequired,
-  deleteClock: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
 

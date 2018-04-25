@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
 import WorldClockButtons from './WorldClockButtons.jsx';
-import { Row, Col } from 'react-bootstrap';
+import { Col, Clearfix } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { addTimezone, deleteTimezone } from '../../modules/clock';
 
@@ -44,29 +44,30 @@ export class WorldClockContainer extends PureComponent {
       <div>
         <h1>World Clock</h1>
         <WorldClockButtons addClock={this.addClock}/>
-        <Col>
-          { this.props.timezones.map((timezone, index) => {
-            const clockProps = {
-              unixtimestamp: this.state.unixtimestamp,
-              timezone: timezone,
-              region: this.props.regions[index],
-              deleteClock: this.deleteClock,
-              index: index,
-            };
-            return this.props.time_actives[index]
-              ? (
-                  <div key={index}>
-                    <WorldClockSelection selectIndex={index}/>
+        { this.props.timezones.map((timezone, index) => {
+          const clockProps = {
+            unixtimestamp: this.state.unixtimestamp,
+            timezone: timezone,
+            region: this.props.regions[index],
+            index: index,
+          };
+          return this.props.time_actives[index]
+            ? (
+                <Col xs={7} md={7} lg={7}>
+                  <div className="world-clock animated fadeInDown" key={index}>
+                    <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
                     <WorldClockDisplay {...clockProps}/>
                   </div>
-              )
-              : (
-                <div key={index}>
-                  <WorldClockSelection selectIndex={index}/>
+                </Col>
+            )
+            : (
+              <Col xs={7} md={7} lg={7}>
+                <div className="world-clock animated fadeInDown" key={index}>
+                  <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
                 </div>
-              );
-          }) }
-        </Col>
+              </Col>
+            );
+        }) }
       </div>
     );
   }

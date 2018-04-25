@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { FormGroup, FormControl } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { changeTimezone, clearTimezone } from '../../modules/clock';
@@ -36,7 +36,7 @@ class WorldClockSelection extends PureComponent {
 
   render() {
     return (
-        <form>
+        <Form inline>
           <FormGroup>
             <FormControl
               className="clock-dropdown"
@@ -51,7 +51,10 @@ class WorldClockSelection extends PureComponent {
               }
             </FormControl>
           </FormGroup>
-        </form>
+          <Button bsStyle="danger" bsSize="small" onClick={() => this.props.deleteClock(this.props.selectIndex)}>
+            <Glyphicon glyph="glyphicon glyphicon-remove"/>
+          </Button>
+        </Form>
     );
   }
 }
@@ -61,6 +64,7 @@ WorldClockSelection.propTypes = {
   timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
   regions: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectIndex: PropTypes.number.isRequired,
+  deleteClock: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
