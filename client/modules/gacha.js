@@ -106,6 +106,15 @@ export default function reducer(state = {}, action) {
       // and display the pretty envelope
       const { card } = action;
 
+      const open_sound_url = '/statics/sound/' + card.open_sound;
+      const open_sound_audio = (() => {
+        try {
+          return new Audio(open_sound_url);
+        } catch (err) {
+          return null;
+        }
+      })();
+
       const newState = Object.assign({}, state, {
         card: {
           id: card.id,
@@ -116,7 +125,7 @@ export default function reducer(state = {}, action) {
           rarity: card.rarity,
           envelope_image_closed: card.envelope_image_closed,
           envelope_image_open: card.envelope_image_open,
-          open_sound: new Audio('/statics/sound/' + card.open_sound),
+          open_sound_audio,
           card_stats: card.card_stats,
         },
       });

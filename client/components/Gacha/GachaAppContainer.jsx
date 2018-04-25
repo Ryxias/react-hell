@@ -47,7 +47,14 @@ class GachaAppContainer extends PureComponent {
   }
 
   handleEnvelopeOpen() {
-      return this.state.animationPhase === 'closed'? this.props.card.open_sound.play()
+    if (this.state.animationPhase === 'closed') {
+      return Promise.resolve()
+        .then(() => {
+          if (this.props.card.open_sound_audio) {
+            return this.props.card.open_sound_audio.play();
+          }
+          return null;
+        })
         .then(() => {
           this.setState({
             animationPhase: 'opening',
@@ -57,7 +64,10 @@ class GachaAppContainer extends PureComponent {
           // speed in the GachaContent component, but in the future we should use
           // the transition group events to fire this as a callback.
           setTimeout((() => this.setState({ animationPhase: 'open_finished' })), 450);
-        }) : false;
+        });
+    } else {
+      return null;
+    }
   }
 
   handleIdolCardClick() {
