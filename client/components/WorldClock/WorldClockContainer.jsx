@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import WorldClockDisplay from './WorldClockDisplay.jsx';
 import WorldClockSelection from './WorldClockSelection.jsx';
 import WorldClockButtons from './WorldClockButtons.jsx';
-import { Row, Col, Clearfix } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { addTimezone, deleteTimezone } from '../../modules/clock';
 
@@ -54,7 +54,7 @@ export class WorldClockContainer extends PureComponent {
             };
             return this.props.time_actives[index]
               ? (
-                  <Col xs={6} key={index} className="animated fadeInDown">
+                  <Col xs={12} md={6} key={index} className="animated fadeInDown">
                     <div className="world-clock">
                       <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
                       <WorldClockDisplay {...clockProps}/>
@@ -62,7 +62,7 @@ export class WorldClockContainer extends PureComponent {
                   </Col>
               )
               : (
-                <Col xs={6} key={index} className="animated fadeInDown">
+                <Col xs={12} md={6} key={index} className="animated fadeInDown">
                   <div className="world-clock">
                     <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
                   </div>

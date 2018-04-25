@@ -9,7 +9,6 @@
 }
 
 .clock-dropdown {
-    width: auto;
     padding: 0rem;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -23,6 +22,6 @@
     padding: 5px;
 }
 
-div.world-clock-container.row > div.col-xs-6:nth-of-type(odd) {
+div.world-clock-container.row > div.col-xs-12.col-md-6:nth-of-type(odd) {
     clear: both;
 }
