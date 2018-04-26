@@ -16,6 +16,14 @@ module.exports = service_container => {
   const apiRequiresLoggedIn = service_container.get('express.api_requires_logged_in_middleware');
   const gossipApiParameterConverter = service_container.get('express.gossip_api_parameter_converter');
   const requiresGossipMiddleware = service_container.get('express.requires_gossip_middleware');
+  const apiErrorHandler = (err, req, res, next) => {
+    res.send({
+      success: false,
+      system_code: '50000000000000',
+      message: 'Internal server error.',
+      error: err.message,
+    });
+  };
 
   // Routes
   registry.routeBuilder({
@@ -37,6 +45,7 @@ module.exports = service_container => {
         },
       },
     },
+    error: apiErrorHandler,
   });
 
   registry.routeBuilder({

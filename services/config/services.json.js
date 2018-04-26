@@ -3,7 +3,7 @@
 module.exports = {
   'app.config': {
     // Configuration manager
-    constructor: require('../../lib/Configuration/ConfigurationManager'),
+    class: require('../../lib/Configuration/ConfigurationManager'),
     autowire: false,
     args: [
       '@app.configuration_loader',
@@ -21,27 +21,38 @@ module.exports = {
   // Controllers
 
   'app.controllers.helloworld': {
-    constructor: require('../../server/controllers/HelloWorldController'),
+    class: require('../../server/controllers/HelloWorldController'),
     tags: [ 'controller' ],
   },
   'app.controllers.gossip_api': {
-    constructor: require('../../server/controllers/GossipApiController'),
+    class: require('../../server/controllers/GossipApiController'),
     tags: [ 'controller' ],
   },
   'app.controllers.debug': {
-    constructor: require('../../server/controllers/DebugController'),
+    class: require('../../server/controllers/DebugController'),
     tags: [ 'controller' ],
   },
   'app.controllers.sif_api': {
-    constructor: require('../../server/controllers/SifApiController'),
+    class: require('../../server/controllers/SifApiController'),
     tags: [ 'controller' ],
   },
   'app.controllers.react': {
-    constructor: require('../../server/controllers/ReactController'),
+    class: require('../../server/controllers/ReactController'),
     tags: [ 'controller' ],
   },
   'app.controllers.auth': {
-    constructor: require('../../server/controllers/AuthenticationApiController'),
+    class: require('../../server/controllers/AuthenticationApiController'),
     tags: [ 'controller' ],
   },
+
+  // Config stuff
+  'app.configuration_loader': {
+    factory: require('../../configuration_loader'),
+  },
+
+  // Routes
+  'app.route_registry': {
+    factory: require('../../server/routing/routing')
+  },
+  RouteRegistry: '@app.route_registry',
 };

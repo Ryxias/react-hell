@@ -34,4 +34,4 @@ if (null === config.slack) {
   throw new Error('Invalid configuration at "slack_bot_token"');
 }
 
-module.exports = config;
+module.exports = () => config;

@@ -9,7 +9,6 @@ const service_container = new ServiceContainer();
 const factory_loader = new FactoryLoader(service_container);
 
 factory_loader.load(require('./config/database_connection'));
-factory_loader.load(require('./config/services'));
 factory_loader.load(require('./config/express'));
 factory_loader.load(require('./config/chuubot'));
 
