@@ -26,7 +26,9 @@ module.exports = service_container => {
   //
   // chuubot configuration
   //
-  service_container.set('chuubot.config', service_container.get('ConfigurationManager').getObject('slack'));
+  service_container.registerFactory('chuubot.config', service_container => {
+    return service_container.get('ConfigurationManager').getObject('slack');
+  });
   service_container.registerFactory('chuubot', service_container => {
     const slack_config = service_container.get('chuubot.config');
 
