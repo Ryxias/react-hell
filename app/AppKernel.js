@@ -18,6 +18,8 @@ class AppKernel {
       console.log(require('util').inspect(thing, false, null));
     };
 
+    Promise.promisifyAll(require('bcryptjs'));
+
     // Boot the service container!
     switch (this.environment) {
       case 'production':

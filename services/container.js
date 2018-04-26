@@ -1,17 +1,23 @@
 'use strict';
 
 //
-const { ServiceContainer, FactoryLoader } = require('service-container');
+const { ServiceContainer, FactoryLoader, JsonLoader } = require('service-container');
 require('express-route-registry').useContainer(require('service-container'));
 
 const service_container = new ServiceContainer();
 
-const loader = new FactoryLoader(service_container);
+const factory_loader = new FactoryLoader(service_container);
 
-loader.load(require('./config/database_connection'));
-loader.load(require('./config/services'));
-loader.load(require('./config/express'));
-loader.load(require('./config/chuubot'));
+factory_loader.load(require('./config/database_connection'));
+factory_loader.load(require('./config/services'));
+factory_loader.load(require('./config/express'));
+factory_loader.load(require('./config/chuubot'));
+
+const json_loader = new JsonLoader(service_container);
+json_loader.load(require('./config/services.json'));
+
+const { ControllerCompilerPass } = require('express-route-registry');
+service_container.addCompilerPass(new ControllerCompilerPass());
 
 // Freezing the container prevents downstream code from registering new services or modifying the container.
 service_container.freeze();
