@@ -3,8 +3,9 @@ const notFoundHandler = (req, res, next) => {
 };
 
 const defaultErrorHandler = (err, req, res, next) => {
+  console.log("++++++++++++++++++");
+  console.log(err);
   res.status(500).send("Whoops, something went wrong!");
-  next(err); // Bubble it to the base error handler, but then the browser doesn't hang waiting for a server response
 };
 
 module.exports = {

@@ -8,23 +8,23 @@ class AuthApiClient extends ApiClient {
   }
 
   login(email, password) {
-    return this._POST('/api/login', { email, password });
+    return this._POST('/api/auth/login', { email, password });
   }
 
   logout() {
-    return this._POST('/api/logout');
+    return this._POST('/api/auth/logout');
   }
 
   register(email, password) {
-    return this._POST('/api/register', { email, password });
+    return this._POST('/api/auth/register', { email, password });
   }
 
   whoami() {
-    return this._GET('/api/whoami');
+    return this._GET('/api/auth/whoami');
   }
 
   requestSlackToken() {
-    return this._POST('/api/slack_token');
+    return this._POST('/api/auth/slack_token');
   }
 }
 
