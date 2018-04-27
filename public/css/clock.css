@@ -4,8 +4,8 @@
 }
 
 .clock-button {
-    margin: 10px;
-    background-color: royalblue;
+    margin: 10px; !important
+    background-color: royalblue; !important
 }
 
 .clock-dropdown {

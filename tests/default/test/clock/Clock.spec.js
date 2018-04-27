@@ -1,14 +1,17 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store'; // mock Redux store
-import { configure, shallow } from 'enzyme';  // shallow rendering to only render top level
+import { configure, shallow, mount } from 'enzyme';  // shallow rendering to only render top level
 import Adapter from 'enzyme-adapter-react-16';  // for Enzyme
+import { Provider } from 'react-redux';
 
 import ConnectedWorldClockContainer,
       { WorldClockContainer } from '../../../../client/components/WorldClock/WorldClockContainer';
 import WorldClockSelection from '../../../../client/components/WorldClock/WorldClockSelection';
 import WorldClockButtons from '../../../../client/components/WorldClock/WorldClockButtons';
 import WorldClockDisplay from '../../../../client/components/WorldClock/WorldClockDisplay';
+
+import { addTimezone, changeTimezone, clearTimezone, deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED } from '../../../../client/modules/clock';
 
 configure({ adapter: new Adapter() }); // Enzyme expects an adapter to be configured,
                                        // before using any of Enzyme's top level APIs, where `Adapter` is the adapter
@@ -22,15 +25,16 @@ describe('WorldClockContainer component (initial state)', () => {
   const stateDefault = {
     clock: {
       timezones: [""],
+      regions: [""],
       time_actives: [false],
     },
   };
   const mockStore = configureStore();
-  let store, container, connectedContainer;
+  let store, container;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} time_actives={stateDefault.clock.time_actives} />);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} regions={stateDefault.clock.regions} time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {
@@ -63,15 +67,16 @@ describe('WorldClockContainer component (active state)', () => {
   const stateDefault = {
     clock: {
       timezones: ["America/Los_Angeles"],
+      regions: ["San Francisco"],
       time_actives: [true],
     },
   };
   const mockStore = configureStore();
-  let store, container, connectedContainer;
+  let store, container;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} time_actives={stateDefault.clock.time_actives} />);
+    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} regions={stateDefault.clock.regions} time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {
@@ -86,7 +91,59 @@ describe('WorldClockContainer component (active state)', () => {
     expect(container.find(WorldClockDisplay).prop('timezone')).toEqual(stateDefault.clock.timezones[0]);
   });
 
+  it('should have region prop properly passed into WorldClockDisplay', () => {
+    expect(container.find(WorldClockDisplay).prop('region')).toEqual(stateDefault.clock.regions[0]);
+  });
+
   it('should have unixtimestamp prop properly passed into WorldClockDisplay', () => {
     expect(typeof container.find(WorldClockDisplay).prop('unixtimestamp') === "number").toBe(true);
   });
+});
+
+describe('ConnectedWorldClockContainer component (active state) --- ACTION CREATORS', () => {
+  const stateDefault = {
+    clock: {
+      timezones: ["America/Los_Angeles", "Pacific/Honolulu", "Asia/Tokyo"],
+      regions: ["San Francisco", "Hawaii", "Japan"],
+      time_actives: [true, true, true, true],
+    },
+  };
+  const mockStore = configureStore();
+  let store, connectedContainer;
+
+  beforeEach(() => {
+    store = mockStore(stateDefault);
+    connectedContainer = mount(
+      <Provider store={store}>
+        <ConnectedWorldClockContainer
+          timezones={stateDefault.clock.timezones}
+          regions={stateDefault.clock.regions}
+          time_actives={stateDefault.clock.time_actives} />
+      </Provider>);
+  });
+
+  it('should render the WorldClockContainer component', () => {
+    expect(connectedContainer.length).toEqual(1);
+  });
+
+  it('should get appropriate actions when dispatched', () => {
+    let action;
+    store.dispatch(addTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives));
+    store.dispatch(changeTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives, 0, "America/New_York", "New York"));
+    store.dispatch(clearTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives, 0));
+    store.dispatch(deleteTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives, 0));
+    action = store.getActions();
+    expect(action[0].type).toBe(TIMEZONE_ADDED);
+    expect(action[1].type).toBe(TIMEZONE_CHANGED);
+    expect(action[2].type).toBe(TIMEZONE_NOT_SELECTED);
+    expect(action[3].type).toBe(TIMEZONE_DELETED);
+  });
+  //
+  // it('should remove the middle active clock when the Delete button is pressed', () => {
+  //
+  // });
+  //
+  // it('should remove the last active clock when the Delete button is pressed', () => {
+  //
+  // });
 });

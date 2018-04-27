@@ -76,16 +76,16 @@ export class WorldClockContainer extends PureComponent {
 }
 
 WorldClockContainer.propTypes = {
-  time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
   timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
   regions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    time_actives: state.clock.time_actives,
     timezones: state.clock.timezones,
     regions: state.clock.regions,
+    time_actives: state.clock.time_actives,
   };
 }
 
