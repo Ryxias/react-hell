@@ -11,7 +11,7 @@ import WorldClockSelection from '../../../../client/components/WorldClock/WorldC
 import WorldClockButtons from '../../../../client/components/WorldClock/WorldClockButtons';
 import WorldClockDisplay from '../../../../client/components/WorldClock/WorldClockDisplay';
 
-import { addTimezone, changeTimezone, clearTimezone, deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED } from '../../../../client/modules/clock';
+import clockReducers, { addTimezone, changeTimezone, clearTimezone, deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED } from '../../../../client/modules/clock';
 
 configure({ adapter: new Adapter() }); // Enzyme expects an adapter to be configured,
                                        // before using any of Enzyme's top level APIs, where `Adapter` is the adapter
@@ -100,7 +100,7 @@ describe('WorldClockContainer component (active state)', () => {
   });
 });
 
-describe('ConnectedWorldClockContainer component (active state) --- ACTION CREATORS', () => {
+describe('ConnectedWorldClockContainer component (active state) --- ACTIONS', () => {
   const stateDefault = {
     clock: {
       timezones: ["America/Los_Angeles", "Pacific/Honolulu", "Asia/Tokyo"],
@@ -126,7 +126,7 @@ describe('ConnectedWorldClockContainer component (active state) --- ACTION CREAT
     expect(connectedContainer.length).toEqual(1);
   });
 
-  it('should get appropriate actions when dispatched', () => {
+  it('should get appropriate actions for each dispatch', () => {
     let action;
     store.dispatch(addTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives));
     store.dispatch(changeTimezone(stateDefault.clock.timezones, stateDefault.clock.regions, stateDefault.clock.time_actives, 0, "America/New_York", "New York"));
@@ -138,12 +138,96 @@ describe('ConnectedWorldClockContainer component (active state) --- ACTION CREAT
     expect(action[2].type).toBe(TIMEZONE_NOT_SELECTED);
     expect(action[3].type).toBe(TIMEZONE_DELETED);
   });
-  //
-  // it('should remove the middle active clock when the Delete button is pressed', () => {
-  //
-  // });
-  //
-  // it('should remove the last active clock when the Delete button is pressed', () => {
-  //
-  // });
 });
+
+describe('ConnectedWorldClockContainer component (active state) --- REDUCERS', () => {
+  const stateDefault = {
+    clock: {
+      timezones: ["America/Los_Angeles", "Pacific/Honolulu", "Asia/Tokyo"],
+      regions: ["San Francisco", "Hawaii", "Japan"],
+      time_actives: [true, true, true],
+    },
+  };
+  const mockStore = configureStore();
+  let store, connectedContainer;
+
+  beforeEach(() => {
+    store = mockStore(stateDefault);
+    connectedContainer = mount(
+      <Provider store={store}>
+        <ConnectedWorldClockContainer
+          timezones={stateDefault.clock.timezones}
+          regions={stateDefault.clock.regions}
+          time_actives={stateDefault.clock.time_actives} />
+      </Provider>);
+  });
+
+  it('should render the WorldClockContainer component', () => {
+    expect(connectedContainer.length).toEqual(1);
+  });
+
+  it('should run the appropriate reducer for TIMEZONE_ADDED action', () => {
+    let state = stateDefault.clock;
+    let action = {
+      type: TIMEZONE_ADDED,
+      timezones: state.timezones.concat(["None"]),
+      regions: state.regions.concat(["Choose your city/region here"]),
+      time_actives: state.time_actives.concat([false]),
+    };
+    state = clockReducers(state, action);
+    expect(state).toEqual({
+        timezones: ["America/Los_Angeles", "Pacific/Honolulu", "Asia/Tokyo", "None"],
+        regions: ["San Francisco", "Hawaii", "Japan", "Choose your city/region here"],
+        time_actives: [true, true, true, false],
+    });
+  });
+
+  it('should run the appropriate reducer for TIMEZONE_CHANGED action', () => {
+    let state = stateDefault.clock;
+    let action = {
+      type: TIMEZONE_CHANGED,
+      timezones: state.timezones.map((e,i) => i === 0 ? "America/New_York" : e),
+      regions: state.regions.map((e,i) => i === 0 ? "New York" : e),
+      time_actives: state.time_actives.map((e,i) => i === 0 ? true : e),
+    };
+    state = clockReducers(state, action);
+    expect(state).toEqual({
+      timezones: ["America/New_York", "Pacific/Honolulu", "Asia/Tokyo"],
+      regions: ["New York", "Hawaii", "Japan"],
+      time_actives: [true, true, true],
+    });
+  });
+
+  it('should run the appropriate reducer for TIMEZONE_NOT_SELECTED action', () => {
+    let state = stateDefault.clock;
+    let action = {
+      type: TIMEZONE_NOT_SELECTED,
+      timezones: state.timezones.map((e,i) => i === 0 ? "None" : e),
+      regions: state.regions.map((e,i) => i === 0 ? "Choose your city/region here" : e),
+      time_actives: state.time_actives.map((e,i) => i === 0 ? false : e),
+    };
+    state = clockReducers(state, action);
+    expect(state).toEqual({
+      timezones: ["None", "Pacific/Honolulu", "Asia/Tokyo"],
+      regions: ["Choose your city/region here", "Hawaii", "Japan"],
+      time_actives: [false, true, true],
+    });
+  });
+
+  it('should run the appropriate reducer for TIMEZONE_DELETED action', () => {
+    let state = stateDefault.clock;
+    let action = {
+      type: TIMEZONE_DELETED,
+      timezones: state.timezones.filter((e,i) => i !== 0),
+      regions: state.regions.filter((e,i) => i !== 0),
+      time_actives: state.time_actives.filter((e,i) => i !== 0),
+    };
+    state = clockReducers(state, action);
+    expect(state).toEqual({
+      timezones: ["Pacific/Honolulu", "Asia/Tokyo"],
+      regions: ["Hawaii", "Japan"],
+      time_actives: [true, true],
+    });
+  });
+});
+

@@ -43,8 +43,8 @@ export function changeTimezone(timezones, regions, time_actives, index, new_time
 }
 
 export function clearTimezone(timezones, regions, time_actives, index) {
-  const newTimezones = timezones.map((e,i) => i === index ? null : e);
-  const newRegions = regions.map((e,i) => i === index ? null : e);
+  const newTimezones = timezones.map((e,i) => i === index ? "None" : e);
+  const newRegions = regions.map((e,i) => i === index ? "Choose your city/region here" : e);
   const newTime_actives = time_actives.map((e,i) => i === index ? false : e);
   return {
     type: TIMEZONE_NOT_SELECTED,
