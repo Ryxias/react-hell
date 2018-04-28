@@ -1,8 +1,27 @@
+.clock-button-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .clock-button {
-    background-color: royalblue;
+    margin: 10px; !important
+    background-color: royalblue; !important
 }
 
 .clock-dropdown {
-    width: auto;
     padding: 0rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.world-clock {
+    margin: 15px 0px 15px 0px;
+    min-width: 235px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+div.world-clock-container.row > div.col-xs-12.col-md-6:nth-of-type(odd) {
+    clear: both;
 }

@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Navbar } from 'react-bootstrap';
 
 import moment from 'moment-timezone';
 
@@ -11,19 +10,21 @@ import moment from 'moment-timezone';
  *
  *  - function
  */
-const WorldClockDisplay = ({ timezone, unixtimestamp }) => {
+const WorldClockDisplay = ({ unixtimestamp, timezone, region }) => {
   const now = moment(unixtimestamp).tz(timezone);
 
   return (
-    <div>
-      Time is now {now.format('LTS')}.
+    <div className="animated fadeInDown">
+      The time is now {now.format('LTS')} in {region}.
     </div>
   );
 };
 
 WorldClockDisplay.propTypes = {
-  timezone: PropTypes.string.isRequired,
   unixtimestamp: PropTypes.number.isRequired,
+  timezone: PropTypes.string.isRequired,
+  region: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default WorldClockDisplay;

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const WorldClockButtons = ({ addClock }) => {
   return (
-    <div>
+    <div className="clock-button-container">
       <Button className="clock-button" onClick={addClock}>Add Clock</Button>
     </div>
   );

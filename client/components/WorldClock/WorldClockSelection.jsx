@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { FormGroup, FormControl} from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { changeTimezone, clearTimezone } from '../../modules/clock';
@@ -17,6 +17,7 @@ class WorldClockSelection extends PureComponent {
       ["None", "Choose your city/region here"],
       ["America/Los_Angeles", "San Francisco"],
       ["America/New_York", "New York"],
+      ["Pacific/Honolulu", "Hawaii"],
       ["Asia/Tokyo", "Japan"],
       ["Asia/Hong_Kong", "Hong Kong"],
       ["Europe/London", "London"],
@@ -27,20 +28,21 @@ class WorldClockSelection extends PureComponent {
 
   onSelectLocation(e) {
     if (e.target.value !== "None") {
-      this.props.dispatch(changeTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex, e.target.value));
+      this.props.dispatch(changeTimezone(this.props.timezones, this.props.regions, this.props.time_actives, this.props.selectIndex, e.target.value, e.target.selectedOptions[0].innerText));
     } else {
-      this.props.dispatch(clearTimezone(this.props.timezones, this.props.time_actives, this.props.selectIndex));
+      this.props.dispatch(clearTimezone(this.props.timezones, this.props.regions, this.props.time_actives, this.props.selectIndex));
     }
   }
 
   render() {
     return (
-        <form>
+        <Form inline>
           <FormGroup>
             <FormControl
               className="clock-dropdown"
               componentClass="select"
               onChange={this.onSelectLocation}
+              value={this.props.timezones[this.props.selectIndex]}
             >
               {
                 this.regions.map((region, i) => {
@@ -49,7 +51,10 @@ class WorldClockSelection extends PureComponent {
               }
             </FormControl>
           </FormGroup>
-        </form>
+          <Button bsStyle="danger" bsSize="small" onClick={() => this.props.deleteClock(this.props.selectIndex)}>
+            <Glyphicon glyph="glyphicon glyphicon-remove"/>
+          </Button>
+        </Form>
     );
   }
 }
@@ -57,13 +62,16 @@ class WorldClockSelection extends PureComponent {
 WorldClockSelection.propTypes = {
   time_actives: PropTypes.arrayOf(PropTypes.bool).isRequired,
   timezones: PropTypes.arrayOf(PropTypes.string).isRequired,
+  regions: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectIndex: PropTypes.number.isRequired,
+  deleteClock: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     time_actives: state.clock.time_actives,
     timezones: state.clock.timezones,
+    regions: state.clock.regions,
   };
 }
 
