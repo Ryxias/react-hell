@@ -3,6 +3,7 @@ import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 
 const stateDefault = {
   name: "",
+  collection: "",
   attribute: "",
   skill: "",
   skill_details: "",
@@ -19,8 +20,9 @@ const stateDefault = {
 const GachaButtons = ({ handleRerollGacha, handleShareWaifu, card_stats = stateDefault }) => {
 
   const gachaInfoOverlay = (
-    <Popover id="popover-trigger-click" title="Card Statistics">
+    <Popover id="popover-trigger-click-root-close" title="Card Statistics">
       <strong>Name:</strong> {card_stats.name} <br/>
+      <strong>Collection:</strong> {card_stats.collection} <br/>
       <strong>Attribute:</strong> {card_stats.attribute} <br/>
       <strong>Skill: [{card_stats.skill}]</strong> {card_stats.skill_details} <br/>
       <strong>Center Skill: [{card_stats.center_skill}]</strong> {card_stats.center_skill_details} <br/>
@@ -33,7 +35,7 @@ const GachaButtons = ({ handleRerollGacha, handleShareWaifu, card_stats = stateD
   return (
     <div className="aidoru-buttons">
       <Button className="gacha-button" onClick={handleRerollGacha}>Re-roll</Button>
-      <OverlayTrigger trigger="click" placement="top" overlay={gachaInfoOverlay}>
+      <OverlayTrigger trigger="click" rootClose placement="top" overlay={gachaInfoOverlay}>
         <Button className="gacha-button">Stats</Button>
       </OverlayTrigger>
       <Button className="gacha-button" onClick={handleShareWaifu}>Share this waifu</Button>

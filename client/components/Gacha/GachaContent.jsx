@@ -53,7 +53,7 @@ const GachaContent = (props) => {
           <CSSTransition
             in={idolized}
             classNames="normal-card"
-            timeout={{ enter: 300, exit: 100 }}>
+            timeout={{ enter: 300, exit: 300 }}>
 
             <img onClick={handleIdolCardClick} className="aidoru-image" src={card.card_image_url}/>
           </CSSTransition>
@@ -62,8 +62,8 @@ const GachaContent = (props) => {
               <CSSTransition
                 in={idolized}
                 classNames="idolized-card"
-                timeout={{ enter: 300, exit: 100 }}>
-                <img className="aidoru-image idolized" src={card.card_idolized_image_url}/>
+                timeout={{ enter: 300, exit: 300 }}>
+                <img onClick={handleIdolCardClick} className="aidoru-image idolized" src={card.card_idolized_image_url}/>
               </CSSTransition>
             )
             : null
