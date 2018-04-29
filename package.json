@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Me learning the hell hole that is react",
   "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node"
+  },
   "scripts": {
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",

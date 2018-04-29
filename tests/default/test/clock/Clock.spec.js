@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store'; // mock Redux store
