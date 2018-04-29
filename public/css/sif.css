@@ -95,7 +95,7 @@
 /* Normal card appears */
 .normal-card-exit {
   width: 0;
-  padding: 15px;
+  padding: 0;
 }
 .normal-card-exit-active {
   width: 370px;
@@ -110,7 +110,7 @@
 /* Idolized card appears */
 .idolized.idolized_card-enter {
   width: 0;
-  padding: 15px;
+  padding: 0;
 }
 .idolized.idolized-card-enter.idolized-card-enter-active {
   width: 370px;
