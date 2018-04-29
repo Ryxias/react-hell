@@ -63,9 +63,6 @@ class GachaAppContainer extends PureComponent {
   handleIdolCardClick() {
     if (!!this.props.card.card_idolized_image_url
       && this.props.card.card_idolized_image_url !== this.props.card.card_image_url) {
-      // if (!this.state.idolized) {
-      //   this.setState({ idolized: true });
-      // }
       this.setState({ idolized: !this.state.idolized });
     }
   }
