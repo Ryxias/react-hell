@@ -35,7 +35,7 @@ const GachaContent = (props) => {
               classNames="envelope"
               timeout={{ enter: 450, exit: 300 }}>
 
-              <img onClick={handleEnvelopeOpen} className="envelope-image" src={imageUrl} />
+              <img onClick={handleEnvelopeOpen} className="envelope-image animated rotateIn" src={imageUrl} />
             </CSSTransition>
           </div>
         )
