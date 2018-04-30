@@ -27,6 +27,24 @@ describe('SchoolIdo.lu Client', function() {
       expect(card.getName()).toEqual('Watanabe You');
       expect(card.getCollection()).toEqual('Time Travel');
       expect(card.getMainUnit()).toEqual('Aqours');
+      expect(card.getSubUnit()).toEqual('CYaRon!');
+      expect(card.getWebsiteUrl()).toEqual('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel-Smile/');
+      expect(card.getIdolizedImageUrl()).toEqual();
+      expect(card.getCardStats()).toEqual({
+        name: 'Watanabe You',
+        collection: 'Time Travel',
+        attribute: 'Smile',
+        skill: 'Score Up',
+        skill_details: 'For every 24 perfects, there is a 32% chance of increasing players score by 700 points. (Level 1)',
+        center_skill: 'Smile Princess',
+        center_skill_details: 'Smile increases drastically (+9%)',
+        non_idolized_maximum_statistics_smile: 5020,
+        non_idolized_maximum_statistics_pure: 4350,
+        non_idolized_maximum_statistics_cool: 3620,
+        idolized_maximum_statistics_smile: 5320,
+        idolized_maximum_statistics_pure: 4650,
+        idolized_maximum_statistics_cool: 3920,
+      });
     });
   });
 });
