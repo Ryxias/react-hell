@@ -7,7 +7,7 @@ import GachaContent from './GachaContent.jsx';
 import GachaLoadingScreen from './GachaLoadingScreen.jsx';
 import { resetGacha, startGachaRoll, shareCard } from '../../modules/gacha';
 
-class GachaAppContainer extends PureComponent {
+export class GachaAppContainer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -103,14 +103,14 @@ GachaAppContainer.defaultProps = {
   card: {},
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     card: state.gacha.card,
     isLoading: !!state.gacha.loading,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return { dispatch };
 };
 

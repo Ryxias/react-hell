@@ -29,7 +29,8 @@ describe('SchoolIdo.lu Client', function() {
       expect(card.getMainUnit()).toEqual('Aqours');
       expect(card.getSubUnit()).toEqual('CYaRon!');
       expect(card.getWebsiteUrl()).toEqual('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel-Smile/');
-      expect(card.getIdolizedImageUrl()).toEqual();
+      expect(card.getImageUrl()).toEqual('https://i.schoolido.lu/c/1220You.png');
+      expect(card.getIdolizedImageUrl()).toEqual('https://i.schoolido.lu/c/1220idolizedYou.png');
       expect(card.getCardStats()).toEqual({
         name: 'Watanabe You',
         collection: 'Time Travel',

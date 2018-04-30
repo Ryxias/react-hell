@@ -8,33 +8,33 @@ import { alert } from './alert';
 //   https://github.com/erikras/ducks-modular-redux
 
 // ACTIONS
-const SHARE_STARTED = 'gacha/SHARE_STARTED';
-const SHARE_SUCCESS = 'gacha/SHARE_SUCCESS';
-const SHARE_FAILURE = 'gacha/SHARE_FAILURE';
+export const SHARE_STARTED = 'gacha/SHARE_STARTED';
+export const SHARE_SUCCESS = 'gacha/SHARE_SUCCESS';
+export const SHARE_FAILURE = 'gacha/SHARE_FAILURE';
 /**
  * ???
  */
-const RESET_GACHA = 'gacha/RESET_GACHA';
+export const RESET_GACHA = 'gacha/RESET_GACHA';
 
 /**
  * Start API call to server to load the next card.
  */
-const START_GACHA_ROLL = 'gacha/START_GACHA_ROLL';
+export const START_GACHA_ROLL = 'gacha/START_GACHA_ROLL';
 
 /**
  * Get this when the API call returns.
  */
-const RECEIVE_GACHA_ROLL = 'gacha/RECIEVE_GACHA_ROLL';
+export const RECEIVE_GACHA_ROLL = 'gacha/RECIEVE_GACHA_ROLL';
 
 /**
  * User clicks on the envelope and begins the opening animation
  */
-const START_OPEN_CARD = 'gacha/START_OPEN_CARD';
+export const START_OPEN_CARD = 'gacha/START_OPEN_CARD';
 
 /**
  * The envelope finishes opening and renders the Aidorus
  */
-const CARD_OPENED = 'gacha/CARD_OPENED';
+export const CARD_OPENED = 'gacha/CARD_OPENED';
 
 
 // ACTION CREATORS
@@ -70,18 +70,20 @@ export function resetGacha() {
 
 export function startGachaRoll() {
   return (dispatch, getState) => {
-
     dispatch({
       type: START_GACHA_ROLL,
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
     return axios.get("/api/sif/roll")
-      .then((received) => {
+      .then(received => {
         dispatch({
           type: RECEIVE_GACHA_ROLL,
           card: received.data,
         });
+      })
+      .catch(err => {
+        dispatch(alert('OOPS! Something went wrong with startGachaRoll. Please check your code: ' + err.response.data.message, 'warning'));
       });
   };
 }
