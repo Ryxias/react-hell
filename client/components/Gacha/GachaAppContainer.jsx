@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import GachaContent from './GachaContent.jsx';
 import GachaLoadingScreen from './GachaLoadingScreen.jsx';
 import { resetGacha, startGachaRoll, shareCard } from '../../modules/gacha';
+const gachaActions = { resetGacha, startGachaRoll, shareCard };
 
 export class GachaAppContainer extends PureComponent {
   constructor(props) {
@@ -34,7 +35,6 @@ export class GachaAppContainer extends PureComponent {
   // the states with the obtained data
   getGacha() {
     this.resetGacha();
-    // this.props.dispatch(startGachaRoll());
     this.props.startGachaRoll();
   }
 
@@ -44,7 +44,6 @@ export class GachaAppContainer extends PureComponent {
 
   handleShareWaifu() {
     if (this.props.card.id) {
-      // this.props.dispatch(shareCard(this.props.card.id, this.state.idolized));
       this.props.shareCard(this.props.card.id, this.state.idolized);
     }
   }
@@ -113,10 +112,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { dispatch };
-};
-
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GachaAppContainer));
-
-export default withRouter(connect(mapStateToProps, { resetGacha, startGachaRoll, shareCard })(GachaAppContainer));
+export default connect(mapStateToProps, { ...gachaActions })(GachaAppContainer);

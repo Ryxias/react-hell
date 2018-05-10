@@ -66,16 +66,19 @@ describe('GachaAppContainer component (initial state --- LOADING)', () => {
       isLoading: true,
     },
   };
-  const dispatch = jest.fn();
   const mockStore = configureStore();
   let store, container;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<GachaAppContainer store={store}
-                                           card={stateDefault.gacha.card}
-                                           isLoading={stateDefault.gacha.isLoading}
-                                           dispatch={dispatch}/>);
+    container = mount(<Provider store={store}>
+                        <GachaAppContainer
+                          resetGacha={resetGacha}
+                          startGachaRoll={startGachaRoll}
+                          shareCard={shareCard}
+                          card={stateDefault.gacha.card}
+                          isLoading={stateDefault.gacha.isLoading} />
+                      </Provider>);
   });
 
   it('should render the GachaAppContainer component', () => {
@@ -109,16 +112,19 @@ describe('GachaAppContainer component (initial state --- LOADED)', () => {
       isLoading: false,
     },
   };
-  const dispatch = jest.fn();
   const mockStore = configureStore();
   let store, container;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<GachaAppContainer store={store}
-                                           card={stateDefault.gacha.card}
-                                           isLoading={stateDefault.gacha.isLoading}
-                                           dispatch={dispatch}/>);
+    container = mount(<Provider store={store}>
+                        <GachaAppContainer
+                          resetGacha={resetGacha}
+                          startGachaRoll={startGachaRoll}
+                          shareCard={shareCard}
+                          card={stateDefault.gacha.card}
+                          isLoading={stateDefault.gacha.isLoading} />
+                      </Provider>);
   });
 
   it('should render the GachaAppContainer component', () => {
@@ -190,17 +196,19 @@ describe('ConnectedGachaAppContainer component --- ACTIONS', () => {
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    connectedContainer = mount(
-      <Provider store={store}>
-        <ConnectedGachaAppContainer
-          card={stateDefault.gacha.card}
-          isLoading={stateDefault.gacha.isLoading}
-        />
-      </Provider>
-    , createContext());
+    connectedContainer = mount(<Provider store={store}>
+                        <GachaAppContainer
+                          resetGacha={resetGacha}
+                          startGachaRoll={startGachaRoll}
+                          shareCard={shareCard}
+                          card={stateDefault.gacha.card}
+                          isLoading={stateDefault.gacha.isLoading} />
+                      </Provider>);
   });
 
   it('should render the ConnectedGachaAppContainer component', () => {
     expect(connectedContainer.length).toEqual(1);
   });
+
+  
 });
