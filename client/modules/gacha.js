@@ -39,13 +39,13 @@ export const CARD_OPENED = 'gacha/CARD_OPENED';
 
 // ACTION CREATORS
 export function shareCard(card_id, idolized = false) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: SHARE_STARTED,
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.post("/api/sif/share", { card_id, idolized })
+    axios.post("/api/sif/share", { card_id, idolized })
       .then(received => {
         dispatch({
           type: SHARE_SUCCESS,
@@ -63,19 +63,21 @@ export function shareCard(card_id, idolized = false) {
 }
 
 export function resetGacha() {
-  return {
-    type: RESET_GACHA,
-  }
+  return (dispatch) => {
+    dispatch({
+      type: RESET_GACHA,
+    });
+  };
 }
 
 export function startGachaRoll() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: START_GACHA_ROLL,
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    return axios.get("/api/sif/roll")
+    axios.get("/api/sif/roll")
       .then(received => {
         dispatch({
           type: RECEIVE_GACHA_ROLL,

@@ -47,9 +47,9 @@ const GachaContent = (props) => {
         timeout={{ enter: 600, exit: 300 }}>
 
         <div className="opened-card-container">
-        <span className="aidoru-name">
-          <a href={card.card_ext_link}>{card.card_title}</a>
-        </span>
+          <span className="aidoru-name">
+            <a href={card.card_ext_link}>{card.card_title}</a>
+          </span>
           <CSSTransition
             in={idolized}
             classNames="normal-card"

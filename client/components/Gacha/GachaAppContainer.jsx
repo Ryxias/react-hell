@@ -26,14 +26,16 @@ export class GachaAppContainer extends PureComponent {
   // with a filler value for the data-attribute to work properly
   resetGacha() {
     this.setState({ animationPhase: 'closed', idolized: false });
-    this.props.dispatch(resetGacha());
+    // this.props.dispatch(resetGacha());
+    this.props.resetGacha();
   }
 
   // GETS a random gacha from schoolido.lu's LLSIF API and replaces
   // the states with the obtained data
   getGacha() {
     this.resetGacha();
-    this.props.dispatch(startGachaRoll());
+    // this.props.dispatch(startGachaRoll());
+    this.props.startGachaRoll();
   }
 
   handleRerollGacha() {
@@ -42,7 +44,8 @@ export class GachaAppContainer extends PureComponent {
 
   handleShareWaifu() {
     if (this.props.card.id) {
-      this.props.dispatch(shareCard(this.props.card.id, this.state.idolized));
+      // this.props.dispatch(shareCard(this.props.card.id, this.state.idolized));
+      this.props.shareCard(this.props.card.id, this.state.idolized);
     }
   }
 
@@ -114,4 +117,6 @@ const mapDispatchToProps = (dispatch) => {
   return { dispatch };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GachaAppContainer));
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GachaAppContainer));
+
+export default withRouter(connect(mapStateToProps, { resetGacha, startGachaRoll, shareCard })(GachaAppContainer));

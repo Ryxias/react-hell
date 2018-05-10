@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-const mockAxios = MockAdapter(axios);
+const mockAxios = new MockAdapter(axios);
 
 import ConnectedGachaAppContainer,
 { GachaAppContainer } from '../../../../client/components/Gacha/GachaAppContainer';
@@ -185,9 +185,7 @@ describe('ConnectedGachaAppContainer component --- ACTIONS', () => {
     },
   };
   const mockStore = configureStore();
-  mockAxios.onGet('/api/sif/roll').reply(200, {
-      data: stateDefault.gacha.card,
-  });
+  mockAxios.onGet('/api/sif/roll').reply(200, { data: stateDefault.gacha.card });
   let store, connectedContainer;
 
   beforeEach(() => {
