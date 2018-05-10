@@ -1,18 +1,17 @@
 'use strict';
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store'; // mock Redux store
 import { configure, shallow, mount } from 'enzyme';  // shallow rendering to only render top level
 import Adapter from 'enzyme-adapter-react-16';  // for Enzyme
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import thunk from 'redux-thunk';
 
 const mockAxios = new MockAdapter(axios);
 
-import ConnectedGachaAppContainer,
-{ GachaAppContainer } from '../../../../client/components/Gacha/GachaAppContainer';
+import ConnectedGachaAppContainer, { GachaAppContainer } from '../../../../client/components/Gacha/GachaAppContainer';
 import GachaButtons from '../../../../client/components/Gacha/GachaButtons';
 import GachaContent from '../../../../client/components/Gacha/GachaContent';
 import GachaLoadingScreen from '../../../../client/components/Gacha/GachaLoadingScreen';
@@ -20,20 +19,6 @@ import GachaLoadingScreen from '../../../../client/components/Gacha/GachaLoading
 import gachaReducers, { shareCard, resetGacha, startGachaRoll, SHARE_STARTED, SHARE_SUCCESS, SHARE_FAILURE,
                         RESET_GACHA, START_GACHA_ROLL, RECEIVE_GACHA_ROLL, START_OPEN_CARD, CARD_OPENED }
                         from '../../../../client/modules/gacha';
-
-// Instantiate router context
-const router = {
-  history: {},
-  route: {
-    location: {},
-    match: {},
-  },
-};
-
-const createContext = () => ({
-  context: { router },
-  childContextTypes: { router: {} },
-});
 
 /*
  * Because of testEnvironment variable in global jest config being 'node', jsdom-dependent methods
@@ -190,25 +175,85 @@ describe('ConnectedGachaAppContainer component --- ACTIONS', () => {
       isLoading: false,
     },
   };
-  const mockStore = configureStore();
-  mockAxios.onGet('/api/sif/roll').reply(200, { data: stateDefault.gacha.card });
+  const shareSuccessState = {
+    type: SHARE_SUCCESS,
+    data: {
+      card: stateDefault.gacha.card,
+      res: {
+        channel: "C2J5CU5AA",
+        test: "Look! <@U12R1EXQF> rolled a [36] Nico Yazawa - <https://i.schoolido.lu/c/36Nico.png>",
+        ts: "1525958003.000241",
+        type: "message",
+        user: "U6X5J5TDX",
+      },
+      success: true,
+      system_code: "2007493PUEBNEWQSJSA",
+    },
+  };
+  const middleware = [ thunk ];
+  const mockStore = configureStore(middleware);
   let store, connectedContainer;
+
+  // Mock Actions
+  const mockActions = {
+    reset: {type: RESET_GACHA},
+    startRoll: {type: START_GACHA_ROLL},
+    receiveRoll: {type: RECEIVE_GACHA_ROLL, card: stateDefault.gacha.card},
+    startShare: {type: SHARE_STARTED},
+    successShare: {
+      type: SHARE_SUCCESS,
+      data: {
+        card: stateDefault.gacha.card,
+        res: {
+          channel: "C2J5CU5AA",
+          test: "Look! <@U12R1EXQF> rolled a [36] Nico Yazawa - <https://i.schoolido.lu/c/36Nico.png>",
+          ts: "1525958003.000241",
+          type: "message",
+          user: "U6X5J5TDX",
+        },
+        success: true,
+        system_code: "2007493PUEBNEWQSJSA",
+      },
+    },
+  };
 
   beforeEach(() => {
     store = mockStore(stateDefault);
     connectedContainer = mount(<Provider store={store}>
-                        <GachaAppContainer
+                        <ConnectedGachaAppContainer
                           resetGacha={resetGacha}
                           startGachaRoll={startGachaRoll}
                           shareCard={shareCard}
                           card={stateDefault.gacha.card}
                           isLoading={stateDefault.gacha.isLoading} />
                       </Provider>);
+
+    // // Mock API requests
+    mockAxios.onGet("/api/sif/roll").reply(200, stateDefault.gacha.card);
+    mockAxios.onPost("/api/sif/share", { card_id: 36, idolized: false }).reply(shareSuccessState.data);
   });
 
   it('should render the ConnectedGachaAppContainer component', () => {
     expect(connectedContainer.length).toEqual(1);
   });
 
-  
+  it('should create an action to reset Gacha', async () => {
+    await store.dispatch(resetGacha());
+    const expectedActions = store.getActions();
+    expect(expectedActions).toContainEqual(mockActions.reset);
+  });
+
+  it('should create an action to start and receive Gacha roll', async () => {
+    await store.dispatch(startGachaRoll());
+    const expectedActions = store.getActions();
+    expect(expectedActions).toContainEqual(mockActions.startRoll);
+    expect(expectedActions).toContainEqual(mockActions.receiveRoll);
+  });
+
+  it('should create an action to share Gacha', async () => {
+    await store.dispatch(shareCard(36, false));
+    const expectedActions = store.getActions();
+    expect(expectedActions).toContainEqual(mockActions.startShare);
+    expect(expectedActions).toContainEqual(mockActions.successShare);
+  });
 });

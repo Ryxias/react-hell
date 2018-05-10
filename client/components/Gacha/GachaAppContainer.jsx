@@ -26,8 +26,7 @@ export class GachaAppContainer extends PureComponent {
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
   resetGacha() {
-    this.setState({ animationPhase: 'closed', idolized: false });
-    // this.props.dispatch(resetGacha());
+    this.setState({ animationPhase: 'closed', idolized: false });;
     this.props.resetGacha();
   }
 
