@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store'; // mock Redux store
@@ -13,13 +15,19 @@ import WorldClockDisplay from '../../../../client/components/WorldClock/WorldClo
 
 import clockReducers, { addTimezone, changeTimezone, clearTimezone, deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED } from '../../../../client/modules/clock';
 
+
+/*
+ * Because of testEnvironment variable in global jest config being 'node', jsdom-dependent methods
+ * like 'mount' will not work unless we explicitly import and deploy jsdom into our individual DOM tests.
+ * Reference: https://github.com/airbnb/enzyme/issues/341
+ */
+
+import jsdomGlobal from 'jsdom-global';
+jsdomGlobal();
+
 configure({ adapter: new Adapter() }); // Enzyme expects an adapter to be configured,
                                        // before using any of Enzyme's top level APIs, where `Adapter` is the adapter
                                        // corresponding to the library currently being tested.
-
-test('Stub function for testing jest functionality', () => {
-  expect(true).toBe(true);
-});
 
 describe('WorldClockContainer component (initial state)', () => {
   const stateDefault = {
@@ -34,7 +42,10 @@ describe('WorldClockContainer component (initial state)', () => {
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} regions={stateDefault.clock.regions} time_actives={stateDefault.clock.time_actives} />);
+    container = shallow(<WorldClockContainer store={store}
+                                             timezones={stateDefault.clock.timezones}
+                                             regions={stateDefault.clock.regions}
+                                             time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {
@@ -57,7 +68,6 @@ describe('WorldClockContainer component (initial state)', () => {
     expect(typeof container.find(WorldClockSelection).prop('selectIndex') === "number").toBe(true);
   });
 
-
   it('should have addClock method prop properly passed into WorldClockButtons', () => {
     expect(typeof container.find(WorldClockButtons).prop('addClock') === "function").toBe(true);
   });
@@ -76,7 +86,10 @@ describe('WorldClockContainer component (active state)', () => {
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    container = shallow(<WorldClockContainer store={store} timezones={stateDefault.clock.timezones} regions={stateDefault.clock.regions} time_actives={stateDefault.clock.time_actives} />);
+    container = shallow(<WorldClockContainer store={store}
+                                             timezones={stateDefault.clock.timezones}
+                                             regions={stateDefault.clock.regions}
+                                             time_actives={stateDefault.clock.time_actives} />);
   });
 
   it('should render the WorldClockContainer component', () => {

@@ -21,6 +21,7 @@
 .envelope-enter.envelope-enter-active {
   width: 280px;
   transition: width 450ms;
+  -webkit-transition: width 450ms;
 }
 .envelope-enter-done {
   width: 280px;
@@ -42,6 +43,7 @@
 .opened-card-enter.opened-card-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
+  -webkit-transition: opacity 500ms ease-in;
 }
 .opened-card-enter-done {
   opacity: 1;
@@ -61,33 +63,99 @@
 
 }
 
+.gacha-loading {
+  max-width: 50%;
+}
+
 .aidoru-image {
-  height: 75%;
+  /*height: 0;*/
+  width: 370px;
   padding: 15px;
 }
 .aidoru-image.idolized {
   width: 0;
+  height: 0;
+  padding: 0;
+  display: none;
 }
 
+/* Normal card disappears */
 .normal-card-enter {
   width: 370px;
+  height: 75%;
+  padding: 15px;
 }
 .normal-card-enter.normal-card-enter-active {
   width: 0;
-  transition: width 300ms;
+  height: 75%;
+  transition: width 300ms ease-in-out;
+  -webkit-transition: width 300ms ease-in-out;
 }
 .normal-card-enter-done {
   width: 0;
+  height: 0;
+  padding: 0;
+  display: none;
 }
-.idolized_card-enter {
+
+/* Normal card appears */
+.normal-card-exit {
   width: 0;
+  height: 0;
+  padding: 0;
+  display: none;
 }
-.idolized-card-enter.idolized-card-enter-active {
+.normal-card-exit-active {
   width: 370px;
-  transition: width 300ms 300ms;
+  height: 75%;
+  transition: width 300ms 300ms ease-in-out;
+  -webkit-transition: width 300ms 300ms ease-in-out;
 }
-.idolized-card-enter-done {
-  width: 370px !important;
+.normal-card-exit-done {
+  width: 370px;
+  height: 75%;
+  padding: 15px;
+  display: inline;
+}
+
+/* Idolized card appears */
+.idolized.idolized_card-enter {
+  width: 0;
+  height: 0;
+  padding: 0;
+  display: inline;
+}
+.idolized.idolized-card-enter.idolized-card-enter-active {
+  width: 370px;
+  height: 75%;
+  transition: width 300ms 300ms ease-in-out;
+  -webkit-transition: width 300ms 300ms ease-in-out;
+}
+.idolized.idolized-card-enter-done {
+  width: 370px;
+  height: 75%;
+  padding: 15px;
+  display: inline;
+}
+
+/* Idolized card disappears */
+.idolized.idolized-card-exit {
+  width: 370px;
+  height: 75%;
+  padding: 15px;
+  display: inline;
+}
+.idolized.idolized-card-exit.idolized-card-exit-active {
+  width: 0;
+  height: 75%;
+  transition: width 300ms ease-in-out;
+  -webkit-transition: width 300ms ease-in-out;
+}
+.idolized.idolized-card-exit-done {
+  width: 0;
+  height: 0;
+  padding: 0;
+  display: none;
 }
 
 .gacha-button {

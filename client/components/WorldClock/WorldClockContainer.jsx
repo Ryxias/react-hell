@@ -56,7 +56,8 @@ export class WorldClockContainer extends PureComponent {
               ? (
                   <Col xs={12} md={6} key={index} className="animated fadeInDown">
                     <div className="world-clock">
-                      <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
+                      <WorldClockSelection selectIndex={index}
+                                           deleteClock={this.deleteClock}/>
                       <WorldClockDisplay {...clockProps}/>
                     </div>
                   </Col>
@@ -64,7 +65,8 @@ export class WorldClockContainer extends PureComponent {
               : (
                 <Col xs={12} md={6} key={index} className="animated fadeInDown">
                   <div className="world-clock">
-                    <WorldClockSelection selectIndex={index} deleteClock={this.deleteClock}/>
+                    <WorldClockSelection selectIndex={index}
+                                         deleteClock={this.deleteClock}/>
                   </div>
                 </Col>
               );
