@@ -35,7 +35,7 @@ const GachaContent = (props) => {
               classNames="envelope"
               timeout={{ enter: 450, exit: 300 }}>
 
-              <img onClick={handleEnvelopeOpen} className="envelope-image" src={imageUrl} />
+              <img onClick={handleEnvelopeOpen} className="envelope-image animated rotateIn" src={imageUrl} />
             </CSSTransition>
           </div>
         )
@@ -47,13 +47,13 @@ const GachaContent = (props) => {
         timeout={{ enter: 600, exit: 300 }}>
 
         <div className="opened-card-container">
-        <span className="aidoru-name">
-          <a href={card.card_ext_link}>{card.card_title}</a>
-        </span>
+          <span className="aidoru-name">
+            <a href={card.card_ext_link}>{card.card_title}</a>
+          </span>
           <CSSTransition
             in={idolized}
             classNames="normal-card"
-            timeout={{ enter: 300, exit: 100 }}>
+            timeout={{ enter: 300, exit: 300 }}>
 
             <img onClick={handleIdolCardClick} className="aidoru-image" src={card.card_image_url}/>
           </CSSTransition>
@@ -62,8 +62,8 @@ const GachaContent = (props) => {
               <CSSTransition
                 in={idolized}
                 classNames="idolized-card"
-                timeout={{ enter: 300, exit: 100 }}>
-                <img className="aidoru-image idolized" src={card.card_idolized_image_url}/>
+                timeout={{ enter: 300, exit: 300 }}>
+                <img onClick={handleIdolCardClick} className="aidoru-image idolized" src={card.card_idolized_image_url}/>
               </CSSTransition>
             )
             : null

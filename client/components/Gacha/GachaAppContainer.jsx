@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom';
 import GachaContent from './GachaContent.jsx';
 import GachaLoadingScreen from './GachaLoadingScreen.jsx';
 import { resetGacha, startGachaRoll, shareCard } from '../../modules/gacha';
+const gachaActions = { resetGacha, startGachaRoll, shareCard };
 
-class GachaAppContainer extends PureComponent {
+export class GachaAppContainer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -25,15 +26,15 @@ class GachaAppContainer extends PureComponent {
   // Resets game state to default states; open_sound has to be pre-populated
   // with a filler value for the data-attribute to work properly
   resetGacha() {
-    this.setState({ animationPhase: 'closed', idolized: false });
-    this.props.dispatch(resetGacha());
+    this.setState({ animationPhase: 'closed', idolized: false });;
+    this.props.resetGacha();
   }
 
   // GETS a random gacha from schoolido.lu's LLSIF API and replaces
   // the states with the obtained data
   getGacha() {
     this.resetGacha();
-    this.props.dispatch(startGachaRoll());
+    this.props.startGachaRoll();
   }
 
   handleRerollGacha() {
@@ -42,7 +43,7 @@ class GachaAppContainer extends PureComponent {
 
   handleShareWaifu() {
     if (this.props.card.id) {
-      this.props.dispatch(shareCard(this.props.card.id, this.state.idolized));
+      this.props.shareCard(this.props.card.id, this.state.idolized);
     }
   }
 
@@ -63,9 +64,7 @@ class GachaAppContainer extends PureComponent {
   handleIdolCardClick() {
     if (!!this.props.card.card_idolized_image_url
       && this.props.card.card_idolized_image_url !== this.props.card.card_image_url) {
-      if (!this.state.idolized) {
-        this.setState({ idolized: true });
-      }
+      this.setState({ idolized: !this.state.idolized });
     }
   }
 
@@ -105,15 +104,11 @@ GachaAppContainer.defaultProps = {
   card: {},
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     card: state.gacha.card,
     isLoading: !!state.gacha.loading,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return { dispatch };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GachaAppContainer));
+export default connect(mapStateToProps, { ...gachaActions })(GachaAppContainer);

@@ -3,15 +3,21 @@
   "version": "0.0.1",
   "description": "Me learning the hell hole that is react",
   "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/default/test/d20"
+    ]
+  },
   "scripts": {
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
-    "jest": "jest",
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
     "sync_models": "sudo NODE_ENV=production node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
-    "test": "NODE_ENV=production ./node_modules/mocha/bin/mocha",
-    "tests": "./bin/runtests",
+    "test": "jest",
     "dev": "NODE_ENV=development node server/server.js",
     "dev_sync_models": "NODE_ENV=development node bin/sync_models.js"
   },
@@ -67,9 +73,14 @@
     "webpack-dev-server": "^2.7.1"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
     "babel-jest": "^22.4.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.3",
+    "jest-mock": "^22.4.3",
+    "jsdom": "11.9.0",
+    "jsdom-global": "3.0.2",
     "mocha": "^3.5.3",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^16.3.2",
