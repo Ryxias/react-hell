@@ -120,7 +120,7 @@ export default function reducer(state = {}, action) {
           rarity: card.rarity,
           envelope_image_closed: card.envelope_image_closed,
           envelope_image_open: card.envelope_image_open,
-          open_sound: new Audio('/statics/sound/' + card.open_sound),
+          open_sound: process.env.NODE_ENV !== 'test' ? new Audio('/statics/sound/' + card.open_sound) : ['audio'],
           card_stats: card.card_stats,
         },
       });

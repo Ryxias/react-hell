@@ -36,17 +36,21 @@
   text-align: center;
   height: inherit;
   opacity: 0;
+  display: none;
 }
 .opened-card-enter {
   opacity: 0.01;
+  display: block;
 }
 .opened-card-enter.opened-card-enter-active {
   opacity: 1;
+  display: block;
   transition: opacity 500ms ease-in;
   -webkit-transition: opacity 500ms ease-in;
 }
-.opened-card-enter-done {
+.opened-card-container.opened-card-enter-done {
   opacity: 1;
+  display: block;
 }
 
 .aidoru-name {

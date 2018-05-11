@@ -162,26 +162,15 @@ describe('ConnectedWorldClockContainer component (active state) --- REDUCERS', (
     },
   };
   const mockStore = configureStore();
-  let store, connectedContainer;
+  let store;
 
   beforeEach(() => {
     store = mockStore(stateDefault);
-    connectedContainer = mount(
-      <Provider store={store}>
-        <ConnectedWorldClockContainer
-          timezones={stateDefault.clock.timezones}
-          regions={stateDefault.clock.regions}
-          time_actives={stateDefault.clock.time_actives} />
-      </Provider>);
-  });
-
-  it('should render the WorldClockContainer component', () => {
-    expect(connectedContainer.length).toEqual(1);
   });
 
   it('should run the appropriate reducer for TIMEZONE_ADDED action', () => {
     let state = stateDefault.clock;
-    let action = {
+    const action = {
       type: TIMEZONE_ADDED,
       timezones: state.timezones.concat(["None"]),
       regions: state.regions.concat(["Choose your city/region here"]),
@@ -197,7 +186,7 @@ describe('ConnectedWorldClockContainer component (active state) --- REDUCERS', (
 
   it('should run the appropriate reducer for TIMEZONE_CHANGED action', () => {
     let state = stateDefault.clock;
-    let action = {
+    const action = {
       type: TIMEZONE_CHANGED,
       timezones: state.timezones.map((e,i) => i === 0 ? "America/New_York" : e),
       regions: state.regions.map((e,i) => i === 0 ? "New York" : e),
@@ -213,7 +202,7 @@ describe('ConnectedWorldClockContainer component (active state) --- REDUCERS', (
 
   it('should run the appropriate reducer for TIMEZONE_NOT_SELECTED action', () => {
     let state = stateDefault.clock;
-    let action = {
+    const action = {
       type: TIMEZONE_NOT_SELECTED,
       timezones: state.timezones.map((e,i) => i === 0 ? "None" : e),
       regions: state.regions.map((e,i) => i === 0 ? "Choose your city/region here" : e),
@@ -229,7 +218,7 @@ describe('ConnectedWorldClockContainer component (active state) --- REDUCERS', (
 
   it('should run the appropriate reducer for TIMEZONE_DELETED action', () => {
     let state = stateDefault.clock;
-    let action = {
+    const action = {
       type: TIMEZONE_DELETED,
       timezones: state.timezones.filter((e,i) => i !== 0),
       regions: state.regions.filter((e,i) => i !== 0),
