@@ -45,7 +45,7 @@ export function shareCard(card_id, idolized = false) {
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    axios.post("/api/sif/share", { card_id, idolized })
+    return axios.post("/api/sif/share", { card_id, idolized })
       .then(received => {
         dispatch({
           type: SHARE_SUCCESS,
@@ -77,7 +77,7 @@ export function startGachaRoll() {
     });
 
     const axios = require('axios'); // FIXME (derek) refactor with the Api Client
-    axios.get("/api/sif/roll")
+    return axios.get("/api/sif/roll")
       .then(received => {
         dispatch({
           type: RECEIVE_GACHA_ROLL,

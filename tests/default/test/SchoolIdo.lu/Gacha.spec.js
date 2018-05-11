@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
+import jest from 'jest-mock';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -28,6 +29,10 @@ import gachaReducers, { shareCard, resetGacha, startGachaRoll, SHARE_STARTED, SH
 
 import jsdomGlobal from 'jsdom-global';
 jsdomGlobal();
+
+global.console = {
+  log: jest.fn(),
+}
 
 configure({ adapter: new Adapter() }); // Enzyme expects an adapter to be configured,
                                        // before using any of Enzyme's top level APIs, where `Adapter` is the adapter
@@ -229,31 +234,44 @@ describe('ConnectedGachaAppContainer component --- ACTIONS', () => {
                       </Provider>);
 
     // // Mock API requests
-    mockAxios.onGet("/api/sif/roll").reply(200, stateDefault.gacha.card);
-    mockAxios.onPost("/api/sif/share", { card_id: 36, idolized: false }).reply(shareSuccessState.data);
+    mockAxios.onGet("/api/sif/roll").reply(config => {
+        console.log('GET HIT');
+        return [200, stateDefault.gacha.card];
+      });
+    mockAxios.onPost("/api/sif/share").reply(config => {
+        console.log('POST HIT');
+        return [201, shareSuccessState.data];
+      });
   });
 
   it('should render the ConnectedGachaAppContainer component', () => {
     expect(connectedContainer.length).toEqual(1);
   });
 
-  it('should create an action to reset Gacha', async () => {
-    await store.dispatch(resetGacha());
+  it('should create an action to reset Gacha', () => {
+    store.dispatch(resetGacha());
     const expectedActions = store.getActions();
     expect(expectedActions).toContainEqual(mockActions.reset);
   });
 
-  it('should create an action to start and receive Gacha roll', async () => {
-    await store.dispatch(startGachaRoll());
-    const expectedActions = store.getActions();
-    expect(expectedActions).toContainEqual(mockActions.startRoll);
-    expect(expectedActions).toContainEqual(mockActions.receiveRoll);
+  it('should create an action to start and receive Gacha roll', () => {
+    return store.dispatch(startGachaRoll())
+      .then(() => {
+        const expectedActions = store.getActions();
+        expect(expectedActions).toContainEqual(mockActions.startRoll);
+        expect(expectedActions).toContainEqual(mockActions.receiveRoll);
+        expect(global.console.log).toHaveBeenCalledWith('GET HIT');
+      });
   });
 
-  it('should create an action to share Gacha', async () => {
-    await store.dispatch(shareCard(36, false));
-    const expectedActions = store.getActions();
-    expect(expectedActions).toContainEqual(mockActions.startShare);
-    expect(expectedActions).toContainEqual(mockActions.successShare);
+  it('should create an action to share Gacha', () => {
+    return store.dispatch(shareCard(36, false))
+      .then(() => {
+        const expectedActions = store.getActions();
+        expect(expectedActions).toContainEqual(mockActions.startShare);
+        expect(expectedActions).toContainEqual(mockActions.successShare);
+        expect(global.console.log).toHaveBeenCalledWith('POST HIT');
+      });
   });
 });
+
