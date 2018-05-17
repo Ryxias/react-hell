@@ -180,3 +180,24 @@
   opacity: 1;
   display: block;
 }
+
+.gacha-button-container {
+  text-align: center;
+  opacity: 0;
+  display: none;
+}
+
+.gacha-buttons-enter {
+  opacity: 0;
+  display: block;
+}
+.gacha-buttons-enter-active {
+  opacity: 1;
+  display: block;
+  transition: opacity 500ms ease-in;
+  -webkit-transition: opacity 500ms ease-in;
+}
+.gacha-buttons-enter-done {
+  opacity: 1;
+  display: block;
+}
