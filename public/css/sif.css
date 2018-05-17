@@ -68,138 +68,92 @@
   margin: auto;
 }
 
+.card-spacing-container {
+  padding: 10px;
+  text-align: center;
+}
+
 /* Megumin */
 .gacha-loading {
   max-width: 50%;
 }
 
-/* Images in initial state after opening envelope */
-.aidoru-image {
+/* Card default states */
+.aidoru-image-normal {
   width: 325px;
   height: 457.031px;
-  padding: 10px;
-  text-align: center;
-  margin: auto;
 }
-.aidoru-image.idolized {
+.aidoru-image-idolized {
   width: 0;
   height: 0;
-  padding: 0;
-  margin: 0;
 }
 
 /* Normal card disappears */
 .normal-card-enter {
   width: 325px;
   height: 457.031px;
-  padding: 10px;
-  display: inline;
-  text-align: center;
-  margin: auto;
 }
-.normal-card-enter.normal-card-enter-active {
+.normal-card-enter-active {
   width: 0;
   height: 457.031px;
-  padding: 10px;
-  display: inline;
-  text-align: center;
-  margin: auto;
   transition: width 300ms ease-in-out;
   -webkit-transition: width 300ms ease-in-out;
 }
 .normal-card-enter-done {
   width: 0;
+  height: 0;
+}
+
+/* Idolized card appears */
+.idolized_card-enter {
+  width: 0;
+  height: 0;
+}
+.idolized-card-enter-active {
+  width: 325px;
   height: 457.031px;
-  padding: 0;
-  display: none;
-  text-align: center;
-  margin: auto;
+  transition: width 300ms ease-in-out 300ms;
+  -webkit-transition: width 300ms ease-in-out 300ms;
+}
+.idolized-card-enter-done {
+  width: 325px;
+  height: 457.031px;
+}
+
+/* Idolized card disappears */
+.idolized-card-exit {
+  width: 325px;
+  height: 457.031px;
+}
+.idolized-card-exit-active {
+  width: 0;
+  height: 457.031px;
+  transition: width 300ms ease-in-out;
+  -webkit-transition: width 300ms ease-in-out;
+}
+.idolized-card-exit-done {
+  width: 0;
+  height: 0;
 }
 
 /* Normal card appears */
 .normal-card-exit {
   width: 0;
   height: 0;
-  padding: 0;
-  display: none;
-  text-align: center;
-  margin: auto;
 }
 .normal-card-exit-active {
   width: 325px;
   height: 457.031px;
-  padding: 10px;
-  display: none;
-  text-align: center;
-  margin: auto;
-  transition: width 300ms 300ms ease-in-out;
-  -webkit-transition: width 300ms 300ms ease-in-out;
+  transition: width 300ms ease-in-out 300ms;
+  -webkit-transition: width 300ms ease-in-out 300ms;
 }
 .normal-card-exit-done {
   width: 325px;
   height: 457.031px;
-  padding: 10px;
-  display: block;
   text-align: center;
-  margin: auto;
 }
 
-/* Idolized card appears */
-.idolized.idolized_card-enter {
-  width: 0;
-  height: 0;
-  padding: 0;
-  text-align: center;
-  margin: auto;
-}
-.idolized.idolized-card-enter.idolized-card-enter-active {
-  width: 325px;
-  height: 0;
-  padding: 0;
-  text-align: center;
-  margin: auto;
-  transition: width 300ms 300ms ease-in-out;
-  -webkit-transition: width 300ms 300ms ease-in-out;
-}
-.idolized.idolized-card-enter-done {
-  width: 325px;
-  height: 457.031px;
-  padding: 10px;
-  display: block;
-  text-align: center;
-  margin: auto;
-}
-
-/* Idolized card disappears */
-.idolized.idolized-card-exit {
-  width: 325px;
-  height: 457.031px;
-  padding: 10px;
-  display: inline;
-  text-align: center;
-  margin: auto;
-}
-.idolized.idolized-card-exit.idolized-card-exit-active {
-  width: 0;
-  height: 457.031px;
-  padding: 10px;
-  display: inline;
-  text-align: center;
-  margin: auto;
-  transition: width 300ms ease-in-out;
-  -webkit-transition: width 300ms ease-in-out;
-}
-.idolized.idolized-card-exit-done {
-  width: 0;
-  height: 457.031px;
-  padding: 0;
-  display: none;
-  text-align: center;
-  margin: auto;
-}
-
-
-/* Gacha button layout and entering animation */
+/* Gacha button styles and entering animation */
 .gacha-button {
   background-color: royalblue;
 }

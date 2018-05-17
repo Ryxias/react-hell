@@ -47,27 +47,29 @@ const GachaContent = (props) => {
         timeout={{ enter: 600, exit: 300 }}>
 
         <div className="opened-card-container">
-          <span className="aidoru-name">
-            <a href={card.card_ext_link}>{card.card_title}</a>
-          </span>
-          <CSSTransition
-            in={idolized}
-            classNames="normal-card"
-            timeout={{ enter: 300, exit: 300 }}>
+          <div className="card-spacing-container">
+            <span className="aidoru-name">
+              <a href={card.card_ext_link}>{card.card_title}</a>
+            </span>
+            <CSSTransition
+              in={idolized}
+              classNames="normal-card"
+              timeout={{ enter: 300, exit: 600 }}>
 
-            <img onClick={handleIdolCardClick} className="aidoru-image" src={card.card_image_url}/>
-          </CSSTransition>
-          { has_idolized_image
-            ? (
-              <CSSTransition
-                in={idolized}
-                classNames="idolized-card"
-                timeout={{ enter: 300, exit: 300 }}>
-                <img onClick={handleIdolCardClick} className="aidoru-image idolized" src={card.card_idolized_image_url}/>
-              </CSSTransition>
-            )
-            : null
-          }
+              <img onClick={handleIdolCardClick} className="aidoru-image-normal" src={card.card_image_url}/>
+            </CSSTransition>
+            { has_idolized_image
+              ? (
+                <CSSTransition
+                  in={idolized}
+                  classNames="idolized-card"
+                  timeout={{ enter: 600, exit: 300 }}>
+                  <img onClick={handleIdolCardClick} className="aidoru-image-idolized" src={card.card_idolized_image_url}/>
+                </CSSTransition>
+              )
+              : null
+            }
+          </div>
         </div>
       </CSSTransition>
       <CSSTransition
