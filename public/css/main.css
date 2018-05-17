@@ -3,7 +3,7 @@
   /*font-family: 'Josefin Sans', sans-serif;*/
 /*}*/
 body {
-  padding-top: 70px;
+  padding-top: 60px;
 }
 
 #header, #footer {
@@ -55,5 +55,9 @@ body {
 #footer .right-thing {
   float: right;
   font-size: 2px;
+}
+
+.main-app-container {
+  text-align: center;
 }
 

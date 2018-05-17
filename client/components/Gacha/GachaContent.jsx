@@ -68,6 +68,13 @@ const GachaContent = (props) => {
             )
             : null
           }
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={animationPhase === 'open_finished'}
+        classNames="gacha-buttons"
+        timeout={{ enter: 600, exit: 300 }}>
+        <div className="gacha-button-container">
           <GachaButtons {...buttonProps} />
         </div>
       </CSSTransition>
