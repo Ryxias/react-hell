@@ -7,7 +7,7 @@ module.exports = {
     filename: 'bundle.js' // bundles all the files together into a single file
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: { presets:[ 'es2015', 'react', 'stage-2' ] } }, // transpiles both .js and .jsx files with ES6 into code interpretable by the browser
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: { presets:[ 'es2015', 'react', 'stage-2' ] } }
     ]
