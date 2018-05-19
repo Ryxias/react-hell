@@ -10,7 +10,7 @@ const factory_loader = new FactoryLoader(service_container);
 
 factory_loader.load(require('./config/database_connection'));
 factory_loader.load(require('./config/express'));
-factory_loader.load(require('./config/chuubot'));
+factory_loader.load(require('./config/slackbots'));
 
 const json_loader = new JsonLoader(service_container);
 json_loader.load(require('./config/services.json'));
