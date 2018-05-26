@@ -11,7 +11,7 @@
  */
 
 class FileSweeper {
-  constructor(Menus, Timer, handleInvalidInput, Fetcher, HttpClient, token) {
+  constructor(Menus, Timer, handleInvalidInput, fetchList, HttpClient, token) {
     // initialize input listener
     this.rl = require('readline').createInterface({
       input: process.stdin,
@@ -26,7 +26,7 @@ class FileSweeper {
     this.httpClient = HttpClient;
     this.timer = Timer;
     this.handleInvalidInput = handleInvalidInput;
-    this.fetchList = Fetcher;
+    this.fetchList = fetchList;
     this.token = token;
   }
 
