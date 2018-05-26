@@ -14,28 +14,29 @@ const menuTypes = require('./lib/menuTypes');
 const readline = require('readline');
 const axios = require('axios');
 const token = process.env.NODE_ENV === 'production' ? require('/etc/chuuni/config').fsd_workspace.legacy_token
-                                                    : require('../../config/config').fsd_workspace.legacy_token;
+  : require('../../config/config').fsd_workspace.legacy_token;
 
 class FileSweeper {
-  constructor() {
+  constructor(Timer) {
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
     this.list = [];
-    this.elapsed = 0;
-    this.deleteLimit = 50; // Default: 50 to match API quota
+    this.deleteLimit = 5; // Default: 50 to match API quota
+    this.timer = new Timer();
   }
 
   /**
    * Initializes the program.
    */
   start() {
+    console.log('what is fetcher?', this.fetch);
     console.log('\nWelcome to the Slack File Sweeper.\n' +
       '(NOTE: Please keep in mind Slack API quota is 50 requests per minute for file deletions.\n' +
       'Therefore, only 50 files can be displayed and deleted at a time every minute.\n' +
       'Starred/Pinned messages are filtered out as they should be deemed to be important.)\n');
-    this.printMainMenu();
+    this.mainMenu();
   }
 
   /**
@@ -44,22 +45,6 @@ class FileSweeper {
   leave() {
     console.log('\nThanks for using Slack File Sweeper! Goodbye!\n');
     process.exit(0);
-  }
-
-  /**
-   * Starts the API quota timer.
-   */
-  startTimer() {
-    let self = this;
-    this.interval = setInterval(() => { self.elapsed += 1 }, 1000);
-  }
-
-  /**
-   * Resets the API quota timer.
-   */
-  resetTimer() {
-    this.elapsed = 0;
-    clearInterval(this.interval);
   }
 
   /**
@@ -74,12 +59,12 @@ class FileSweeper {
    * @param page: current page of the search query
    * @returns {*}
    */
-  fetchList(eventType, types = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
+  fetchList(eventType = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
     const params = {
       ts_from: 0,
       ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
     };
-    let api_url = `https://slack.com/api/files.list?token=${token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${types}&page=${page}`;
+    let api_url = `https://slack.com/api/files.list?token=${token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${eventType}&page=${page}`;
     return axios.get(api_url)
       .then(res => {
         let result = res.data;
@@ -99,52 +84,52 @@ class FileSweeper {
         } else {
           if (page < result.paging.pages) {
             page += 1;
-            return this.fetchList(eventType, types, itemCount, ignoreCount, page);
+            return this.fetchList(eventType, itemCount, ignoreCount, page);
           } else {
             return this.list;
           }
         }
       }).catch(err => {
-      console.error(err);
-    });
+        console.error(err);
+      });
   }
 
   /**
    * Prints the available main filtering options for user to use for file deletion.
    * @param eventType: to match the correct filter and action functions required for query and deletion
    */
-  printMainMenu(eventType = 'mainMenu') {
+  mainMenu(eventType = 'mainMenu') {
     console.log(
       '~~~~~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~~~~~\n' +
       'Please choose one of the following options.\n' +
       'You may quit anytime by typing "quit" or "exit".\n'
     );
-    menuTypes['mainMenu'].forEach((item) => {
+    menuTypes[eventType].forEach((item) => {
       console.log(item);
     });
     let self = this;
     this.rl.question('\nChoose one of the options above: ', (input) => {
       if (input === 'quit' || input === 'exit') {
         self.leave();
-      } else if (this.elapsed === 0 || this.elapsed >= 60) {
-        this.resetTimer();
+      } else if (this.timer.elapsed === 0 || this.timer.elapsed >= 60) {
+        this.timer.reset();
         switch(input) {
           case '1':
-            this.printFilterMenu('all');
+            this.filterMenu('all');
             break;
           case '2':
-            this.printFilterMenu('images');
+            this.filterMenu('images');
             break;
           case '3':
-            this.printFilterMenu('videos');
+            this.filterMenu('videos');
             break;
           default:
-            this.handleInvalidInput(eventType, this.printMainMenu);
+            this.handleInvalidInput(eventType, this.mainMenu);
         };
       } else {
         console.log('\nAPI Quota has been reached for this minute.\n' +
-          'Please wait ' + (60 - this.elapsed) + ' more seconds before trying again.\n');
-        this.printMainMenu();
+          'Please wait ' + (60 - this.timer.elapsed) + ' more seconds before trying again.\n');
+        this.mainMenu();
       }
     });
   }
@@ -152,14 +137,14 @@ class FileSweeper {
   /**
    * Prints a list of the non-starred/pinned files that can be marked for deletion.
    * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
-   * @returns this.confirmDeletion(eventType, this.printFilterMenu).
+   * @returns this.confirmDeletion(eventType, this.filterMenu).
    */
-  printFilterMenu(eventType) {
+  filterMenu(eventType) {
     console.log('\nThe following files will be deleted:\n');
     if (this.list.length === 0) {
       this.fetchList(eventType)
         .then(() => {
-          return this.confirmDeletion(eventType, this.printFilterMenu);
+          return this.confirmDeletion(eventType, this.filterMenu);
         });
     } else {
       let count = 1;
@@ -167,7 +152,7 @@ class FileSweeper {
         console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
         count += 1;
       });
-      return this.confirmDeletion(eventType, this.printFilterMenu);
+      return this.confirmDeletion(eventType, this.filterMenu);
     }
   }
 
@@ -182,12 +167,12 @@ class FileSweeper {
     this.rl.question('\nAre you sure you want to delete the items above?\nEnter your choice (Y/N): ', (input) => {
       if (input === 'quit' || input === 'exit') {
         self.leave();
-      } else if (this.elapsed === 0 || this.elapsed >= 60) {
-        this.resetTimer();
+      } else if (this.timer.elapsed === 0 || this.timer.elapsed >= 60) {
+        this.timer.reset();
         if (input === 'N' || input === 'n') {
           this.list = []; // Clears the list
           console.log('\nReturning to main menu...\n');
-          this.printMainMenu();
+          this.mainMenu();
         } else if (input !== 'Y' && input !== 'y') {
           this.handleInvalidInput(eventType, caller);
         } else {
@@ -211,8 +196,8 @@ class FileSweeper {
           if (deleteCount === this.deleteLimit) {
             console.log('\nAll files in list are now deleted.\n');
             this.list = [];
-            this.startTimer();
-            return this.printMainMenu();
+            this.timer.start();
+            return this.mainMenu();
           }
         }).catch(err => console.error(err));
     });

@@ -2,6 +2,10 @@
 
 const FileSweeper = require('./FileSweeper/FileSweeper');
 
-const app = new FileSweeper();
+const dependencies = [
+  require('./FileSweeper/lib/Timer'),
+];
+
+const app = new FileSweeper(...dependencies);
 
 app.start();
