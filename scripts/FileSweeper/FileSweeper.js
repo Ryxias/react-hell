@@ -10,21 +10,18 @@
  *
  */
 
-const menuTypes = require('./lib/menuTypes');
-const readline = require('readline');
-const axios = require('axios');
-const token = process.env.NODE_ENV === 'production' ? require('/etc/chuuni/config').fsd_workspace.legacy_token
-  : require('../../config/config').fsd_workspace.legacy_token;
-
 class FileSweeper {
-  constructor(Timer) {
-    this.rl = readline.createInterface({
+  constructor(Menus, Timer, HttpClient, token) {
+    this.rl = require('readline').createInterface({
       input: process.stdin,
       output: process.stdout
     });
     this.list = [];
     this.deleteLimit = process.env.NODE_ENV === 'production' ? 50 : 5; // Default: 50 to match API quota
+    this.menus = Menus;
     this.timer = new Timer();
+    this.httpClient = HttpClient;
+    this.token = token;
   }
 
   /**
@@ -64,8 +61,8 @@ class FileSweeper {
       ts_from: 0,
       ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
     };
-    let api_url = `https://slack.com/api/files.list?token=${token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${eventType}&page=${page}`;
-    return axios.get(api_url)
+    let api_url = `https://slack.com/api/files.list?token=${this.token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${eventType}&page=${page}`;
+    return this.httpClient.get(api_url)
       .then(res => {
         let result = res.data;
         result.files.forEach(file => {
@@ -104,7 +101,7 @@ class FileSweeper {
       'Please choose one of the following options.\n' +
       'You may quit anytime by typing "quit" or "exit".\n'
     );
-    menuTypes[eventType].forEach((item) => {
+    this.menus[eventType].forEach((item) => {
       console.log(item);
     });
     let self = this;
@@ -188,8 +185,8 @@ class FileSweeper {
   deleteFiles() {
     let deleteCount = 0;
     this.list.forEach(file => {
-      let api_url = `https://slack.com/api/files.delete?token=${token}&file=${file.id}`;
-      axios.post(api_url)
+      let api_url = `https://slack.com/api/files.delete?token=${this.token}&file=${file.id}`;
+      this.httpClient.post(api_url)
         .then(res => {
           deleteCount += 1;
           console.log(`Deleted ${file.name}.`);
