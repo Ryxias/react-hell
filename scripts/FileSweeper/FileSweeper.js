@@ -11,7 +11,7 @@
  */
 
 class FileSweeper {
-  constructor(Menus, Timer, Handler, HttpClient, token) {
+  constructor(Menus, Timer, Handler, Fetcher, HttpClient, token) {
     // initialize input listener
     this.rl = require('readline').createInterface({
       input: process.stdin,
@@ -23,9 +23,10 @@ class FileSweeper {
     this.deleteLimit = process.env.NODE_ENV === 'production' ? 50 : 5; // Default: 50 to match API quota
     this.ageLimit = Math.floor(Date.now()/1000) - 5259492; // Up to two months ago in seconds
     this.menus = Menus;
-    this.timer = new Timer();
-    this.handle = new Handler();
     this.httpClient = HttpClient;
+    this.timer = Timer;
+    this.handle = Handler;
+    this.fetchList = Fetcher;
     this.token = token;
   }
 
@@ -46,55 +47,6 @@ class FileSweeper {
   leave() {
     console.log('\nThanks for using Slack File Sweeper! Goodbye!\n');
     process.exit(0);
-  }
-
-  /**
-   * Used to fetch the list of files that exist on the current workspace using the Slack API.
-   * This automatically filters out any starred/pinned files deemed as important and provides
-   * a list of 50 files at a time to satisfy the maximum API quota for deletion (50).
-   *
-   * @param eventType: to match the correct filter and action functions required for query and deletion
-   * @param types: type of file used to sort the search query
-   * @param itemCount: current item number on the file list
-   * @param ignoreCount: number of skipped files due to it being starred/pinned
-   * @param page: current page of the search query
-   * @returns {*}
-   */
-  fetchList(eventType = 'all', ignoreCount = 0, page = 1) {
-    let api_url = `https://slack.com/api/files.list?token=${this.token}&count=${this.deleteLimit}&ts_to=${this.ageLimit}&types=${eventType}&page=${page}`;
-    return this.httpClient.get(api_url)
-      .then(res => {
-        let itemCount = 1;
-        let result = res.data;
-        result.files.forEach(file => {
-          if (file.is_starred !== true && !file.pinned_to) {
-            if (this.list.length < this.deleteLimit) {
-              this.list.push(file);
-            }
-          } else {
-            ignoreCount += 1;
-          }
-        });
-        if ((page * this.deleteLimit) - ignoreCount >= this.deleteLimit) {
-          console.log('The following files will be deleted:\n');
-          return this.list.forEach(file => {
-            console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-            itemCount += 1;
-          });
-        } else {
-          if (page < result.paging.pages) {
-            return this.fetchList(eventType, ignoreCount, page + 1);
-          } else {
-            console.log('The following files will be deleted:\n');
-            return this.list.forEach(file => {
-              console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-              itemCount += 1;
-            });
-          }
-        }
-      }).catch(err => {
-        console.error(err);
-      });
   }
 
   /**
@@ -145,7 +97,7 @@ class FileSweeper {
   filterMenu(eventType) {
     console.log('\nFetching list...\n');
     if (this.list.length === 0) {
-      this.fetchList(eventType)
+      this.fetchList(this, eventType)
         .then(() => {
           return this.confirmDeletion(eventType, this.filterMenu);
         });
