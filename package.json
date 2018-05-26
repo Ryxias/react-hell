@@ -15,6 +15,7 @@
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
+    "sweeper": "node scripts/startSweeper",
     "sync_models": "sudo NODE_ENV=production node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
     "test": "jest",
