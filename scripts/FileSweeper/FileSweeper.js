@@ -12,12 +12,16 @@
 
 class FileSweeper {
   constructor(Menus, Timer, HttpClient, token) {
+    // initialize input listener
     this.rl = require('readline').createInterface({
       input: process.stdin,
       output: process.stdout
     });
-    this.list = [];
+
+    // Class variables
+    this.list = []; // Storage
     this.deleteLimit = process.env.NODE_ENV === 'production' ? 50 : 5; // Default: 50 to match API quota
+    this.ageLimit = Math.floor(Date.now()/1000) - 5259492; // Up to two months ago in seconds
     this.menus = Menus;
     this.timer = new Timer();
     this.httpClient = HttpClient;
@@ -57,11 +61,7 @@ class FileSweeper {
    * @returns {*}
    */
   fetchList(eventType = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
-    const params = {
-      ts_from: 0,
-      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
-    };
-    let api_url = `https://slack.com/api/files.list?token=${this.token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${eventType}&page=${page}`;
+    let api_url = `https://slack.com/api/files.list?token=${this.token}&count=${this.deleteLimit}&ts_to=${this.ageLimit}&types=${eventType}&page=${page}`;
     return this.httpClient.get(api_url)
       .then(res => {
         let result = res.data;
