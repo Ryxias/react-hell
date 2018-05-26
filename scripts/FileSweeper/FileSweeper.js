@@ -11,7 +11,7 @@
  */
 
 class FileSweeper {
-  constructor(Menus, Timer, HttpClient, token) {
+  constructor(Menus, Timer, Handler, HttpClient, token) {
     // initialize input listener
     this.rl = require('readline').createInterface({
       input: process.stdin,
@@ -24,6 +24,7 @@ class FileSweeper {
     this.ageLimit = Math.floor(Date.now()/1000) - 5259492; // Up to two months ago in seconds
     this.menus = Menus;
     this.timer = new Timer();
+    this.handle = new Handler();
     this.httpClient = HttpClient;
     this.token = token;
   }
@@ -102,7 +103,7 @@ class FileSweeper {
    */
   mainMenu(eventType = 'mainMenu') {
     console.log(
-      '~~~~~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~~~~~\n' +
+      '\n~~~~~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~~~~~\n' +
       'Please choose one of the following options.\n' +
       'You may quit anytime by typing "quit" or "exit".\n'
     );
@@ -126,7 +127,7 @@ class FileSweeper {
             this.filterMenu('videos');
             break;
           default:
-            this.handleInvalidInput(eventType, this.mainMenu);
+            this.handle.invalidInput(eventType, this.mainMenu, this);
         };
       } else {
         console.log('\nAPI Quota has been reached for this minute.\n' +
@@ -176,7 +177,7 @@ class FileSweeper {
           console.log('\nReturning to main menu...\n');
           this.mainMenu();
         } else if (input !== 'Y' && input !== 'y') {
-          this.handleInvalidInput(eventType, caller);
+          this.handle.invalidInput(eventType, caller, this);
         } else {
           this.deleteFiles();
         }
@@ -203,16 +204,6 @@ class FileSweeper {
           }
         }).catch(err => console.error(err));
     });
-  }
-
-  /**
-   * Informs the user that an invalid input was detected and returns to previous menu action.
-   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
-   * @callback: callback function to execute after printing error.
-   */
-  handleInvalidInput(eventType, callback) {
-    console.log('\nSorry, I could not recognize that input. Please try again.\n');
-    callback.call(this, eventType);
   }
 }
 
