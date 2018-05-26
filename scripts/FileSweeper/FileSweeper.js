@@ -13,6 +13,8 @@
 const menuTypes = require('./lib/menuTypes');
 const readline = require('readline');
 const axios = require('axios');
+const token = process.env.NODE_ENV === 'production' ? require('/etc/chuuni/config').fsd_workspace.legacy_token
+                                                    : require('../../config/config').fsd_workspace.legacy_token;
 
 class FileSweeper {
   constructor() {
@@ -20,7 +22,13 @@ class FileSweeper {
       input: process.stdin,
       output: process.stdout
     });
+    this.list = [];
     this.elapsed = 0;
+    this.config = {
+      headers: {
+        'Authorization': 'bearer ' + token,
+      },
+    }
   }
 
   start() {
@@ -59,29 +67,74 @@ class FileSweeper {
   }
 
   printFilterAllMenu(eventType) {
-    console.log('\nThe following files will be deleted of ALL types:');
+    console.log('\nThe following files will be deleted of ALL types:\n');
     // list of ALL stuff
-    this.printDeleteConfirmation(eventType);
+    const params = {
+      count: 50,
+      ts_from: 0,
+      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
+    };
+    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}`)
+      .then(res => {
+        let count = 1;
+        res.data.files.forEach(file => {
+          this.list.push(file);
+          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+          count += 1;
+        });
+        this.printDeleteConfirmation(eventType);
+      }).catch(err => console.error(err));
   }
 
   printFilterImagesMenu(eventType) {
     console.log('\nThe following image files will be deleted:');
-    this.printDeleteConfirmation(eventType);
+    const params = {
+      count: 50,
+      types: 'images',
+      ts_from: 0,
+      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
+    };
+    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}&types=${params.types}`)
+      .then(res => {
+        let count = 1;
+        res.data.files.forEach(file => {
+          this.list.push(file);
+          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+          count += 1;
+        });
+        this.printDeleteConfirmation(eventType);
+      }).catch(err => console.error(err));
   }
 
   printFilterVideosMenu(eventType) {
     console.log('\nThe following video files will be deleted:');
-    this.printDeleteConfirmation(eventType);
+    const params = {
+      count: 50,
+      types: 'videos',
+      ts_from: 0,
+      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
+    };
+    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}&types=${params.types}`)
+      .then(res => {
+        let count = 1;
+        res.data.files.forEach(file => {
+          this.list.push(file);
+          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+          count += 1;
+        });
+        this.printDeleteConfirmation(eventType);
+      }).catch(err => console.error(err));
   }
 
   printDeleteConfirmation(eventType) {
-    console.log('Are you sure you want to delete the items above? (Y/N)');
+    console.log('\nAre you sure you want to delete the items above?');
+    console.log('(NOTE: Starred/pinned messages will not be deleted.) (Y/N)');
     this.startListener(eventType);
   }
 
   checkInput(input, eventType) {
     if (input === 'N' || input === 'n') {
-      console.log('Returning to main menu...');
+      console.log('\nReturning to main menu...\n');
       this.printMainMenu();
     } else if (input !== 'Y' && input !== 'y') {
       this.handleInvalidInput(eventType);
