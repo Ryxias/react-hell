@@ -23,7 +23,7 @@ class FileSweeper {
       output: process.stdout
     });
     this.list = [];
-    this.deleteLimit = 5; // Default: 50 to match API quota
+    this.deleteLimit = process.env.NODE_ENV === 'production' ? 50 : 5; // Default: 50 to match API quota
     this.timer = new Timer();
   }
 
