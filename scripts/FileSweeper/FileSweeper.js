@@ -32,7 +32,6 @@ class FileSweeper {
    * Initializes the program.
    */
   start() {
-    console.log('what is fetcher?', this.fetch);
     console.log('\nWelcome to the Slack File Sweeper.\n' +
       '(NOTE: Please keep in mind Slack API quota is 50 requests per minute for file deletions.\n' +
       'Therefore, only 50 files can be displayed and deleted at a time every minute.\n' +
@@ -207,14 +206,13 @@ class FileSweeper {
   }
 
   /**
-   * handleInvalidInput
    * Informs the user that an invalid input was detected and returns to previous menu action.
    * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
    * @callback: callback function to execute after printing error.
    */
   handleInvalidInput(eventType, callback) {
-    console.log('\nSorry, I could not recognize that input. Please try again.');
-    callback(eventType);
+    console.log('\nSorry, I could not recognize that input. Please try again.\n');
+    callback.call(this, eventType);
   }
 }
 
