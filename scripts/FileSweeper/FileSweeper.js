@@ -29,30 +29,41 @@ class FileSweeper {
         'Authorization': 'bearer ' + token,
       },
     };
+    this.deleteLimit = 50; // Default: 50 to match API quota
   }
 
+  /**
+   * Initializes the program.
+   */
   start() {
     this.printWelcome();
   }
 
+  /**
+   * Exits the program.
+   */
   leave() {
     console.log('\nThanks for using Slack File Sweeper! Goodbye!\n');
     process.exit(0);
   }
 
-  resetTimer() {
-    this.elapsed = 0;
-    clearInterval(this.interval);
-  }
-
+  /**
+   * Starts the API quota timer.
+   */
   startTimer() {
     let self = this;
     this.interval = setInterval(() => { self.elapsed += 1 }, 1000);
   }
 
   /**
-   *
-   * fetchList
+   * Resets the API quota timer.
+   */
+  resetTimer() {
+    this.elapsed = 0;
+    clearInterval(this.interval);
+  }
+
+  /**
    * Used to fetch the list of files that exist on the current workspace using the Slack API.
    * This automatically filters out any starred/pinned files deemed as important and provides
    * a list of 50 files at a time to satisfy the maximum API quota for deletion (50).
@@ -66,7 +77,7 @@ class FileSweeper {
    */
   fetchList(eventType, types = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
     const params = {
-      count: 50,
+      count: this.deleteLimit,
       ts_from: 0,
       ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
     };
@@ -75,7 +86,7 @@ class FileSweeper {
       .then(res => {
         res.data.files.forEach(file => {
           if (file.is_starred !== true && !file.pinned_to) {
-            if (this.list.length < 50) {
+            if (this.list.length < this.deleteLimit) {
               this.list.push(file);
               console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
               itemCount += 1;
@@ -84,7 +95,7 @@ class FileSweeper {
             ignoreCount += 1;
           }
         });
-        if ((page * params.count) - ignoreCount >= 50) {
+        if ((page * params.count) - ignoreCount >= this.deleteLimit) {
           return this.printDeleteConfirmation(eventType);
         } else {
           page += 1;
@@ -95,13 +106,53 @@ class FileSweeper {
     });
   }
 
+  /**
+   * Deletes all of the files on list.
+   * @param eventType: used to print the appropriate message.
+   */
+  deleteFiles(eventType) {
+    let deleteCount = 0;
+    this.list.forEach(file => {
+      let api_url = `https://slack.com/api/files.delete?token=${token}&file=${file.id}`;
+      axios.post(api_url)
+        .then(res => {
+          deleteCount += 1;
+          console.log(`Deleted ${file.name}.`);
+          if (deleteCount === this.deleteLimit) {
+            switch (eventType) {
+              case 'all':
+                console.log('\nAll files in list are deleted.\n');
+                break;
+              case 'images':
+                console.log('\nAll images in list are deleted.\n');
+                break;
+              case 'videos':
+                console.log('\nAll videos in list are deleted.\n');
+                break;
+              default:
+            }
+            this.list = [];
+            this.startTimer();
+            return this.printMainMenu();
+          }
+        }).catch(err => console.error(err));
+    });
+  }
+
+  /**
+   * Only runs once in the beginning of the program.  Informs user about API quota for deletion.
+   */
   printWelcome() {
     console.log('\nWelcome to the Slack File Sweeper.\n' +
       '(NOTE: Please keep in mind Slack API quota is 50 requests per minute for file deletions.\n' +
-      'Therefore, only 50 files can be displayed and deleted at a time every minute.)\n');
+      'Therefore, only 50 files can be displayed and deleted at a time every minute.\n' +
+      'Starred/Pinned messages are filtered out as they should be deemed to be important.)\n');
     this.printMainMenu();
   }
 
+  /**
+   * Prints the available main filtering options for user to use for file deletion.
+   */
   printMainMenu() {
     console.log('Please choose one of the following options.\n' +
       'You may quit anytime by entering "quit" or "exit".\n');
@@ -111,6 +162,11 @@ class FileSweeper {
     this.startListener('mainMenu');
   }
 
+  /**
+   * Prints all the non-starred/pinned files the Slack API server can see that can be marked for deletion.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @returns {*}
+   */
   printFilterAllMenu(eventType) {
     console.log('\nThe following files will be deleted of ALL types:\n');
     // list of ALL stuff
@@ -126,6 +182,11 @@ class FileSweeper {
     }
   }
 
+  /**
+   * Prints all the non-starred/pinned images the Slack API server can see that can be marked for deletion.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @returns {*}
+   */
   printFilterImagesMenu(eventType) {
     console.log('\nThe following image files will be deleted:');
     // list of all IMAGES
@@ -141,6 +202,11 @@ class FileSweeper {
     }
   }
 
+  /**
+   * Prints all the non-starred/pinned videos the Slack API server can see that can be marked for deletion.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @returns {*}
+   */
   printFilterVideosMenu(eventType) {
     console.log('\nThe following video files will be deleted:');
     // list of all VIDEOS
@@ -156,11 +222,21 @@ class FileSweeper {
     }
   }
 
+  /**
+   * Prompts the user for confirmation if they want those files deleted or return to the main menu.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @returns call to startListener()
+   */
   printDeleteConfirmation(eventType) {
     console.log('\nAre you sure you want to delete the items above? (Y/N)');
-    this.startListener(eventType);
+    return this.startListener(eventType);
   }
 
+  /**
+   * Tries an action based on user input for deletion confirmation event.
+   * @param input: user's input that is used to determine the appropriate action to take
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   */
   checkInput(input, eventType) {
     if (input === 'N' || input === 'n') {
       this.list = []; // Clears the list
@@ -169,21 +245,15 @@ class FileSweeper {
     } else if (input !== 'Y' && input !== 'y') {
       this.handleInvalidInput(eventType);
     } else {
-      switch(eventType) {
-        case 'all':
-          this.handleFilterAllAction();
-          break;
-        case 'images':
-          this.handleFilterImagesAction();
-          break;
-        case 'videos':
-          this.handleFilterVideosAction();
-          break;
-        default:
-      }
+      this.deleteFiles(eventType);
     }
   }
 
+  /**
+   * Tries the option selected by the user from the main menu.
+   * @param input: user's input that is used to determine the appropriate action to take
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   */
   handleMainMenuAction(input, eventType) {
     switch(input) {
       case '1':
@@ -200,43 +270,11 @@ class FileSweeper {
     };
   }
 
-  handleFilterAllAction(input, eventType) {
-    // delete all the stuff
-    let deleteCount = 0;
-    this.list.forEach(file => {
-      console.log(`Deleting ${file.name}...`);
-      // axios.post()
-    });
-    this.list = []; // Clears the list;
-    console.log('\nAll files deleted.\n');
-    this.startTimer();
-    this.printMainMenu();
-  }
-
-  handleFilterImagesAction(input, eventType) {
-    // delete all the images
-    let deleteCount = 0;
-    this.list.forEach(file => {
-      console.log(`Deleting ${file.name}...`);
-    });
-    this.list = []; // Clears the list;
-    console.log('\nAll images deleted.\n');
-    this.startTimer();
-    this.printMainMenu();
-  }
-
-  handleFilterVideosAction(input, eventType) {
-    // delete all the videos
-    let deleteCount = 0;
-    this.list.forEach(file => {
-      console.log(`Deleting ${file.name}...`);
-    });
-    this.list = []; // Clears the list;
-    console.log('\nAll videos deleted.\n');
-    this.startTimer();
-    this.printMainMenu();
-  }
-
+  /**
+   * handleInvalidInput
+   * Informs the user that an invalid input was detected and returns to previous menu action.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   */
   handleInvalidInput(eventType) {
     console.log('\nSorry, I could not recognize that input. Please try again.');
     switch(eventType) {
@@ -253,6 +291,10 @@ class FileSweeper {
     }
   }
 
+  /**
+   * Enables input listener for user input after program prompt.
+   * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   */
   startListener(eventType) {
     let self = this;
     this.rl.question('\nEnter your choice: ', (input) => {
