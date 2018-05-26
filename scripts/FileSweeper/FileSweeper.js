@@ -81,10 +81,11 @@ class FileSweeper {
       ts_from: 0,
       ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
     };
-    let api_url = `https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_to=${params.ts_to}&types=${types}`;
+    let api_url = `https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_to=${params.ts_to}&types=${types}&page=${page}`;
     return axios.get(api_url)
       .then(res => {
-        res.data.files.forEach(file => {
+        let result = res.data;
+        result.files.forEach(file => {
           if (file.is_starred !== true && !file.pinned_to) {
             if (this.list.length < this.deleteLimit) {
               this.list.push(file);
@@ -98,8 +99,12 @@ class FileSweeper {
         if ((page * params.count) - ignoreCount >= this.deleteLimit) {
           return this.printDeleteConfirmation(eventType);
         } else {
-          page += 1;
-          return this.fetchList(eventType, types, itemCount, ignoreCount, page);
+          if (page < result.paging.pages) {
+            page += 1;
+            return this.fetchList(eventType, types, itemCount, ignoreCount, page);
+          } else {
+            return this.printDeleteConfirmation(eventType);
+          }
         }
       }).catch(err => {
       console.error(err);
