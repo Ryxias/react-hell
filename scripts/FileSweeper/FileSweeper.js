@@ -28,7 +28,7 @@ class FileSweeper {
       headers: {
         'Authorization': 'bearer ' + token,
       },
-    }
+    };
   }
 
   start() {
@@ -50,6 +50,51 @@ class FileSweeper {
     this.interval = setInterval(() => { self.elapsed += 1 }, 1000);
   }
 
+  /**
+   *
+   * fetchList
+   * Used to fetch the list of files that exist on the current workspace using the Slack API.
+   * This automatically filters out any starred/pinned files deemed as important and provides
+   * a list of 50 files at a time to satisfy the maximum API quota for deletion (50).
+   *
+   * @param eventType: to match the correct filter and action functions required for query and deletion
+   * @param types: type of file used to sort the search query
+   * @param itemCount: current item number on the file list
+   * @param ignoreCount: number of skipped files due to it being starred/pinned
+   * @param page: current page of the search query
+   * @returns {*}
+   */
+  fetchList(eventType, types = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
+    const params = {
+      count: 50,
+      ts_from: 0,
+      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
+    };
+    let api_url = `https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_to=${params.ts_to}&types=${types}`;
+    return axios.get(api_url)
+      .then(res => {
+        res.data.files.forEach(file => {
+          if (file.is_starred !== true && !file.pinned_to) {
+            if (this.list.length < 50) {
+              this.list.push(file);
+              console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+              itemCount += 1;
+            }
+          } else {
+            ignoreCount += 1;
+          }
+        });
+        if ((page * params.count) - ignoreCount >= 50) {
+          return this.printDeleteConfirmation(eventType);
+        } else {
+          page += 1;
+          return this.fetchList(eventType, types, itemCount, ignoreCount, page);
+        }
+      }).catch(err => {
+      console.error(err);
+    });
+  }
+
   printWelcome() {
     console.log('\nWelcome to the Slack File Sweeper.\n' +
       '(NOTE: Please keep in mind Slack API quota is 50 requests per minute for file deletions.\n' +
@@ -69,71 +114,56 @@ class FileSweeper {
   printFilterAllMenu(eventType) {
     console.log('\nThe following files will be deleted of ALL types:\n');
     // list of ALL stuff
-    const params = {
-      count: 50,
-      ts_from: 0,
-      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
-    };
-    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}`)
-      .then(res => {
-        let count = 1;
-        res.data.files.forEach(file => {
-          this.list.push(file);
-          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-          count += 1;
-        });
-        this.printDeleteConfirmation(eventType);
-      }).catch(err => console.error(err));
+    if (this.list.length > 0) {
+      let count = 1;
+      this.list.forEach(file => {
+        console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+        count += 1;
+      });
+      return this.printDeleteConfirmation(eventType);
+    } else {
+      return this.fetchList(eventType);
+    }
   }
 
   printFilterImagesMenu(eventType) {
     console.log('\nThe following image files will be deleted:');
-    const params = {
-      count: 50,
-      types: 'images',
-      ts_from: 0,
-      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
-    };
-    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}&types=${params.types}`)
-      .then(res => {
-        let count = 1;
-        res.data.files.forEach(file => {
-          this.list.push(file);
-          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-          count += 1;
-        });
-        this.printDeleteConfirmation(eventType);
-      }).catch(err => console.error(err));
+    // list of all IMAGES
+    if (this.list.length > 0) {
+      let count = 1;
+      this.list.forEach(file => {
+        console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+        count += 1;
+      });
+      return this.printDeleteConfirmation(eventType);
+    } else {
+      return this.fetchList(eventType, 'images');
+    }
   }
 
   printFilterVideosMenu(eventType) {
     console.log('\nThe following video files will be deleted:');
-    const params = {
-      count: 50,
-      types: 'videos',
-      ts_from: 0,
-      ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
-    };
-    return axios.get(`https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_from=${params.ts_from}&ts_to=${params.ts_to}&types=${params.types}`)
-      .then(res => {
-        let count = 1;
-        res.data.files.forEach(file => {
-          this.list.push(file);
-          console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-          count += 1;
-        });
-        this.printDeleteConfirmation(eventType);
-      }).catch(err => console.error(err));
+    // list of all VIDEOS
+    if (this.list.length > 0) {
+      let count = 1;
+      this.list.forEach(file => {
+        console.log(count + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+        count += 1;
+      });
+      return this.printDeleteConfirmation(eventType);
+    } else {
+      return this.fetchList(eventType, 'videos');
+    }
   }
 
   printDeleteConfirmation(eventType) {
-    console.log('\nAre you sure you want to delete the items above?');
-    console.log('(NOTE: Starred/pinned messages will not be deleted.) (Y/N)');
+    console.log('\nAre you sure you want to delete the items above? (Y/N)');
     this.startListener(eventType);
   }
 
   checkInput(input, eventType) {
     if (input === 'N' || input === 'n') {
+      this.list = []; // Clears the list
       console.log('\nReturning to main menu...\n');
       this.printMainMenu();
     } else if (input !== 'Y' && input !== 'y') {
@@ -172,6 +202,12 @@ class FileSweeper {
 
   handleFilterAllAction(input, eventType) {
     // delete all the stuff
+    let deleteCount = 0;
+    this.list.forEach(file => {
+      console.log(`Deleting ${file.name}...`);
+      // axios.post()
+    });
+    this.list = []; // Clears the list;
     console.log('\nAll files deleted.\n');
     this.startTimer();
     this.printMainMenu();
@@ -179,6 +215,11 @@ class FileSweeper {
 
   handleFilterImagesAction(input, eventType) {
     // delete all the images
+    let deleteCount = 0;
+    this.list.forEach(file => {
+      console.log(`Deleting ${file.name}...`);
+    });
+    this.list = []; // Clears the list;
     console.log('\nAll images deleted.\n');
     this.startTimer();
     this.printMainMenu();
@@ -186,6 +227,11 @@ class FileSweeper {
 
   handleFilterVideosAction(input, eventType) {
     // delete all the videos
+    let deleteCount = 0;
+    this.list.forEach(file => {
+      console.log(`Deleting ${file.name}...`);
+    });
+    this.list = []; // Clears the list;
     console.log('\nAll videos deleted.\n');
     this.startTimer();
     this.printMainMenu();
