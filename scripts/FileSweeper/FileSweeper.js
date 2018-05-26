@@ -24,12 +24,7 @@ class FileSweeper {
     });
     this.list = [];
     this.elapsed = 0;
-    this.config = {
-      headers: {
-        'Authorization': 'bearer ' + token,
-      },
-    };
-    this.deleteLimit = 5; // Default: 50 to match API quota
+    this.deleteLimit = 50; // Default: 50 to match API quota
   }
 
   /**
@@ -81,11 +76,10 @@ class FileSweeper {
    */
   fetchList(eventType, types = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
     const params = {
-      count: this.deleteLimit,
       ts_from: 0,
       ts_to: (Math.floor(Date.now()/1000) - 5259492) // Two months ago in seconds
     };
-    let api_url = `https://slack.com/api/files.list?token=${token}&count=${params.count}&ts_to=${params.ts_to}&types=${types}&page=${page}`;
+    let api_url = `https://slack.com/api/files.list?token=${token}&count=${this.deleteLimit}&ts_to=${params.ts_to}&types=${types}&page=${page}`;
     return axios.get(api_url)
       .then(res => {
         let result = res.data;
@@ -100,7 +94,7 @@ class FileSweeper {
             ignoreCount += 1;
           }
         });
-        if ((page * params.count) - ignoreCount >= this.deleteLimit) {
+        if ((page * this.deleteLimit) - ignoreCount >= this.deleteLimit) {
           return this.list;
         } else {
           if (page < result.paging.pages) {
@@ -116,29 +110,8 @@ class FileSweeper {
   }
 
   /**
-   * Deletes all of the files on list.
-   * @param eventType: used to print the appropriate message.
-   */
-  deleteFiles() {
-    let deleteCount = 0;
-    this.list.forEach(file => {
-      let api_url = `https://slack.com/api/files.delete?token=${token}&file=${file.id}`;
-      axios.post(api_url)
-        .then(res => {
-          deleteCount += 1;
-          console.log(`Deleted ${file.name}.`);
-          if (deleteCount === this.deleteLimit) {
-            console.log('\nAll files in list are now deleted.\n');
-            this.list = [];
-            this.startTimer();
-            return this.printMainMenu();
-          }
-        }).catch(err => console.error(err));
-    });
-  }
-
-  /**
    * Prints the available main filtering options for user to use for file deletion.
+   * @param eventType: to match the correct filter and action functions required for query and deletion
    */
   printMainMenu(eventType = 'mainMenu') {
     console.log(
@@ -179,7 +152,7 @@ class FileSweeper {
   /**
    * Prints a list of the non-starred/pinned files that can be marked for deletion.
    * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
-   * @returns {*}
+   * @returns this.confirmDeletion(eventType, this.printFilterMenu).
    */
   printFilterMenu(eventType) {
     console.log('\nThe following files will be deleted:\n');
@@ -201,8 +174,8 @@ class FileSweeper {
   /**
    * Prompts the user for confirmation if they want those files deleted or return to the main menu
    * and then tries an action based on user input for deletion confirmation event.
-   * @param input: user's input that is used to determine the appropriate action to take
    * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @param caller: previous caller function.
    */
   confirmDeletion(eventType, caller) {
     let self = this;
@@ -225,9 +198,31 @@ class FileSweeper {
   }
 
   /**
+   * Deletes all of the files on list.
+   */
+  deleteFiles() {
+    let deleteCount = 0;
+    this.list.forEach(file => {
+      let api_url = `https://slack.com/api/files.delete?token=${token}&file=${file.id}`;
+      axios.post(api_url)
+        .then(res => {
+          deleteCount += 1;
+          console.log(`Deleted ${file.name}.`);
+          if (deleteCount === this.deleteLimit) {
+            console.log('\nAll files in list are now deleted.\n');
+            this.list = [];
+            this.startTimer();
+            return this.printMainMenu();
+          }
+        }).catch(err => console.error(err));
+    });
+  }
+
+  /**
    * handleInvalidInput
    * Informs the user that an invalid input was detected and returns to previous menu action.
    * @param eventType: used to route to the appropriate method and print the appropriate messages to the user.
+   * @callback: callback function to execute after printing error.
    */
   handleInvalidInput(eventType, callback) {
     console.log('\nSorry, I could not recognize that input. Please try again.');
