@@ -60,30 +60,36 @@ class FileSweeper {
    * @param page: current page of the search query
    * @returns {*}
    */
-  fetchList(eventType = 'all', itemCount = 1, ignoreCount = 0, page = 1) {
+  fetchList(eventType = 'all', ignoreCount = 0, page = 1) {
     let api_url = `https://slack.com/api/files.list?token=${this.token}&count=${this.deleteLimit}&ts_to=${this.ageLimit}&types=${eventType}&page=${page}`;
     return this.httpClient.get(api_url)
       .then(res => {
+        let itemCount = 1;
         let result = res.data;
         result.files.forEach(file => {
           if (file.is_starred !== true && !file.pinned_to) {
             if (this.list.length < this.deleteLimit) {
               this.list.push(file);
-              console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
-              itemCount += 1;
             }
           } else {
             ignoreCount += 1;
           }
         });
         if ((page * this.deleteLimit) - ignoreCount >= this.deleteLimit) {
-          return this.list;
+          console.log('The following files will be deleted:\n');
+          return this.list.forEach(file => {
+            console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+            itemCount += 1;
+          });
         } else {
           if (page < result.paging.pages) {
-            page += 1;
-            return this.fetchList(eventType, itemCount, ignoreCount, page);
+            return this.fetchList(eventType, ignoreCount, page + 1);
           } else {
-            return this.list;
+            console.log('The following files will be deleted:\n');
+            return this.list.forEach(file => {
+              console.log(itemCount + ') NAME: ' + file.name + '\n   TITLE: ' + file.title);
+              itemCount += 1;
+            });
           }
         }
       }).catch(err => {
@@ -137,7 +143,7 @@ class FileSweeper {
    * @returns this.confirmDeletion(eventType, this.filterMenu).
    */
   filterMenu(eventType) {
-    console.log('\nThe following files will be deleted:\n');
+    console.log('\nFetching list...\n');
     if (this.list.length === 0) {
       this.fetchList(eventType)
         .then(() => {
