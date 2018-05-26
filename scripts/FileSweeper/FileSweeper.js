@@ -11,7 +11,7 @@
  */
 
 class FileSweeper {
-  constructor(Menus, Timer, Handler, Fetcher, HttpClient, token) {
+  constructor(Menus, Timer, handleInvalidInput, Fetcher, HttpClient, token) {
     // initialize input listener
     this.rl = require('readline').createInterface({
       input: process.stdin,
@@ -25,7 +25,7 @@ class FileSweeper {
     this.menus = Menus;
     this.httpClient = HttpClient;
     this.timer = Timer;
-    this.handle = Handler;
+    this.handleInvalidInput = handleInvalidInput;
     this.fetchList = Fetcher;
     this.token = token;
   }
@@ -79,7 +79,7 @@ class FileSweeper {
             this.filterMenu('videos');
             break;
           default:
-            this.handle.invalidInput(eventType, this.mainMenu, this);
+            this.handleInvalidInput(eventType, this.mainMenu, this);
         };
       } else {
         console.log('\nAPI Quota has been reached for this minute.\n' +
@@ -129,7 +129,7 @@ class FileSweeper {
           console.log('\nReturning to main menu...\n');
           this.mainMenu();
         } else if (input !== 'Y' && input !== 'y') {
-          this.handle.invalidInput(eventType, caller, this);
+          this.handleInvalidInput(eventType, caller, this);
         } else {
           this.deleteFiles();
         }
