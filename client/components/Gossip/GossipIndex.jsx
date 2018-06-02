@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadGossipIndex, deleteGossip } from '../../modules/gossip';
+import { loadGossipIndex, deleteGossipAndReload } from '../../modules/gossip';
 import GossipCell from './GossipCell.jsx';
 import GossipIndexPaginator from './GossipIndexPaginator.jsx';
 
@@ -75,8 +75,7 @@ class GossipIndex extends React.PureComponent {
   }
 
   handleDeleteGossip(id) {
-    this.props.dispatch(deleteGossip(id));
-    this.handleLoadGossips(this.state.page_number);
+    this.props.dispatch(deleteGossipAndReload(id, this.state.page_number, PAGE_SIZE));
   }
 
   _matrixifyGossips(gossips) {
