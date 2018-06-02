@@ -17,7 +17,7 @@ class GossipApiClient extends ApiClient {
   }
 
   deleteGossip(id) {
-    return this._DELETE(`/api/gossip/${id}`);
+    return this._DELETE(`/api/gossips/${id}`);
   }
 }
 export default GossipApiClient;
