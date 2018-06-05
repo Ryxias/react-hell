@@ -32,50 +32,50 @@ module.exports = service_container => {
         '/roll': {
           get: {
             name: 'sif_api_roll',
-            service_id: 'app.controllers.sif_api',
+            service_id: 'SifApiController',
             action: 'get_roll_gacha_action',
           },
         },
         '/share': {
           middleware: [ apiRequiresLoggedIn ],
           post: {
-            service_id: 'app.controllers.sif_api',
+            service_id: 'SifApiController',
             action: 'share_roll_action',
           }
         },
       },
       '/auth': {
         '/login': {
-          post: [ 'app.controllers.auth', 'login_action' ]
+          post: [ 'AuthenticationApiController', 'login_action' ]
         },
         '/logout': {
           middleware: [ apiRequiresLoggedIn ],
-          post: [ 'app.controllers.auth', 'logout_action' ]
+          post: [ 'AuthenticationApiController', 'logout_action' ]
         },
         '/whoami': {
-          get: [ 'app.controllers.auth', 'whoami_action' ]
+          get: [ 'AuthenticationApiController', 'whoami_action' ]
         },
         '/register': {
-          post: [ 'app.controllers.auth', 'register_action' ]
+          post: [ 'AuthenticationApiController', 'register_action' ]
         },
         '/change_password': {
           middleware: [ apiRequiresLoggedIn ],
-          post: [ 'app.controllers.auth', 'change_password_action' ]
+          post: [ 'AuthenticationApiController', 'change_password_action' ]
         },
         '/slack_token': {
           middleware: [ apiRequiresLoggedIn ],
-          post: [ 'app.controllers.auth', 'request_slack_connector_token_action' ]
+          post: [ 'AuthenticationApiController', 'request_slack_connector_token_action' ]
         },
       },
       '/gossips': {
         middleware: [ apiRequiresLoggedIn ],
-        get: [ 'app.controllers.gossip_api', 'index_action' ],
+        get: [ 'GossipApiController', 'index_action' ],
         '/:gossip_id(\\d+)': {
           param: [ 'gossip_id', gossipApiParameterConverter ],
           middleware: [ requiresGossipMiddleware ],
-          get: [ 'app.controllers.gossip_api', 'get_single_gossip_action' ],
-          patch: [ 'app.controllers.gossip_api', 'edit_single_gossip_action' ],
-          delete: [ 'app.controllers.gossip_api', 'delete_single_gossip_action' ],
+          get: [ 'GossipApiController', 'get_single_gossip_action' ],
+          patch: [ 'GossipApiController', 'edit_single_gossip_action' ],
+          delete: [ 'GossipApiController', 'delete_single_gossip_action' ],
         }
       },
       '/*': {
@@ -90,10 +90,10 @@ module.exports = service_container => {
   registry.routeBuilder({
     '/_debug/': { // hopefully hard to guess
       '/routes': {
-        get: [ 'app.controllers.debug', 'get_all_routes_action' ],
+        get: [ 'DebugController', 'get_all_routes_action' ],
 
         '/match': {
-          get: [ 'app.controllers.debug', 'get_match_routes_action' ],
+          get: [ 'DebugController', 'get_match_routes_action' ],
         }
       },
     },
@@ -101,13 +101,13 @@ module.exports = service_container => {
 
   registry.routeBuilder({
     '/helloworld': {
-      get: [ 'app.controllers.helloworld', 'index_action' ],
+      get: [ 'HelloWorldController', 'index_action' ],
     },
     '/health': {
-      get: [ 'app.controllers.helloworld', 'health_check_action' ],
+      get: [ 'HelloWorldController', 'health_check_action' ],
     },
     '/*': {
-      get: [ 'app.controllers.react', 'index_action' ]
+      get: [ 'ReactController', 'index_action' ]
     },
   });
 
