@@ -1,10 +1,13 @@
+'use strict';
+
 //
 // Configuration Loader
 //   Looks into a specific directory to find a configuration file on the server,
 //   which should be a javascript file that exports 'config'
 //
 
-const CONFIG_FILE_PATH = process.env.NODE_ENV === 'production' ? '/etc/chuuni/config' : './config/config';
+const CONFIG_FILE_NAME = `config_${process.env.NODE_ENV}.js`;
+const CONFIG_FILE_PATH = `./config/${CONFIG_FILE_NAME}`;
 
 // Blows up on bad permissions
 const config = require(CONFIG_FILE_PATH);

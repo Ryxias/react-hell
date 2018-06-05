@@ -8,10 +8,8 @@ describe('HangmanService', function() {
   describe('#getGameBySlackChannel', function() {
     describe('with some random string', function() {
       let result = null;
-      beforeAll(function() { // Should be before()
-        return HangmanService.getGameBySlackChannel('TEST-ASDFQWERTY')
-          .then(res => result = res);
-      });
+      HangmanService.getGameBySlackChannel('TEST-ASDFQWERTY')
+        .then(res => result = res);
 
       it('returns a game, regardless of whether one exists or not', function() {
         expect(result).to.be.an.instanceOf(HangmanGame);

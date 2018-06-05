@@ -8,12 +8,16 @@ import Adapter from 'enzyme-adapter-react-16';  // for Enzyme
 import { Provider } from 'react-redux';
 
 import ConnectedWorldClockContainer,
-      { WorldClockContainer } from '../../../../client/components/WorldClock/WorldClockContainer';
-import WorldClockSelection from '../../../../client/components/WorldClock/WorldClockSelection';
-import WorldClockButtons from '../../../../client/components/WorldClock/WorldClockButtons';
-import WorldClockDisplay from '../../../../client/components/WorldClock/WorldClockDisplay';
+      { WorldClockContainer } from '../../../client/components/WorldClock/WorldClockContainer';
+import WorldClockSelection from '../../../client/components/WorldClock/WorldClockSelection';
+import WorldClockButtons from '../../../client/components/WorldClock/WorldClockButtons';
+import WorldClockDisplay from '../../../client/components/WorldClock/WorldClockDisplay';
 
-import clockReducers, { addTimezone, changeTimezone, clearTimezone, deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED, TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED } from '../../../../client/modules/clock';
+import clockReducers, {
+  addTimezone, changeTimezone, clearTimezone,
+  deleteTimezone, TIMEZONE_ADDED, TIMEZONE_CHANGED,
+  TIMEZONE_NOT_SELECTED, TIMEZONE_DELETED
+} from '../../../client/modules/clock';
 
 
 /*
