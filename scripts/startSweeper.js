@@ -1,12 +1,12 @@
 'use strict';
 
-const FileSweeper = require('./FileSweeper/FileSweeper');
+const FileSweeper = require('../lib/FileSweeper/FileSweeper');
 
 const dependencies = [
-  require('./FileSweeper/lib/menuTypes'),
-  new (require('./FileSweeper/lib/Timer'))(),
-  new (require('./FileSweeper/lib/Handler'))().invalidInput,
-  new (require('./FileSweeper/lib/Fetcher'))(this.httpClient).fetchList,
+  require('../lib/FileSweeper/utils/menuTypes'),
+  new (require('../lib/FileSweeper/utils/Timer'))(),
+  new (require('../lib/FileSweeper/utils/Handler'))().invalidInput,
+  new (require('../lib/FileSweeper/utils/Fetcher'))(this.httpClient).fetchList,
   require('axios'),
   (process.env.NODE_ENV === 'production' ? require('/etc/chuuni/config').fsd_workspace.legacy_token
     : require('../config/config').fsd_workspace.legacy_token),
