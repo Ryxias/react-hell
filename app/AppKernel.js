@@ -20,10 +20,14 @@ class AppKernel {
 
     Promise.promisifyAll(require('bcryptjs'));
 
+    if (!this.environment) {
+      throw new Error('What environment are you on? Use `export NODE_ENV=xxx`!');
+    }
+
     // Boot the service container!
     switch (this.environment) {
+      case 'local':
       case 'production':
-      case 'test':
         this.service_container = require('../services/container');
         break;
       default:

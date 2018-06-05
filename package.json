@@ -1,33 +1,19 @@
 {
-  "name": "react-hell",
+  "name": "chuuni",
   "version": "0.0.1",
-  "description": "Me learning the hell hole that is react",
+  "description": "chuuni.me",
   "main": "index.js",
-  "jest": {
-    "verbose": true,
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/tests/default/test/d20"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "globalSetup": "./tests/default/jest_init.js"
-  },
   "scripts": {
     "start": "sudo NODE_ENV=production nodemon server/server.js",
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
-    "sync_models": "sudo NODE_ENV=production node bin/sync_models.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
-    "test": "jest",
-    "dev": "NODE_ENV=development node server/server.js",
-    "dev_sync_models": "NODE_ENV=development node bin/sync_models.js"
+    "dev": "node server/server.js",
+    "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Ryxias/react-hell.git"
+    "url": "git@github.com:Ryxias/chuuni.git"
   },
   "license": "MIT",
   "author": "Derek Wang",
@@ -38,9 +24,11 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.18.2",
@@ -77,11 +65,8 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
-    "babel-jest": "^22.4.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^22.4.3",
-    "jest-mock": "^22.4.3",
     "jsdom": "11.9.0",
     "jsdom-global": "3.0.2",
     "mocha": "^3.5.3",
