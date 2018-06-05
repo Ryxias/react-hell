@@ -9,7 +9,11 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/tests/default/test/d20"
-    ]
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "globalSetup": "./tests/default/jest_init.js"
   },
   "scripts": {
     "start": "sudo NODE_ENV=production nodemon server/server.js",
