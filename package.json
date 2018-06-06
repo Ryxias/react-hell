@@ -11,7 +11,7 @@
     "dev": "node_modules/.bin/nodemon server/server.js",
     "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@",
     "jest": "./node_modules/.bin/jest --config=__tests__/jest_config.js",
-    "sync_models": "node bin/sync_models.js"
+    "sync_models": "node bin/commands/sync_models.js"
   },
   "repository": {
     "type": "git",
