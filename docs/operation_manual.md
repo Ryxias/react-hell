@@ -34,15 +34,35 @@ Should take less than 1 second to run.  You can Ctrl+C out of it when done.
 These are steps to running the website on a local OSX machine.
 
 
-## Install Developer Tools
-You will need things like `npm`, `git`, `ssh`, `brew`, etc. These come installed with OSX Developer Tools.
-To check if they are installed, you can always use the `which` command.
+## Install Homebrew
+First, make sure `homebrew` is installed:
+
+```bash
+$ which brew
+/usr/local/bin/brew
+```
+If not installed, nothing will return.
+To install `homebrew`, copy/paste and run:
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+...and follow installation prompt.
+
+## Install Node
+You will need things like `npm`, `node`, etc. To check if they are installed, you can always use the `which` command.
 
 ```bash
 $ which npm
 /usr/local/bin/npm
 ```
 If not installed, nothing will return
+
+Install them with `homebrew`:
+
+```bash
+$ brew install node
+```
 
 
 ## Get the code
@@ -66,24 +86,11 @@ $ npm install
 
 
 ## Setup your Configuration File
-You will need a `config/config.js` file. In the `config/` directory, there is a file called `config.js.example`.
-Copy paste it to a new file named `config.js` in the same directory.
+You will need a `config/config_local.js` file. In the `config/` directory, there is a file called `config_local.js.example`.
+Copy paste it to a new file named `config/config_local.js` in the same directory.
 
 ## Setup your Database
 Chuuni is powered by MySQL for its database. You will need the `mysql-server` process running on your local machine.
-First, make sure `homebrew` is installed:
-
-```bash
-$ which brew
-/usr/local/bin/brew
-```
-If not installed, nothing will return.
-To install `homebrew`, copy/paste and run:
-
-```
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-...and follow installation prompt.
 
 Second, install `mysql`:
 
@@ -120,11 +127,20 @@ mysql>
 Type `exit` to quit out.
 
 
+## Add Your Tables
+
+```bash
+$ export NODE_ENV=local
+$ npm run sync_models
+```
+
+
 ## Start your Webserver
 Now that all of your system dependencies have been setup, you need to run your webserver on your OSX machine.
 Run the following command:
 
 ```bash
+$ export NODE_ENV=local
 $ npm run dev
 ```
 
