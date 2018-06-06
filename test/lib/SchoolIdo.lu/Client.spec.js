@@ -1,11 +1,6 @@
 'use strict';
 
-import React from 'react';
-import renderer from 'react-test-renderer';
-import configureStore from 'redux-mock-store'; // mock Redux store
-import { configure, shallow, mount } from 'enzyme';  // shallow rendering to only render top level
-import Adapter from 'enzyme-adapter-react-16';  // for Enzyme
-import { Provider } from 'react-redux';
+import { expect } from 'chai';
 
 /*
  * testEnvironment variable needs to be changed to 'node' for these cross origin requests to work in jest
@@ -13,7 +8,7 @@ import { Provider } from 'react-redux';
  * Reference: https://github.com/axios/axios/issues/1418
  */
 
-import Client from '../../../../lib/SchoolIdo.lu/Client';
+import Client from '../../../lib/SchoolIdo.lu/Client';
 
 describe('SchoolIdo.lu Client', function() {
   const client = new Client();
@@ -22,16 +17,16 @@ describe('SchoolIdo.lu Client', function() {
     // this makes an API call
     return client.getCard(1220).then(card => {
       // UR yousoro~
-      expect(card.getId()).toEqual(1220);
-      expect(card.getRarity()).toEqual('UR');
-      expect(card.getName()).toEqual('Watanabe You');
-      expect(card.getCollection()).toEqual('Time Travel');
-      expect(card.getMainUnit()).toEqual('Aqours');
-      expect(card.getSubUnit()).toEqual('CYaRon!');
-      expect(card.getWebsiteUrl()).toEqual('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel-Smile/');
-      expect(card.getImageUrl()).toEqual('https://i.schoolido.lu/c/1220You.png');
-      expect(card.getIdolizedImageUrl()).toEqual('https://i.schoolido.lu/c/1220idolizedYou.png');
-      expect(card.getCardStats()).toEqual({
+      expect(card.getId()).to.equal(1220);
+      expect(card.getRarity()).to.equal('UR');
+      expect(card.getName()).to.equal('Watanabe You');
+      expect(card.getCollection()).to.equal('Time Travel');
+      expect(card.getMainUnit()).to.equal('Aqours');
+      expect(card.getSubUnit()).to.equal('CYaRon!');
+      expect(card.getWebsiteUrl()).to.equal('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel-Smile/');
+      expect(card.getImageUrl()).to.equal('https://i.schoolido.lu/c/1220You.png');
+      expect(card.getIdolizedImageUrl()).to.equal('https://i.schoolido.lu/c/1220idolizedYou.png');
+      expect(card.getCardStats()).to.deep.equal({
         name: 'Watanabe You',
         collection: 'Time Travel',
         attribute: 'Smile',
