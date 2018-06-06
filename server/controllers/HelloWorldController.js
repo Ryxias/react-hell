@@ -8,17 +8,20 @@ class HelloWorldController extends Controller {
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
+    const variable = 'This is how you put stuff in!';
+
+
     return res.send(
 `
 <html>
   <body>
-    <div>Hello world!</div>
+    <ul>
+      <li>Hello!</li>
+      <li>World!</li>
+      <li>${variable}</li>
+    </ul>
   </body>
 </html>
-
-<script>
-  alert('omfg');
-</script>
 `
     );
   }

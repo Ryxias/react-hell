@@ -8,7 +8,7 @@
     "chuubot": "NODE_ENV=production nodemon server/chuubot.js",
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
-    "dev": "node server/server.js",
+    "dev": "node_modules/.bin/nodemon server/server.js",
     "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@",
     "jest": "jest --config=__tests__/jest_config.js",
     "sync_models": "node bin/sync_models.js"
@@ -43,6 +43,7 @@
     "moment": "^2.22.0",
     "moment-timezone": "^0.5.14",
     "mysql2": "^1.4.2",
+    "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
