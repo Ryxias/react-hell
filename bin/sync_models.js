@@ -2,25 +2,14 @@
 
 //
 // Synchronizes the database schema with the models that have been loaded
+//   This is only intended to run on dev and will not work at all on production
 //
 
 const AppKernel = require('../app/AppKernel');
-const kernel = new AppKernel(process.env.NODE_ENV);
+const app_kernel = new AppKernel(process.env.NODE_ENV);
+app_kernel.boot();
 
-kernel.boot();
+const SyncDbSchemaCommand = require('../lib/Command/Commands/SyncDbSchemaCommand');
+const command = new SyncDbSchemaCommand(app_kernel);
 
-const ConnectionManager = kernel.getContainer().get('ConnectionManager');
-const SessionStore = kernel.getContainer().get('express.session_store');
-
-ConnectionManager.createDatabaseIfNotExists()
-// create Sessions table
-  .then(() => SessionStore.sync())
-  // This step may fail because the models are sync'd in the wrong order (Foreign key problems)
-  // Simply re-run the whole operation and it should work
-  .then(() => ConnectionManager.sync())
-  .then(() => console.log('Sync completed!'))
-  .catch(err => {
-    console.error(`Sync error:`);
-    console.error(err);
-  })
-  .then(() => process.exit(0));
+command.run();

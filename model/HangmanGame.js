@@ -2,7 +2,7 @@
 
 const { STRING, TEXT, DATE, BIGINT, BOOLEAN } = require('sequelize');
 
-module.exports = sequelize => {
+module.exports = (service_container, sequelize) => {
   const HangmanGame = sequelize.define('hangman_game', {
     id: {
       type: BIGINT.UNSIGNED,

@@ -7,7 +7,7 @@ const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
  * associated Slack account. It enables seamless integration between the website
  * and slack by connecting the two identities.
  */
-module.exports = sequelize => {
+module.exports = (service_container, sequelize) => {
   const SlackUser = sequelize.define('slack_user', {
     id: {
       type: BIGINT.UNSIGNED,

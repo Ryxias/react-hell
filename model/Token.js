@@ -7,7 +7,7 @@ const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
  * Tokens do not understand any logic about themselves, but other systems can utilize
  * tokens to temporarily store one-time keys or authentication-handoff stuff or whatever.
  */
-module.exports = sequelize => {
+module.exports = (service_container, sequelize) => {
   const Token = sequelize.define('token', {
     id: {
       type: BIGINT.UNSIGNED,
