@@ -10,10 +10,17 @@ const kernel = new AppKernel(process.env.NODE_ENV);
 kernel.boot();
 
 const ConnectionManager = kernel.getContainer().get('ConnectionManager');
+const SessionStore = kernel.getContainer().get('express.session_store');
 
-return Promise.resolve()
-  .then(() => ConnectionManager.createDatabaseIfNotExists())
+ConnectionManager.createDatabaseIfNotExists()
+// create Sessions table
+  .then(() => SessionStore.sync())
+  // This step may fail because the models are sync'd in the wrong order (Foreign key problems)
+  // Simply re-run the whole operation and it should work
   .then(() => ConnectionManager.sync())
   .then(() => console.log('Sync completed!'))
-  .then(() => process.exit(0))
-  .catch(err => console.error(`Sync error: ${err.message}.`));
+  .catch(err => {
+    console.error(`Sync error:`);
+    console.error(err);
+  })
+  .then(() => process.exit(0));
