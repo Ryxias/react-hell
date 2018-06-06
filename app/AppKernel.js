@@ -27,6 +27,7 @@ class AppKernel {
     // Boot the service container!
     switch (this.environment) {
       case 'local':
+      case 'test':
       case 'production':
         this.service_container = require('../services/container');
         break;
