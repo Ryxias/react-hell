@@ -9,7 +9,11 @@ const kernel = new AppKernel(process.env.NODE_ENV);
 
 kernel.boot();
 
-kernel.getContainer().get('ConnectionManager').sync()
+const ConnectionManager = kernel.getContainer().get('ConnectionManager');
+
+return Promise.resolve()
+  .then(() => ConnectionManager.createDatabaseIfNotExists())
+  .then(() => ConnectionManager.sync())
   .then(() => console.log('Sync completed!'))
   .then(() => process.exit(0))
   .catch(err => console.error(`Sync error: ${err.message}.`));
