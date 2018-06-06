@@ -9,7 +9,12 @@
     "nicobot": "NODE_ENV=production nodemon server/nicobot.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
     "dev": "node server/server.js",
-    "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@"
+    "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@",
+    "jest": "jest"
+  },
+  "jest": {
+    "^.+\\.jsx?$": "babel-jest",
+    "globalSetup": "./tests/default/jest_init.js",
   },
   "repository": {
     "type": "git",
@@ -64,6 +69,9 @@
     "webpack": "^4.8.3"
   },
   "devDependencies": {
+    "babel-jest": "^22.4.3",
+    "jest": "^22.4.3",
+    "jest-mock": "^22.4.3",
     "axios-mock-adapter": "^1.15.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
