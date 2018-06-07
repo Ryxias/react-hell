@@ -61,6 +61,7 @@
     "redux-logger": "^3.0.1",
     "redux-test-utils": "^0.2.2",
     "redux-thunk": "^2.2.0",
+    "request": "^2.87.0",
     "sequelize": "^4.8.0",
     "service-container": "github:ryxias/service-container#v1.0.3",
     "showdown": "^1.7.4",

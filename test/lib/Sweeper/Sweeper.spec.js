@@ -1,6 +1,6 @@
 'use strict';
 
-const FileSweeper = require('../../../../lib/FileSweeper/FileSweeper');
+const FileSweeper = require('../../../lib/FileSweeper/FileSweeper');
 
 // Initialize sinon and chai's assertion library compatible with sinon
 const chai = require('chai');
@@ -12,12 +12,12 @@ chai.use(sinonChai);
 const MockAdapter = require('axios-mock-adapter');
 
 const dependencies = [
-  require('../../../../lib/FileSweeper/utils/menuTypes'),
-  new (require('../../../../lib/FileSweeper/utils/Timer'))(),
-  new (require('../../../../lib/FileSweeper/utils/Handler'))().invalidInput,
-  new (require('../../../../lib/FileSweeper/utils/Fetcher'))(this.httpClient).fetchList,
+  require('../../../lib/FileSweeper/utils/menuTypes'),
+  new (require('../../../lib/FileSweeper/utils/Timer'))(),
+  new (require('../../../lib/FileSweeper/utils/Handler'))().invalidInput,
+  new (require('../../../lib/FileSweeper/utils/Fetcher'))(require('axios')).fetchList,
   require('axios'),
-  (require('../../../../config/config').fsd_workspace.legacy_token),
+  (require('../../../config/config').fsd_workspace.legacy_token),
 ];
 
 const app = new FileSweeper(...dependencies);
