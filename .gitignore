@@ -66,6 +66,7 @@ public/dist/
 
 # Config files - i.e. keys
 config/config.js
+config/config_local.js
 
 # System Garbage
 .DS_Store

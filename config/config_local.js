@@ -11,11 +11,11 @@ module.exports = {
   },
   nicobot: {
     bot_user_id: 'U5YDC4Y21',
-    bot_token: 'xoxb-202454168069-w0qjwRsxTODGPNezbxLyyMXi',
+    bot_token: 'xoxb-202454168069-dYc4FI4zOoNnOpW1TVhMWnTf',
   },
   slack: {},
   fsd_workspace: {
-    legacy_token: 'xoxp-36778673491-36851507831-187811729077-e26b8ea3bd5f6cd65819ae57c092c86a',
+    legacy_token: 'xoxp-36778673491-36851507831-376669224497-9487e19c1138bf513cef57715ce31153',
   },
-  secret: 'ekkusupuroooshyon',
+  secret: 'chuuuuuuniekkusuproshion',
 };
