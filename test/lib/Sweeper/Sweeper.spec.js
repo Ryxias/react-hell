@@ -15,9 +15,9 @@ const dependencies = [
   require('../../../lib/FileSweeper/utils/menuTypes'),
   new (require('../../../lib/FileSweeper/utils/Timer'))(),
   new (require('../../../lib/FileSweeper/utils/Handler'))().invalidInput,
-  new (require('../../../lib/FileSweeper/utils/Fetcher'))(require('axios')).fetchList,
+  new (require('../../../lib/FileSweeper/utils/Fetcher'))().fetchList,
   require('axios'),
-  (require('../../../config/config').fsd_workspace.legacy_token),
+  (process.env.NODE_ENV === 'test' ? require('../../../config/config_test').fsd_workspace.legacy_token : require('../../../config/config_local').fsd_workspace.legacy_token),
 ];
 
 const app = new FileSweeper(...dependencies);
