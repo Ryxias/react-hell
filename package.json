@@ -9,6 +9,7 @@
     "nicobot": "NODE_ENV=production ./node_modules/.bin/nodemon server/nicobot.js",
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
     "dev": "node_modules/.bin/nodemon server/server.js",
+    "sweeper": "node scripts/startSweeper.js",
     "test": "./node_modules/.bin/mocha --require test/init_test --compilers jsx:babel-core/register --recursive $@",
     "jest": "./node_modules/.bin/jest --config=__tests__/jest_config.js",
     "sync_models": "node bin/commands/sync_models.js"
@@ -60,6 +61,7 @@
     "redux-logger": "^3.0.1",
     "redux-test-utils": "^0.2.2",
     "redux-thunk": "^2.2.0",
+    "request": "^2.87.0",
     "sequelize": "^4.8.0",
     "service-container": "github:ryxias/service-container#v1.0.3",
     "showdown": "^1.7.4",
@@ -81,6 +83,8 @@
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.5.1",
+    "sinon": "^5.0.10",
+    "sinon-chai": "^3.1.0",
     "webpack-cli": "^2.1.3"
   }
 }
