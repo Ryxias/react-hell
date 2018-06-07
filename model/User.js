@@ -3,7 +3,7 @@
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-module.exports = sequelize => {
+module.exports = (service_container, sequelize) => {
   const User = sequelize.define('user', {
     id: {
       type: BIGINT.UNSIGNED,

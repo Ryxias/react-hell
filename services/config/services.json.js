@@ -17,30 +17,31 @@ module.exports = {
   GossipStore: require('../../lib/ModelStores/GossipStore'),
   SlackUserStore: require('../../lib/ModelStores/SlackUserStore'),
   TokenStore: require('../../lib/ModelStores/TokenStore'),
+  HangmanGameStore: require('../../lib/ModelStores/HangmanGameStore'),
 
   // Controllers
 
-  'app.controllers.helloworld': {
+  HelloWorldController: {
     class: require('../../server/controllers/HelloWorldController'),
     tags: [ 'controller' ],
   },
-  'app.controllers.gossip_api': {
+  GossipApiController: {
     class: require('../../server/controllers/GossipApiController'),
     tags: [ 'controller' ],
   },
-  'app.controllers.debug': {
+  DebugController: {
     class: require('../../server/controllers/DebugController'),
     tags: [ 'controller' ],
   },
-  'app.controllers.sif_api': {
+  SifApiController: {
     class: require('../../server/controllers/SifApiController'),
     tags: [ 'controller' ],
   },
-  'app.controllers.react': {
+  ReactController: {
     class: require('../../server/controllers/ReactController'),
     tags: [ 'controller' ],
   },
-  'app.controllers.auth': {
+  AuthenticationApiController: {
     class: require('../../server/controllers/AuthenticationApiController'),
     tags: [ 'controller' ],
   },
@@ -55,4 +56,6 @@ module.exports = {
     factory: require('../../server/routing/routing')
   },
   RouteRegistry: '@app.route_registry',
+
+  HangmanService: require('../../lib/Hangman/HangmanService'),
 };

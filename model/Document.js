@@ -2,7 +2,7 @@
 
 const { STRING, TEXT, DATE, BIGINT } = require('sequelize');
 
-module.exports = sequelize => {
+module.exports = (service_container, sequelize) => {
 
   /**
    * Some silly generic document store

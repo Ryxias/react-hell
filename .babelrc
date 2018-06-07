@@ -1,9 +1,15 @@
-/* 
+/*
     ./.babelrc
     Configuration for allowing the use of ES6 on the .js and .jsx files
-*/  
+
+    We IGNORE the server controllers because for some reason Babel does not like
+    the extends syntax. It is unclear why.
+*/
 {
   "presets":[
-      "es2015", "stage-3", "react"
+      "env", "stage-1", "stage-2", "stage-3", "react"
+  ],
+  "ignore": [
+    "server/controllers/*.js"
   ]
 }

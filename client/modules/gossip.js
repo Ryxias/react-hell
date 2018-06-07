@@ -22,28 +22,35 @@ const LOAD_MANY_GOSSIPS_FAIL = 'gossip/LOAD_MANY_GOSSIPS_FAIL';
 //
 export function loadGossipIndex(page_number, page_size) {
   return (dispatch, getState) => {
-    dispatch({ type: LOAD_MANY_GOSSIPS_START });
-
-    const GossipApiClient = getState().getContainer().get('gossip_api_client');
-
-    return GossipApiClient.getGossipIndex(page_number, page_size)
-      .then(({ data })=> {
-        dispatch({
-          type: LOAD_MANY_GOSSIPS_SUCCESS,
-          gossips: data.items,
-          page: data.page,
-          page_size: data.page_size,
-          page_count: data.page_count,
-        });
-      })
-      .catch(result => {
-        dispatch({
-          type: LOAD_MANY_GOSSIPS_FAIL,
-          message: result.message,
-        });
-        // What do we do?
-      });
+    return _loadGossips(dispatch, getState, page_number, page_size);
   };
+}
+
+function _loadGossips(dispatch, getState, page_number, page_size) {
+  return Promise.resolve()
+    .then(() => {
+      dispatch({ type: LOAD_MANY_GOSSIPS_START });
+
+      const GossipApiClient = getState().getContainer().get('gossip_api_client');
+
+      return GossipApiClient.getGossipIndex(page_number, page_size)
+        .then(({ data })=> {
+          dispatch({
+            type: LOAD_MANY_GOSSIPS_SUCCESS,
+            gossips: data.items,
+            page: data.page,
+            page_size: data.page_size,
+            page_count: data.page_count,
+          });
+        })
+        .catch(result => {
+          dispatch({
+            type: LOAD_MANY_GOSSIPS_FAIL,
+            message: result.message,
+          });
+          // What do we do?
+        });
+    });
 }
 
 export function loadGossip(id) {
@@ -72,7 +79,7 @@ export function loadGossip(id) {
   };
 }
 
-export function deleteGossip(id) {
+export function deleteGossipAndReload(id, page_number, page_size) {
   return (dispatch, getState) => {
     dispatch({ type: DELETE_GOSSIP_START });
 
@@ -93,6 +100,9 @@ export function deleteGossip(id) {
           message,
         });
         dispatch(alert(message, 'warning'));
+      })
+      .then(() => {
+        return _loadGossips(dispatch, getState, page_number, page_size);
       });
   };
 }

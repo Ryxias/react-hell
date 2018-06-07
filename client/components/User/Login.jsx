@@ -41,7 +41,7 @@ class Login extends PureComponent {
         <h1>Login</h1>
         <LoginForm {...props} />
         <LinkContainer to="/register">
-          <a className="nav-link">or register</a>
+          <a>or register</a>
         </LinkContainer>
       </div>
     );
