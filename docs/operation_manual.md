@@ -12,6 +12,9 @@ You can run this bash script on your local machine where you dev your code.
 
 You will need your `~/.ssh/config` setup properly, and using `ssh-add` to setup your keys will be convenient.
 
+See GitHub's guide [Connecting to Github with SSH](https://help.github.com/articles/connecting-to-github-with-ssh/)
+-> [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+
 
 ## Running the Web Server
 
