@@ -14,9 +14,16 @@ class HelloWorldController extends Controller {
     return res.send(
 `
 <html>
+  <head>
+    <style>
+      body  {background-color: FED958;}
+      h1    {color: F53D41;}
+      p     {color: F53D41;}
+      ul    {color: F53D41;}
+    </style>
+  </head>
   <body>
-<<<<<<< HEAD
-    <h1 style="color:red">Red &lt;h1?&gt;</h1>
+    <h1>Red &lt;h1?&gt;</h1>
 
     <p> Here's there start of a paragraph. Unordered list below... <br>
       <ul>
@@ -32,13 +39,6 @@ class HelloWorldController extends Controller {
         <li>${variable}</li>
       </ul>
     </p>
-=======
-    <ul>
-      <li>Hello!</li>
-      <li>World!</li>
-      <li>${variable}</li>
-    </ul>
->>>>>>> helloWorldCommentBox
 
     <!-- begin wwww.htmlcommentbox.com -->
       <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
