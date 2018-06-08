@@ -3,11 +3,11 @@ module.exports = {
   port: 8000,
   db: {
     host: '',
-    db: '',
-    user: '',
+    db: 'chuuni',
+    user: 'root',
     password: '',
   },
-  secret: '',
+  secret: 'some_secret_for_sessions_on_dev',
   slack: {
     bot_user_id: '',
     bot_token: '',
