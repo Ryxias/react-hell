@@ -8,18 +8,50 @@ class HelloWorldController extends Controller {
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
-    const variable = 'This is how you put stuff in!';
+    const variable = '& < > " \' /' ;
 
 
     return res.send(
 `
 <html>
+  <head>
+    <style>
+      body  {background-color: FED958;}
+      h1    {color: F53D41;}
+      p     {color: F53D41;}
+      ul    {color: F53D41;}
+    </style>
+  </head>
   <body>
-    <ul>
-      <li>Hello!</li>
-      <li>World!</li>
-      <li>${variable}</li>
-    </ul>
+    <h1>Red &lt;h1?&gt;</h1>
+
+    <p> Here's there start of a paragraph. Unordered list below... <br>
+      <ul>
+        <li>Hello!</li>
+        <li>World!</li>
+        <li>
+          <a href="https://www.google.com">Google</a>
+           opens in the same tab though...
+        </li>
+        <li>Below is a picture of a bunny... <br>
+          <img src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg">
+        </li>
+        <li>${variable}</li>
+      </ul>
+    </p>
+
+    <!-- begin wwww.htmlcommentbox.com -->
+      <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
+      <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+      <script
+        type="text/javascript" id="hcb"> /*<!--*/
+        if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"),
+        l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"),
+        h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1528389398444");
+        if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/
+      </script>
+    <!-- end  -->
+
   </body>
 </html>
 `
