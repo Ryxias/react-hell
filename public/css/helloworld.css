@@ -1,0 +1,17 @@
+body {
+  background-color: FED958;
+}
+h1 {
+  font-size: 36px;
+  letter-spacing: 2em;
+  color: F53D41;
+}
+p { 
+  color: F53D41;
+}
+ul {
+  color: F53D41;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+}

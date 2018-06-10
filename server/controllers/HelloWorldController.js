@@ -4,37 +4,37 @@ const { Controller } = require('express-route-registry');
 
 class HelloWorldController extends Controller {
 
-  /**
+  /*
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
     const variable = '& < > " \' /' ;
 
-
     return res.send(
 `
 <html>
   <head>
-    <style>
-      body  {background-color: FED958;}
-      h1    {color: F53D41;}
-      p     {color: F53D41;}
-      ul    {color: F53D41;}
-    </style>
+    <link rel="stylesheet" href="http://localhost:8000/statics/css/helloworld.css">
   </head>
   <body>
     <h1>Red &lt;h1?&gt;</h1>
 
-    <p> Here's there start of a paragraph. Unordered list below... <br>
+      <button id="sound"; type="button" onclick="sound()">Sound</button>
+
+
+    <p>Here's there start of a paragraph. Unordered list below... <br>
+    <p>Also, I'm using an external CSS file!</p>
       <ul>
-        <li>Hello!</li>
-        <li>World!</li>
-        <li>
-          <a href="https://www.google.com">Google</a>
-           opens in the same tab though...
-        </li>
+        <li><b>Bold Text</b></li>
+        <li><strong>Strong Text</strong></li>
+        <li><a href="https://www.google.com" target="_blank">Google</a> opens in new tab!</li>
+        <li>Below, I used JavaScript & js string interpolation for "\${Date()}"
+        <li id="demo"></p>
+          <script>
+            document.getElementById("demo").innerHTML = "${Date()}";
+          </script>
         <li>Below is a picture of a bunny... <br>
-          <img src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg">
+          <img src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg"; height="200"; width="200";>
         </li>
         <li>${variable}</li>
       </ul>
@@ -88,7 +88,7 @@ class HelloWorldController extends Controller {
             };
           }
           return {
-            message: 'Your webserver is up and running',
+            message: 'BEEP BEEP BOOP BOOP go to localhost:8000/helloworld ... Kevin',
             healthy: true,
           };
         })();
