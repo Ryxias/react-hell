@@ -18,6 +18,7 @@ module.exports = {
   SlackUserStore: require('../../lib/ModelStores/SlackUserStore'),
   TokenStore: require('../../lib/ModelStores/TokenStore'),
   HangmanGameStore: require('../../lib/ModelStores/HangmanGameStore'),
+  MazeGameStore: require('../../lib/ModelStores/MazeGameStore'),
 
   // Controllers
 
@@ -58,4 +59,7 @@ module.exports = {
   RouteRegistry: '@app.route_registry',
 
   HangmanService: require('../../lib/Hangman/HangmanService'),
+  MazeGameService: require('../../lib/Maze/MazeGameService'),
+
+  MazeRoomGenerator: require('../../lib/Maze/MazeRoomGenerator'),
 };
