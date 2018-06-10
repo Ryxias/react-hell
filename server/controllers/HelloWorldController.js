@@ -12,10 +12,14 @@ class HelloWorldController extends Controller {
     var today = Date();
 
     return res.send(
+
+      //for stylesheet's href:
+      //http://localhost:8000/statics/css/helloworld.css   - when working locally
+      //http://chuuni.me/statics/css/helloworld.css        - before pushing to origin
 `
 <html>
   <head>
-    <link rel="stylesheet" href="http://localhost:8000/statics/css/helloworld.css">
+    <link rel="stylesheet" href="http://chuuni.me/statics/css/helloworld.css">
   </head>
   <body>
     <header>
@@ -45,24 +49,27 @@ class HelloWorldController extends Controller {
       <img onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg"; height="200"; width="200";> <br>
       I started coding this page on <br>
       6 . 6 . 2 0 1 8 <br>
+    </p>
       <hr color='F53D41' size="1px" width='300px'/>
-      <b>Bold Text</b>
 
-    <p> <strong>Strong Text</strong><br>
-        <a href="https://www.google.com" target="_blank">Google</a> opens in new tab!<br>
+
+    <p>
+      <strong>Strong Text</strong><br>
+      <a href="https://www.google.com" target="_blank">Google</a> - opens in new tab!<br>
+    </p>
+        <hr color='F53D41' size="1px" width='300px'/><br>
+
+    <p>
         Below, I used JavaScript & js string interpolation for "\${Date()}"
-        <ul id="dateListItem" align='center'>
+        <ul id="date" align="center">
 
           <script>
-            document.getElementById("dateListItem").innerHTML = "${today}";
+            document.getElementById("date").innerHTML = "${today}";
           </script>
         </ul>
 
         </li>
         <li>${variable}</li>
-
-
-
         api.openweathermap.org/data/2.5/forecast?zip={zip code},{country code}
     </p>
 
