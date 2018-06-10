@@ -2,6 +2,9 @@
 
 const { STRING, TEXT, DATE, BIGINT, BOOLEAN } = require('sequelize');
 
+const MazeGameData = require('../lib/Maze/MazeGameData');
+const MazeGameState = require('../lib/Maze/MazeGameState');
+
 module.exports = (service_container, sequelize) => {
   const MazeGame = sequelize.define('maze_game', {
     id: {
@@ -42,18 +45,24 @@ module.exports = (service_container, sequelize) => {
     },
   });
 
-  MazeGame.prototype.setData = function(data) {
-    this.data = JSON.stringify(data);
+  MazeGame.prototype.setData = function(maze_game_data) {
+    if (!maze_game_data instanceof MazeGameData) {
+      throw new Error('Invalid MazeGameData');
+    }
+    this.data = maze_game_data.toDb();
   };
   MazeGame.prototype.getData = function() {
-    return JSON.parse(this.data);
+    return MazeGameData.fromDb(this.data);
   };
 
-  MazeGame.prototype.setState = function(state) {
-    this.state = JSON.stringify(state);
+  MazeGame.prototype.setState = function(maze_game_state) {
+    if (!maze_game_state instanceof MazeGameState) {
+      throw new Error('Invalid MazeGameState');
+    }
+    this.state = maze_game_state.toDb();
   };
   MazeGame.prototype.getState = function() {
-    return JSON.parse(this.state);
+    return MazeGameState.fromDb(this.state);
   };
 
   MazeGame.prototype.addLogEntry = function(entry) {
