@@ -1,0 +1,7 @@
+# mocha.opts
+
+  --reporter dot
+  --require test/init_test
+  --compilers jsx:babel-core/register
+  --recursive
+  --exit
