@@ -22,7 +22,7 @@ describe('MazeGameService', function() {
 
   describe('#startGame', function() {
     function startGame() {
-      return MazeGameService.getGameBySlackChannel('TEST123')
+      return MazeGameService.getGameBySlackChannel('MazeGameService.spec#startGame')
         .then(game => MazeGameService.startGame(game)
           .then(outcome => ({ outcome, game })));
     }
@@ -63,43 +63,51 @@ describe('MazeGameService', function() {
 
   describe('#look', function() {
     function look() {
-      return MazeGameService.getGameBySlackChannel('TEST123')
-        .then(game => MazeGameService.look(game)
-          .then(outcome => ({ outcome, game })));
+      return MazeGameService.getGameBySlackChannel('MazeGameService.spec#look')
+        .then(game => MazeGameService.startGame(game)
+          .then(() => MazeGameService.look(game)
+            .then(outcome => ({ outcome, game }))));
     }
 
     it('returns a description of your current room', function() {
       return look()
         .then(({ outcome, game }) => {
-          expect(outcome.message).to.equal('There is a room');
+          expect(outcome.message).to.include('There is a room');
+          expect(outcome.message).to.include('Exits: east');
         });
     });
   });
 
   describe('#move', function() {
-    function move(direction = 'north') {
-      return MazeGameService.getGameBySlackChannel('TEST123')
-        .then(game => MazeGameService.move(game, direction)
-          .then(outcome => ({ outcome, game })));
+    let game = null;
+    before(function() {
+      return MazeGameService.getGameBySlackChannel('MazeGameService.spec#move')
+        .then(_game => MazeGameService.startGame(_game).then(() => game = _game));
+    });
+
+    function move(direction) {
+      return MazeGameService.move(game, direction);
     }
 
     it('moves you to the next room', function() {
       return move('east')
-        .then(({ outcome, game }) => {
-          expect(outcome.message).to.equal('You went east');
+        .then(outcome => {
+          expect(outcome.message).to.include('You went east');
+          expect(outcome.message).to.include('There is another room');
+          expect(outcome.message).to.include('Exits: north, west');
         });
     });
 
     it('fails on invalid direction', function() {
       return move('aaaaa')
-        .then(({ outcome, game }) => {
+        .then(outcome => {
           expect(outcome.message).to.equal('Invalid direction: aaaaa.');
         });
     });
 
     it('fails on a direction your room does not support', function() {
       return move('south')
-        .then(({ outcome, game }) => {
+        .then(outcome => {
           expect(outcome.message).to.equal('You cannot move in that direction!');
         });
     });
@@ -109,8 +117,8 @@ describe('MazeGameService', function() {
         .then(() => move('north'))
         .then(() => move('west'))
         .then(() => move('up'))
-        .then(({ outcome, game }) => {
-          expect(outcome.message).to.equal('Victory!');
+        .then(outcome => {
+          expect(outcome.message).to.include('Victory!');
         });
     });
   });

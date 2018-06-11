@@ -71,5 +71,11 @@ module.exports = (service_container, sequelize) => {
     this.log = JSON.stringify(logs);
   };
 
+  MazeGame.prototype.wipe = function() {
+    this.log = '[]';
+    this.state = '{}';
+    this.data = '{}';
+  };
+
   return MazeGame;
 };
