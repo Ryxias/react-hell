@@ -4,53 +4,88 @@ const { Controller } = require('express-route-registry');
 
 class HelloWorldController extends Controller {
 
-  /**
+  /*
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
     const variable = '& < > " \' /' ;
-
+    var today = Date();
 
     return res.send(
+
+      //for stylesheet's href:
+      //http://localhost:8000/statics/css/helloworld.css   - when working locally
+      //http://chuuni.me/statics/css/helloworld.css        - before pushing to origin
 `
 <html>
   <head>
-    <style>
-      body  {background-color: FED958;}
-      h1    {color: F53D41;}
-      p     {color: F53D41;}
-      ul    {color: F53D41;}
-    </style>
+    <link rel="stylesheet" href="http://chuuni.me/statics/css/helloworld.css">
   </head>
   <body>
-    <h1>Red &lt;h1?&gt;</h1>
+    <header>
+      <h1>byKevin</h1>
+    </header>
+      <br>
 
-    <p> Here's there start of a paragraph. Unordered list below... <br>
-      <ul>
-        <li>Hello!</li>
-        <li>World!</li>
-        <li>
-          <a href="https://www.google.com">Google</a>
-           opens in the same tab though...
-        </li>
-        <li>Below is a picture of a bunny... <br>
-          <img src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg">
+      <div align='center'>
+        <button type="button" onclick="play_sr_open()">Magical Sound!</button>
+        <audio id="sr_open" src="https://chuuni.me/statics/sound/sr_open.mp3" autostart="false" ></audio>
+        <audio id="ur_open" src="https://chuuni.me/statics/sound/ur_open.mp3" autostart="false" ></audio>
+        <script>
+          function play_sr_open() {
+            var sound = document.getElementById("sr_open");
+            sound.play()
+          }
+          function play_ur_open() {
+            var sound = document.getElementById("ur_open");
+            sound.play()
+          }
+        </script>
+      </div>
+
+
+    <p>
+      ...or click bunny for another sound!<br>
+      <img onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg"; height="200"; width="200";> <br>
+      I started coding this page on <br>
+      6 . 6 . 2 0 1 8 <br>
+    </p>
+      <hr color='F53D41' size="1px" width='300px'/>
+
+
+    <p>
+      <strong>Strong Text</strong><br>
+      <a href="https://www.google.com" target="_blank">Google</a> - opens in new tab!<br>
+    </p>
+        <hr color='F53D41' size="1px" width='300px'/><br>
+
+    <p>
+        Below, I used JavaScript & js string interpolation for "\${Date()}"
+        <ul id="date" align="center">
+
+          <script>
+            document.getElementById("date").innerHTML = "${today}";
+          </script>
+        </ul>
+
         </li>
         <li>${variable}</li>
-      </ul>
+        api.openweathermap.org/data/2.5/forecast?zip={zip code},{country code}
     </p>
 
-    <!-- begin wwww.htmlcommentbox.com -->
+    <!-- begin HTML COMMENT BOX -->
       <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
+
       <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-      <script
-        type="text/javascript" id="hcb"> /*<!--*/
+
+      <script type="text/javascript" id="hcb">
         if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"),
         l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"),
-        h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1528389398444");
+        h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");
+        s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1528389398444");
         if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/
       </script>
-    <!-- end  -->
+    <!-- end HTML COMMENT BOX  -->
 
   </body>
 </html>
@@ -88,7 +123,7 @@ class HelloWorldController extends Controller {
             };
           }
           return {
-            message: 'Your webserver is up and running',
+            message: 'BEEP BEEP BOOP BOOP go to localhost:8000/helloworld ... Kevin',
             healthy: true,
           };
         })();
