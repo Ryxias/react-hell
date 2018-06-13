@@ -117,12 +117,20 @@ describe('----- Slack File Sweeper -----', () => {
     expect(app.deleteFiles).to.have.been.calledOnce;
   });
 
-  it('should properly fetch recent files of ALL types from the Slack team server', () => {
-    return app.fetchList(app, 'all')
-      .then(result => {
-        expect(result.length).to.equal(5);
-      });
+  it('should clear file list and return to main menu if user answers no for deletion', () => {
+    app.list = [{
+      id: 9999999999999999
+    }];
+    const fake = sinon.fake();
+    sinon.replace(app, 'mainMenu', fake);  // replaces with anonymous fake function
+
+    app.handleDeletionOption('all', 'N');
+
+    expect(app.list.length).to.equal(0);
+    expect(app.deleted.length).to.equal(0);
+    expect(app.mainMenu).to.have.been.calledOnce;
   });
+
 
   it('should properly execute deletion actions upon calling deleteFiles()', () => {
     const fake = sinon.fake();
