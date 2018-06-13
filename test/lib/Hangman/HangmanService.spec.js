@@ -500,4 +500,165 @@ describe('HangmanService', function () {
     });
   });
 
+  describe('#answer', function () {
+    describe('when the user answers incorrectly', function () {
+      let result = null;
+      before(function () { // Should be before()
+        return HangmanService.getGameBySlackChannel('TEST-#startGame')
+          .then(res => {
+            let game = res;
+            game.active = true;
+            game.guesses = `[]`;
+            return game.save();
+          })
+          .then((game) => HangmanService.answer(game, 'placeholder roulette phrase'))
+          .then(res => result = res);
+      });
+
+      it('should inform the user was incorrect', function () {
+        expect(result.message).to.equal('Nope, good try!');
+      });
+
+      it('should keep the game active', function() {
+        HangmanService.getGameBySlackChannel('TEST-#startGame')
+          .then(res => {
+            let game = res;
+            expect(game.active).to.equal(true);
+          });
+      });
+    });
+
+    describe('when the user answers correctly', function () {
+      let result = null;
+      before(function () { // Should be before()
+        return HangmanService.getGameBySlackChannel('TEST-#startGame')
+          .then(res => {
+            let game = res;
+            game.active = true;
+            game.guesses = `[]`;
+            return game.save();
+          })
+          .then((game) => HangmanService.answer(game, 'placeholder hangman phrase'))
+          .then(res => result = res);
+      });
+
+      it('should inform the user was incorrect', function () {
+        expect(result.message).to.equal('Correct! You win!');
+      });
+
+      it('should make game inactive', function() {
+        HangmanService.getGameBySlackChannel('TEST-#startGame')
+          .then(res => {
+            let game = res;
+            expect(game.active).to.equal(false);
+          });
+      });
+    });
+  });
+
+  describe('#stopGame', function () {
+    let result = null;
+    before(function () { // Should be before()
+      return HangmanService.getGameBySlackChannel('TEST-#startGame')
+        .then(res => {
+          let game = res;
+          game.active = true;
+          game.guesses = `[]`;
+          return game.save();
+        })
+        .then((game) => HangmanService.stopGame(game))
+        .then(res => result = res);
+    });
+
+    it('should inform the user the game was stopped', function () {
+      expect(result.message).to.equal('Game stopped.');
+    });
+
+
+    it('should make game inactive', function () {
+      HangmanService.getGameBySlackChannel('TEST-#startGame')
+        .then(res => {
+          let game = res;
+          expect(game.active).to.equal(false);
+        });
+    });
+  });
+
+  describe('Utility Methods', function () {
+    describe('_isOutOfGuesses', function () {
+      let game;
+      it('should return false if less than 10', function () {
+        game = { guesses: `["a","b","c","d"]` };
+        expect(HangmanService._isOutOfGuesses(game)).to.equal(false);
+      });
+
+      it('should return true if at least 10', function () {
+        game = { guesses: `["a","b","c","d","e","f","g","h","i","j"]` };
+        expect(HangmanService._isOutOfGuesses(game)).to.equal(false);
+      });
+    });
+
+    describe('_isCorrectGuess', function () {
+      let game = null;
+      before(function () { // Should be before()
+        return HangmanService.getGameBySlackChannel('TEST-#startGame')
+          .then(res => {
+            let game = res;
+            game.active = true;
+            game.guesses = `[]`;
+            return game.save();
+          })
+          .then(res => game = res);
+      });
+
+      it('should return false if incorrect letter guess', function () {
+        expect(HangmanService._isCorrectGuess('z', game)).to.equal(false);
+      });
+
+      it('should return true if correct letter guess', function () {
+        expect(HangmanService._isCorrectGuess('a', game)).to.equal(true);
+      });
+    });
+
+    describe('_generateMatches', function () {
+      describe('with no guesses', function () {
+        let result = null;
+        before(function () { // Should be before()
+          return HangmanService.getGameBySlackChannel('TEST-#startGame')
+            .then(res => {
+              let game = res;
+              game.active = true;
+              game.guesses = `[]`;
+              return game.save();
+            })
+            .then((game) => HangmanService._generateMatches(game))
+            .then(res => result = res);
+        });
+
+        it('should not reveal any letters', function () {
+          expect(result.hangman_text).to.equal('`___________ _______ ______`');
+        });
+      });
+
+      describe('with guesses', function () {
+        let result = null;
+        before(function () { // Should be before()
+          return HangmanService.getGameBySlackChannel('TEST-#startGame')
+            .then(res => {
+              let game = res;
+              game.active = true;
+              game.guesses = `["p","h","r","a","s","e"]`;
+              return game.save();
+            })
+            .then((game) => HangmanService._generateMatches(game))
+            .then(res => result = res);
+        });
+
+        it('should reveal letters', function () {
+          expect(result.hangman_text).to.equal('`P_A_EH___ER HA___A_ PHRASE`');
+        });
+      });
+    });
+  });
+
 });
