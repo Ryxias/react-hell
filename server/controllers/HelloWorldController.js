@@ -19,7 +19,7 @@ class HelloWorldController extends Controller {
 `
 <html>
   <head>
-    <link rel="stylesheet" href="http://chuuni.me/statics/css/helloworld.css">
+    <link rel="stylesheet" href="/statics/css/helloworld.css">
   </head>
   <body>
     <header>
@@ -29,8 +29,8 @@ class HelloWorldController extends Controller {
 
       <div align='center'>
         <button type="button" onclick="play_sr_open()">Magical Sound!</button>
-        <audio id="sr_open" src="https://chuuni.me/statics/sound/sr_open.mp3" autostart="false" ></audio>
-        <audio id="ur_open" src="https://chuuni.me/statics/sound/ur_open.mp3" autostart="false" ></audio>
+        <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
+        <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
         <script>
           function play_sr_open() {
             var sound = document.getElementById("sr_open");
