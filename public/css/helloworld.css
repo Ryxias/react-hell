@@ -1,44 +1,84 @@
 header, footer {
     padding: 1em;
     color: white;
-    background-color: F53D41;
+    background-color: #F53D41;
     clear: left;
     text-align: center;
 }
 body {
   font-size: 12px
   font-family: sans-serif;
-  background-color: FED958;
+  background-color: #FED958;
 }
 h1 {
   font-family: sans-serif;
   text-align: center;
   font-size: 36px;
   letter-spacing: 1.25em;
-  color: FED958;
+  color: #FED958;
+}
+h3 {
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 36px;
+  letter-spacing: 1.25em;
+  color: #F53D41;
 }
 p {
   font-family: sans-serif;
-  color: F53D41;
+  color: #F53D41;
   text-align: center;
 }
 ul {
   font-family: sans-serif;
-  color: F53D41;
+  color: #F53D41;
   align-items: center;
-
-  border-style: solid;
-  border-width: 1px;
-  border-bottom-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-spacing: 15px;
-
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 li {
   font-family: sans-serif;
-  color: F53D41;
+  color: #F53D41;
+}
+
+/* STYLE FOR TABS */
+
+.tab {
+    font-family: sans-serif;
+    overflow: hidden;
+    background-color: #F53D41;
+
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    color: #FED958;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #FED958;
+    color: #F53D41;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #FED958;
+    border: 1px solid #F53D41;
+    border-bottom: none;
+    color: black;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #F53D41;
+    border-top: none;
 }

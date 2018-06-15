@@ -8,8 +8,7 @@ class HelloWorldController extends Controller {
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
-    const variable = '& < > " \' /' ;
-    var today = Date();
+    const today = Date();
 
     return res.send(
 
@@ -21,27 +20,41 @@ class HelloWorldController extends Controller {
   <head>
     <link rel="stylesheet" href="/statics/css/helloworld.css">
   </head>
+
   <body>
     <header>
       <h1>byKevin</h1>
     </header>
-      <br>
+    <br>
 
-      <div align='center'>
-        <button type="button" onclick="play_sr_open()">Magical Sound!</button>
-        <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
-        <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
-        <script>
-          function play_sr_open() {
-            var sound = document.getElementById("sr_open");
-            sound.play()
-          }
-          function play_ur_open() {
-            var sound = document.getElementById("ur_open");
-            sound.play()
-          }
-        </script>
-      </div>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
+      <button class="tablinks" onclick="openTab(event, 'Instagram')">IG</button>
+      <button class="tablinks" onclick="openTab(event, 'Medium')">Medium</button>
+    </div>
+
+    <div id="Home" class="tabcontent">
+      <h3>Home</h3>
+      <p>This is my home page!</p>
+    </div>
+
+    <div id="Instagram" class="tabcontent">
+      <h3>Instagram</h3>
+      <p>See my Instagram feed.</p>
+    </div>
+
+    <div id="Medium" class="tabcontent">
+      <h3>Medium</h3>
+      <p>Read about my coding adventures.</p>
+    </div>
+
+
+
+    <div align='center'>
+      <button type="button" onclick="play_sr_open()">Magical Sound!</button>
+      <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
+      <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
+    </div>
 
 
     <p>
@@ -50,28 +63,41 @@ class HelloWorldController extends Controller {
       I started coding this page on <br>
       6 . 6 . 2 0 1 8 <br>
     </p>
+
       <hr color='F53D41' size="1px" width='300px'/>
-
-
-    <p>
-      <strong>Strong Text</strong><br>
-      <a href="https://www.google.com" target="_blank">Google</a> - opens in new tab!<br>
-    </p>
-        <hr color='F53D41' size="1px" width='300px'/><br>
 
     <p>
         Below, I used JavaScript & js string interpolation for "\${Date()}"
-        <ul id="date" align="center">
-
-          <script>
-            document.getElementById("date").innerHTML = "${today}";
-          </script>
-        </ul>
+        <ul id="date" align="center"></ul>
 
         </li>
-        <li>${variable}</li>
-        api.openweathermap.org/data/2.5/forecast?zip={zip code},{country code}
     </p>
+
+    <script>
+      function openTab(evt, tabName) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(tabName).style.display = "block";
+          evt.currentTarget.className += " active";
+      }
+
+      function play_sr_open() {
+        var sound = document.getElementById("sr_open");
+        sound.play()
+      }
+      function play_ur_open() {
+        var sound = document.getElementById("ur_open");
+        sound.play()
+      }
+      document.getElementById("date").innerHTML = "${today}";
+    </script>
 
     <!-- begin HTML COMMENT BOX -->
       <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
