@@ -12,9 +12,6 @@ class HelloWorldController extends Controller {
 
     return res.send(
 
-      //for stylesheet's href:
-      //http://localhost:8000/statics/css/helloworld.css   - when working locally
-      //http://chuuni.me/statics/css/helloworld.css        - before pushing to origin
 `
 <html>
   <head>
@@ -31,6 +28,7 @@ class HelloWorldController extends Controller {
       <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
       <button class="tablinks" onclick="openTab(event, 'Instagram')">IG</button>
       <button class="tablinks" onclick="openTab(event, 'Medium')">Medium</button>
+      <button class="tablinks" onclick="openTab(event, 'anotherroute')">anotherroute</button>
     </div>
 
     <div id="Home" class="tabcontent">
@@ -46,6 +44,11 @@ class HelloWorldController extends Controller {
     <div id="Medium" class="tabcontent">
       <h3>Medium</h3>
       <p>Read about my coding adventures.</p>
+    </div>
+
+    <div id="anotherroute" class="tabcontent">
+      <h3>anotherroute</h3>
+      <p><a href="/anotherroute">anotherroute</a>
     </div>
 
 
@@ -126,7 +129,7 @@ class HelloWorldController extends Controller {
     return res.render('sample', {
       variable1: 'hello',
       variable2: 'world',
-
+      variable3: 'Go Back',
       foo_array: [
         {
           foo_name: 'zz',
