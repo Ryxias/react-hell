@@ -25,6 +25,7 @@ class HelloWorldController extends Controller {
     <header>
       <h1>byKevin</h1>
     </header>
+<<<<<<< HEAD
     <br>
 
     <div class="tab">
@@ -55,6 +56,25 @@ class HelloWorldController extends Controller {
       <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
       <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
     </div>
+=======
+      <br>
+
+      <div align='center'>
+        <button type="button" onclick="play_sr_open()">Magical Sound!</button>
+        <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
+        <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
+        <script>
+          function play_sr_open() {
+            var sound = document.getElementById("sr_open");
+            sound.play()
+          }
+          function play_ur_open() {
+            var sound = document.getElementById("ur_open");
+            sound.play()
+          }
+        </script>
+      </div>
+>>>>>>> 615be7f8768553fed5ab67ff31707bc9f7078dd9
 
 
     <p>
