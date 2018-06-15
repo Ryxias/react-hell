@@ -10,7 +10,7 @@
     "webpack": "./node_modules/.bin/webpack --config=webpack.config.js -d --watch",
     "dev": "node_modules/.bin/nodemon server/server.js",
     "sweeper": "node scripts/startSweeper.js",
-    "test": "./node_modules/mocha/bin/_mocha $@",
+    "test": "./node_modules/mocha/bin/_mocha --opts test/mocha.opts",
     "jest": "./node_modules/.bin/jest --config=__tests__/jest_config.js",
     "sequelize": "./node_modules/.bin/sequelize",
     "sync_models": "node bin/commands/sync_models.js"

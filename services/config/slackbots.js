@@ -42,6 +42,7 @@ module.exports = service_container => {
     chuu.addScript(service_container.get('slackbot.scripts.user_connector'));
     chuu.addScript(service_container.get('slackbot.scripts.hangman'));
     chuu.addScript(service_container.get('slackbot.scripts.maze'));
+    chuu.addScript(service_container.get('slackbot.scripts.bangdri'));
 
     return chuu;
   });
@@ -54,4 +55,5 @@ module.exports = service_container => {
   service_container.autowire('slackbot.scripts.gossip', require('../../lib/Slack/BotScripts/Gossip'));
   service_container.autowire('slackbot.scripts.hangman', require('../../lib/Slack/BotScripts/HangmanScript'));
   service_container.autowire('slackbot.scripts.maze', require('../../lib/Slack/BotScripts/MazeScript'));
+  service_container.autowire('slackbot.scripts.bangdri', require('../../lib/Slack/BotScripts/BangDreamScript'));
 };
