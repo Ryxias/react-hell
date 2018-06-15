@@ -121,6 +121,9 @@ module.exports = service_container => {
 
     app.use('/test', (req, res, next) => res.send('omfg why'));
 
+    // handlebars
+    require('../../init/HandlebarsSetup')(app);
+
     const start = () => {
       const port = production ? 80 : service_container.get('ConfigurationManager').getValue('port');
 
