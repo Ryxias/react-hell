@@ -12,6 +12,7 @@ module.exports = {
   ConfigurationManager: '@app.config',
 
   'sif.client': require('../../lib/SchoolIdo.lu/Client'),
+  BangDreamClient: require('../../lib/BangDream/Client'),
 
   UserStore: require('../../lib/ModelStores/UserStore'),
   GossipStore: require('../../lib/ModelStores/GossipStore'),

@@ -120,6 +120,31 @@ class HelloWorldController extends Controller {
   }
 
   /**
+   * Controller action for testing
+   */
+  another_action(req, res, next) {
+    return res.render('sample', {
+      variable1: 'hello',
+      variable2: 'world',
+
+      foo_array: [
+        {
+          foo_name: 'zz',
+          foo_value: 'aa',
+        },
+        {
+          foo_name: 'qqqqqq',
+          foo_value: 'ppikachu',
+        },
+        {
+          foo_name: 'NNO',
+          foo_value: 'aaaaaaaaaa',
+        },
+      ],
+    });
+  }
+
+  /**
    * Presents a health
    */
   health_check_action(req, res, next) {

@@ -103,6 +103,9 @@ module.exports = service_container => {
     '/helloworld': {
       get: [ 'HelloWorldController', 'index_action' ],
     },
+    '/anotherroute': {
+      get: [ 'HelloWorldController', 'another_action' ],
+    },
     '/health': {
       get: [ 'HelloWorldController', 'health_check_action' ],
     },
