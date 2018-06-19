@@ -15,20 +15,49 @@ class HelloWorldController extends Controller {
 `
 <html>
   <head>
+    <title>Not Localhost</title>
     <link rel="stylesheet" href="/statics/css/helloworld.css">
   </head>
 
   <body>
-    <header>
-      <h1>byKevin</h1>
-    </header>
-    <br>
+      <div class="rectangleLarge">
+        <div class="content">
+          <h1>Testing, testing, 1, 2, 3</h1>
+        </div>
+      </div>
+
+      <!-- <div class="square a_1">
+      </div>
+      <div class="square a_2">
+      </div>
+      <div class="square a_3">
+      </div> -->
+
+      <div class="square b_1">
+      </div>
+      <div class="square b_2">
+      </div>
+      <div class="square b_3">
+        <div class="content">
+          <img id="bunny" onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg";>
+          <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
+        </div>
+      </div>
+
+      <div class="square c_1">
+      </div>
+      <div class="square c_2">
+      </div>
+      <div class="square c_3">
+      </div>
+
+    <hr>
 
     <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
       <button class="tablinks" onclick="openTab(event, 'Instagram')">IG</button>
       <button class="tablinks" onclick="openTab(event, 'Medium')">Medium</button>
-      <button class="tablinks" onclick="openTab(event, 'anotherroute')">anotherroute</button>
+      <button class="tablinks" onclick="openTab(event, 'Guest Book')">Guest Book</button>
     </div>
 
     <div id="Home" class="tabcontent">
@@ -46,49 +75,51 @@ class HelloWorldController extends Controller {
       <p>Read about my coding adventures.</p>
     </div>
 
-    <div id="anotherroute" class="tabcontent">
-      <h3>anotherroute</h3>
-      <p><a href="/anotherroute">anotherroute</a>
+    <div id="Guest Book" class="tabcontent">
+      <h3>Guest Book</h3>
+      <p><a href="/guestbook">Sign the Guest Book!</a>
     </div>
 
-
+    <br>
 
     <div align='center'>
       <button type="button" onclick="play_sr_open()">Magical Sound!</button>
       <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
-      <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
     </div>
 
 
     <p>
-      ...or click bunny for another sound!<br>
-      <img onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg"; height="200"; width="200";> <br>
       I started coding this page on <br>
       6 . 6 . 2 0 1 8 <br>
-    </p>
 
-      <hr color='F53D41' size="1px" width='300px'/>
-
-    <p>
-        Below, I used JavaScript & js string interpolation for "\${Date()}"
         <ul id="date" align="center"></ul>
-
-        </li>
     </p>
 
+    <br>
+    <!-- NAV BAR SCRIPT -->
     <script>
       function openTab(evt, tabName) {
           var i, tabcontent, tablinks;
           tabcontent = document.getElementsByClassName("tabcontent");
+          tablinks = document.getElementsByClassName("tablinks");
+
+
+          // 1. When you click, this sets every tab's .display to "none"
           for (i = 0; i < tabcontent.length; i++) {
               tabcontent[i].style.display = "none";
           }
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-              tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
-          document.getElementById(tabName).style.display = "block";
-          evt.currentTarget.className += " active";
+
+          // 2. When you click, this sets every tab's className to "tabconent"
+          // for (i = 0; i < tablinks.length; i++) {
+          //     tablinks[i].className = tablinks[i].className.replace(" active", ""); //replace(searchValue, newValue)
+          // }
+
+          // 3. When you click, this sets the clicked tab's .display to "block"
+          document.getElementById(tabName).style.display = "block"
+
+          // 4. When you click, this sets the clicked tab's className to "tabcontent active"
+          // evt.currentTarget.className += " active";
+
       }
 
       function play_sr_open() {
@@ -99,7 +130,9 @@ class HelloWorldController extends Controller {
         var sound = document.getElementById("ur_open");
         sound.play()
       }
+
       document.getElementById("date").innerHTML = "${today}";
+
     </script>
 
     <!-- begin HTML COMMENT BOX -->
@@ -114,7 +147,7 @@ class HelloWorldController extends Controller {
         s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1528389398444");
         if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/
       </script>
-    <!-- end HTML COMMENT BOX  -->
+    <!-- end HTML COMMENT BOX -->
 
   </body>
 </html>

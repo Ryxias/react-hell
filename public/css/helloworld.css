@@ -1,84 +1,66 @@
-header, footer {
-    padding: 1em;
-    color: white;
-    background-color: #F53D41;
-    clear: left;
-    text-align: center;
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto:100|Shrikhand');
+
 body {
-  font-size: 12px
-  font-family: sans-serif;
-  background-color: #FED958;
-}
-h1 {
-  font-family: sans-serif;
-  text-align: center;
-  font-size: 36px;
-  letter-spacing: 1.25em;
-  color: #FED958;
-}
-h3 {
-  font-family: sans-serif;
-  text-align: center;
-  font-size: 36px;
-  letter-spacing: 1.25em;
-  color: #F53D41;
-}
-p {
-  font-family: sans-serif;
-  color: #F53D41;
-  text-align: center;
-}
-ul {
-  font-family: sans-serif;
-  color: #F53D41;
-  align-items: center;
-}
-li {
-  font-family: sans-serif;
-  color: #F53D41;
+  font-family: 'Shrikhand', cursive;
 }
 
-/* STYLE FOR TABS */
-
-.tab {
-    font-family: sans-serif;
-    overflow: hidden;
-    background-color: #F53D41;
-
+.square {
+  float: left;
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  margin: 0.5px;
+  background-color: #a8c9ff;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.rectangleLarge {
+  float: left;
+  position: relative;
+  width: 90%;
+  padding-bottom: 30%;
+  margin: 0.5px;
+  background-color: #a8c9ff;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
-/* Style the buttons inside the tab */
-.tab button {
-    color: #FED958;
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
+#bunny {
+  align-self: center center;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #FED958;
-    color: #F53D41;
+.a_1 {
+}
+.a_2 {
+}
+.a_3 {
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-    background-color: #FED958;
-    border: 1px solid #F53D41;
-    border-bottom: none;
-    color: black;
+.b_1 {
+  background-color: #ffe3ce;
+}
+.b_2 {
+  background-color: #ffe3ce;
+}
+.b_3 {
+  background-color: #ffe3ce;
 }
 
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #F53D41;
-    border-top: none;
+.c_1 {
+}
+.c_2 {
+}
+.c_3 {
 }
