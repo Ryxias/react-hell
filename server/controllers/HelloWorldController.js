@@ -20,9 +20,20 @@ class HelloWorldController extends Controller {
   </head>
 
   <body>
+    <div class="entireSquare toprow">
       <div class="rectangleLarge">
         <div class="content">
-          <h1>Testing, testing, 1, 2, 3</h1>
+          <div class="square a_1">
+          </div>
+          <div class="square a_2">
+          </div>
+          <div class="square a_3">
+          </div>
+          <div class"rectangleLarge">
+            <div class="content">
+              <h1>Testing, testing, 1, 2, 3</h1>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -33,24 +44,33 @@ class HelloWorldController extends Controller {
       <div class="square a_3">
       </div> -->
 
-      <div class="square b_1">
-      </div>
-      <div class="square b_2">
-      </div>
-      <div class="square b_3">
+      <div class="rectangleLarge middlerow">
         <div class="content">
-          <img id="bunny" onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg";>
-          <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
+          <div class="square b_1">
+          </div>
+          <div class="square b_2">
+          </div>
+          <div class="square b_3">
+            <div class="content">
+              <img id="bunny" onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg";>
+              <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="square c_1">
+      <div class="rectangleLarge bottomrow">
+        <div class="content">
+          <div class="square c_1">
+          </div>
+          <div class="square c_2">
+          </div>
+          <div class="square c_3">
+          </div>
+        </div>
       </div>
-      <div class="square c_2">
-      </div>
-      <div class="square c_3">
-      </div>
-
+    </div>
+      <!--
     <hr>
 
     <div class="tab">
@@ -58,35 +78,7 @@ class HelloWorldController extends Controller {
       <button class="tablinks" onclick="openTab(event, 'Instagram')">IG</button>
       <button class="tablinks" onclick="openTab(event, 'Medium')">Medium</button>
       <button class="tablinks" onclick="openTab(event, 'Guest Book')">Guest Book</button>
-    </div>
-
-    <div id="Home" class="tabcontent">
-      <h3>Home</h3>
-      <p>This is my home page!</p>
-    </div>
-
-    <div id="Instagram" class="tabcontent">
-      <h3>Instagram</h3>
-      <p>See my Instagram feed.</p>
-    </div>
-
-    <div id="Medium" class="tabcontent">
-      <h3>Medium</h3>
-      <p>Read about my coding adventures.</p>
-    </div>
-
-    <div id="Guest Book" class="tabcontent">
-      <h3>Guest Book</h3>
-      <p><a href="/guestbook">Sign the Guest Book!</a>
-    </div>
-
-    <br>
-
-    <div align='center'>
-      <button type="button" onclick="play_sr_open()">Magical Sound!</button>
-      <audio id="sr_open" src="/statics/sound/sr_open.mp3" autostart="false" ></audio>
-    </div>
-
+    </div> -->
 
     <p>
       I started coding this page on <br>
