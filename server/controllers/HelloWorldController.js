@@ -12,135 +12,35 @@ class HelloWorldController extends Controller {
 
     return res.send(
 
+
 `
 <html>
   <head>
     <title>Not Localhost</title>
-    <link rel="stylesheet" href="/statics/css/helloworld.css">
+    <link rel="stylesheet" rel="text/css" href="/statics/css/helloworld.css">
   </head>
 
   <body>
-    <div class="entireSquare toprow">
-      <div class="rectangleLarge">
-        <div class="content">
-          <div class="square a_1">
-          </div>
-          <div class="square a_2">
-          </div>
-          <div class="square a_3">
-          </div>
-          <div class"rectangleLarge">
-            <div class="content">
-              <h1>Testing, testing, 1, 2, 3</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+    <a class="fixedLink" href="https://www.instagram.com/thekevinwang">
+      @the<strong>kevinwang</strong>
+    </a>
 
-      <!-- <div class="square a_1">
-      </div>
-      <div class="square a_2">
-      </div>
-      <div class="square a_3">
-      </div> -->
-
-      <div class="rectangleLarge middlerow">
-        <div class="content">
-          <div class="square b_1">
-          </div>
-          <div class="square b_2">
-          </div>
-          <div class="square b_3">
-            <div class="content">
-              <img id="bunny" onclick="play_ur_open()" src="https://pbs.twimg.com/profile_images/965036344216039424/NQOVAYZ-_400x400.jpg";>
-              <audio id="ur_open" src="/statics/sound/ur_open.mp3" autostart="false" ></audio>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rectangleLarge bottomrow">
-        <div class="content">
-          <div class="square c_1">
-          </div>
-          <div class="square c_2">
-          </div>
-          <div class="square c_3">
-          </div>
-        </div>
-      </div>
+    <div class="fullPage" id="pageOne">
+      <h1>Kevin here</h1>
     </div>
-      <!--
-    <hr>
+    <div class="fullPage" id="pageTwo">
+      <h1>I'm a noob at web design...</h1>
+    </div>
+    <div class="fullPage" id="pageThree">
+      <h1>...and all things Code.</h1>
+      <p>
+        It's all quite tricky when you have a degree in <strong>Jazz Performance</strong>.<br>
+        <br>: P
+      </p>
+    </div>
 
-    <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
-      <button class="tablinks" onclick="openTab(event, 'Instagram')">IG</button>
-      <button class="tablinks" onclick="openTab(event, 'Medium')">Medium</button>
-      <button class="tablinks" onclick="openTab(event, 'Guest Book')">Guest Book</button>
-    </div> -->
-
-    <p>
-      I started coding this page on <br>
-      6 . 6 . 2 0 1 8 <br>
-
-        <ul id="date" align="center"></ul>
-    </p>
-
-    <br>
-    <!-- NAV BAR SCRIPT -->
     <script>
-      function openTab(evt, tabName) {
-          var i, tabcontent, tablinks;
-          tabcontent = document.getElementsByClassName("tabcontent");
-          tablinks = document.getElementsByClassName("tablinks");
-
-
-          // 1. When you click, this sets every tab's .display to "none"
-          for (i = 0; i < tabcontent.length; i++) {
-              tabcontent[i].style.display = "none";
-          }
-
-          // 2. When you click, this sets every tab's className to "tabconent"
-          // for (i = 0; i < tablinks.length; i++) {
-          //     tablinks[i].className = tablinks[i].className.replace(" active", ""); //replace(searchValue, newValue)
-          // }
-
-          // 3. When you click, this sets the clicked tab's .display to "block"
-          document.getElementById(tabName).style.display = "block"
-
-          // 4. When you click, this sets the clicked tab's className to "tabcontent active"
-          // evt.currentTarget.className += " active";
-
-      }
-
-      function play_sr_open() {
-        var sound = document.getElementById("sr_open");
-        sound.play()
-      }
-      function play_ur_open() {
-        var sound = document.getElementById("ur_open");
-        sound.play()
-      }
-
-      document.getElementById("date").innerHTML = "${today}";
-
     </script>
-
-    <!-- begin HTML COMMENT BOX -->
-      <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
-
-      <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-
-      <script type="text/javascript" id="hcb">
-        if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"),
-        l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"),
-        h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");
-        s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1528389398444");
-        if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/
-      </script>
-    <!-- end HTML COMMENT BOX -->
-
   </body>
 </html>
 `
