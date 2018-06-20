@@ -41,7 +41,7 @@
     "express-handlebars": "^3.0.0",
     "express-route-registry": "github:ryxias/express-route-registry#v1.2.0",
     "express-session": "^1.15.6",
-    "handlebars": "^4.0.10",
+    "handlebars": "^4.0.11",
     "moment": "^2.22.0",
     "moment-timezone": "^0.5.14",
     "mysql2": "^1.4.2",
