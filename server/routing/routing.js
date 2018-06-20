@@ -103,7 +103,7 @@ module.exports = service_container => {
     '/helloworld': {
       get: [ 'HelloWorldController', 'index_action' ],
     },
-    '/anotherroute': {
+    '/guestbook': {
       get: [ 'HelloWorldController', 'another_action' ],
     },
     '/health': {
