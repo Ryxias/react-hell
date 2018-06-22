@@ -28,20 +28,6 @@ p {
   font-size: 2.5vw;
 }
 
-.rotate {
-    /* Safari */
-  -webkit-transform: rotate(90deg);
-
-  /* Firefox */
-  -moz-transform: rotate(90deg);
-
-  /* IE */
-  -ms-transform: rotate(90deg);
-
-  /* Opera */
-  -o-transform: rotate(90deg);
-}
-
 a {
   color: white;
 }
@@ -63,7 +49,6 @@ div {
   /* thess two are crucial */
 }
 
-}
 .fullPage {
   height: 100%;
   width: 100%;
@@ -98,8 +83,6 @@ div {
   margin-bottom: 0px;
   float: left;
   color: white;
-
-;
 }
 
   /* TANish: #ffe3ce; */
