@@ -25,6 +25,12 @@ class HelloWorldController extends Controller {
       @the<strong>kevinwang</strong>
     </a>
 
+    <div class="nav">
+      <a href="#pageOne">1</a>
+      <a href="#pageTwo">2</a>
+      <a href="#pageThree">3</a>
+    </div>
+
     <div class="fullPage" id="pageOne">
       <h1>Kevin here</h1>
     </div>
@@ -35,7 +41,7 @@ class HelloWorldController extends Controller {
       <h1>...and all things Code.</h1>
       <p>
         It's all quite tricky when you have a degree in <strong>Jazz Performance</strong>.<br>
-        <br>: P
+        <br><a href="#pageOne">: P</a>
       </p>
     </div>
 
