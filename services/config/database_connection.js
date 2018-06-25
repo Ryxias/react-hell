@@ -18,12 +18,6 @@ module.exports = service_container => {
     );
     connection_manager.connect();
 
-    // FIXME where do I put this?
-    // load associations
-    const SlackUser = connection_manager.get('SlackUser');
-    const User = connection_manager.get('User');
-    SlackUser.belongsTo(User, {foreignKey: 'user_id'}); // Adds user_id fk to SlackUser
-
     return connection_manager;
   });
   service_container.alias('ConnectionManager', 'database.connection_manager');

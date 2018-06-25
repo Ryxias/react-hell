@@ -33,5 +33,6 @@ module.exports = {
   //   charset: 'utf8mb4',
   //   collate: 'utf8mb4_unicode_ci',
   // },
-  logging: true,
+  logging: true, // True barfs up lots of SQL statements
+  //logging: false,
 };
