@@ -43,5 +43,17 @@ module.exports = (service_container, sequelize) => {
     },
   });
 
+  RockPaperScissorsGame.prototype.start = function(player) {
+
+  };
+
+  RockPaperScissorsGame.prototype.join = function(player) {
+
+  };
+
+  RockPaperScissorsGame.prototype.pick = function(player, choice) {
+
+  };
+
   return RockPaperScissorsGame;
 };
