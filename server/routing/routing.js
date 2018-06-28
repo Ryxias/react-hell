@@ -8,14 +8,12 @@ module.exports = service_container => {
 
   // Route Registry
   // FIXME Eventually move this file to a compiler pass?
-  const { RouteRegistry } = require('express-route-registry');
+  const { RouteRegistry, JsonLoader } = require('express-route-registry');
   const registry = new RouteRegistry();
-  registry.setContainer(service_container);
+
+  const json_loader = new JsonLoader(registry, service_container);
 
   // Middleware
-  const apiRequiresLoggedIn = service_container.get('express.api_requires_logged_in_middleware');
-  const gossipApiParameterConverter = service_container.get('express.gossip_api_parameter_converter');
-  const requiresGossipMiddleware = service_container.get('express.requires_gossip_middleware');
   const apiErrorHandler = (err, req, res, next) => {
     res.send({
       success: false,
@@ -26,56 +24,56 @@ module.exports = service_container => {
   };
 
   // Routes
-  registry.routeBuilder({
+  json_loader.load({
     '/api': {
       '/sif': {
         '/roll': {
           get: {
             name: 'sif_api_roll',
-            service_id: 'SifApiController',
+            service_id: '@SifApiController',
             action: 'get_roll_gacha_action',
           },
         },
         '/share': {
-          middleware: [ apiRequiresLoggedIn ],
+          middleware: [ '@express.api_requires_logged_in_middleware' ],
           post: {
-            service_id: 'SifApiController',
+            service_id: '@SifApiController',
             action: 'share_roll_action',
           }
         },
       },
       '/auth': {
         '/login': {
-          post: [ 'AuthenticationApiController', 'login_action' ]
+          post: [ '@AuthenticationApiController', 'login_action' ]
         },
         '/logout': {
-          middleware: [ apiRequiresLoggedIn ],
-          post: [ 'AuthenticationApiController', 'logout_action' ]
+          middleware: [ '@express.api_requires_logged_in_middleware' ],
+          post: [ '@AuthenticationApiController', 'logout_action' ]
         },
         '/whoami': {
-          get: [ 'AuthenticationApiController', 'whoami_action' ]
+          get: [ '@AuthenticationApiController', 'whoami_action' ]
         },
         '/register': {
-          post: [ 'AuthenticationApiController', 'register_action' ]
+          post: [ '@AuthenticationApiController', 'register_action' ]
         },
         '/change_password': {
-          middleware: [ apiRequiresLoggedIn ],
-          post: [ 'AuthenticationApiController', 'change_password_action' ]
+          middleware: [ '@express.api_requires_logged_in_middleware' ],
+          post: [ '@AuthenticationApiController', 'change_password_action' ]
         },
         '/slack_token': {
-          middleware: [ apiRequiresLoggedIn ],
-          post: [ 'AuthenticationApiController', 'request_slack_connector_token_action' ]
+          middleware: [ '@express.api_requires_logged_in_middleware' ],
+          post: [ '@AuthenticationApiController', 'request_slack_connector_token_action' ]
         },
       },
       '/gossips': {
-        middleware: [ apiRequiresLoggedIn ],
-        get: [ 'GossipApiController', 'index_action' ],
+        middleware: [ '@express.api_requires_logged_in_middleware' ],
+        get: [ '@GossipApiController', 'index_action' ],
         '/:gossip_id(\\d+)': {
-          param: [ 'gossip_id', gossipApiParameterConverter ],
-          middleware: [ requiresGossipMiddleware ],
-          get: [ 'GossipApiController', 'get_single_gossip_action' ],
-          patch: [ 'GossipApiController', 'edit_single_gossip_action' ],
-          delete: [ 'GossipApiController', 'delete_single_gossip_action' ],
+          param: [ 'gossip_id', '@express.gossip_api_parameter_converter' ],
+          middleware: [ '@express.requires_gossip_middleware' ],
+          get: [ '@GossipApiController', 'get_single_gossip_action' ],
+          patch: [ '@GossipApiController', 'edit_single_gossip_action' ],
+          delete: [ '@GossipApiController', 'delete_single_gossip_action' ],
         }
       },
       '/*': {
@@ -87,30 +85,30 @@ module.exports = service_container => {
     error: apiErrorHandler,
   });
 
-  registry.routeBuilder({
+  json_loader.load({
     '/_debug/': { // hopefully hard to guess
       '/routes': {
-        get: [ 'DebugController', 'get_all_routes_action' ],
+        get: [ '@DebugController', 'get_all_routes_action' ],
 
         '/match': {
-          get: [ 'DebugController', 'get_match_routes_action' ],
+          get: [ '@DebugController', 'get_match_routes_action' ],
         }
       },
     },
   });
 
-  registry.routeBuilder({
+  json_loader.load({
     '/helloworld': {
-      get: [ 'HelloWorldController', 'index_action' ],
+      get: [ '@HelloWorldController', 'index_action' ],
     },
     '/guestbook': {
-      get: [ 'HelloWorldController', 'another_action' ],
+      get: [ '@HelloWorldController', 'another_action' ],
     },
     '/health': {
-      get: [ 'HelloWorldController', 'health_check_action' ],
+      get: [ '@HelloWorldController', 'health_check_action' ],
     },
     '/*': {
-      get: [ 'ReactController', 'index_action' ]
+      get: [ '@ReactController', 'index_action' ]
     },
   });
 

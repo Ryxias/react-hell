@@ -39,7 +39,7 @@
     "connect-session-sequelize": "^5.0.1",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
-    "express-route-registry": "github:ryxias/express-route-registry#v1.2.0",
+    "express-route-registry": "github:ryxias/express-route-registry#v1.4.0",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
     "moment": "^2.22.0",
@@ -64,7 +64,7 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.87.0",
     "sequelize": "^4.8.0",
-    "service-container": "github:ryxias/service-container#v1.0.3",
+    "service-container": "github:ryxias/service-container#v1.0.5",
     "showdown": "^1.7.4",
     "uuid": "^3.2.1",
     "webpack": "^4.8.3"

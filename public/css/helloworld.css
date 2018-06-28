@@ -12,9 +12,9 @@ h1 {
   font-size: 7vw;
   font-size: 7vh;
   letter-spacing: 0.05em;
-
   width: 100%;
 }
+
 
 p {
   float: left;
@@ -23,7 +23,6 @@ p {
   text-align: center;
   text-shadow: 1px 1px 10px rgba(255,255, 255, 0.5);
 
-  padding: 10px;
   font-family: 'Roboto', sans-serif;
   font-size: 2.5vw;
 }
@@ -42,6 +41,16 @@ a {
   padding-bottom: 60px;
   z-index: 999;
 }
+.nav {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding-bottom: 60px;
+  padding-right: 60px;
+  z-index: 998;
+}
 
 div {
   display: flex;
@@ -52,8 +61,8 @@ div {
 .fullPage {
   height: 100%;
   width: 100%;
-  margin-right: 60px;
-  margin-left: 60px;
+  margin: auto;
+
 }
 
 #pageOne {
