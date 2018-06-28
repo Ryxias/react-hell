@@ -20,6 +20,17 @@ describe('BangDream/Client', function() {
           });
       });
     });
+
+    describe('with a non-working card', function() {
+      const id = 999999999999;
+
+      it('returns an error', function() {
+        return Client.getCard(id)
+          .then(result => {
+            expect(result).to.be.an.instanceOf(Error);
+          });
+      });
+    });
   });
 
   describe('getRandomCard', function() {
@@ -35,6 +46,23 @@ describe('BangDream/Client', function() {
       return Client.getRandomCard()
         .then(result => {
           expect(Client.memoized_last_page_id).to.be.above(35); // last I checked it was 36 pages
+        });
+    });
+  });
+
+  describe('doBangDriCall', function() {
+    it('works with valid page', function() {
+      return Client.doBangDriCall(`/api/cards/?page=1`)
+        .then(response => {
+          expect(response).to.not.be.an.instanceOf(Error);
+          expect(response).to.have.property('results');
+        });
+    });
+
+    it('errors with invalid page', function() {
+      return Client.doBangDriCall(`/api/cards/?page=9090909090909`)
+        .catch(response => {
+          expect(response).to.be.an.instanceOf(Error);
         });
     });
   });
