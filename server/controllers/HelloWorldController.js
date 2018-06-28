@@ -18,28 +18,45 @@ class HelloWorldController extends Controller {
   <head>
     <title>Not Localhost</title>
     <link rel="stylesheet" rel="text/css" href="/statics/css/helloworld.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   </head>
 
   <body>
     <a class="fixedLink" href="https://www.instagram.com/thekevinwang">
-      @the<strong>kevinwang</strong>
+      <i class="fab fa-instagram"></i>the<strong>kevinwang</strong>
     </a>
+
+    <div class="nav">
+      <a href="#pageOne">1</a>
+      <a href="#pageTwo">2</a>
+      <a href="#pageThree">3</a>
+    </div>
 
     <div class="fullPage" id="pageOne">
       <h1>Kevin here</h1>
     </div>
     <div class="fullPage" id="pageTwo">
-      <h1>I'm a noob at web design...</h1>
+      <h1>I'm a noob at web development...</h1>
     </div>
     <div class="fullPage" id="pageThree">
       <h1>...and all things Code.</h1>
       <p>
         It's all quite tricky when you have a degree in <strong>Jazz Performance</strong>.<br>
-        <br>: P
+        <br><a href="#pageOne"><i class="fas fa-caret-up"></i></a>
+        <!-- check fontawesome.com -->
       </p>
     </div>
 
     <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
     </script>
   </body>
 </html>
