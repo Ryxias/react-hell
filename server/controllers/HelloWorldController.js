@@ -27,9 +27,11 @@ class HelloWorldController extends Controller {
     </a>
 
     <div class="nav">
+      <nbsp>
       <a href="#pageOne">1</a>
       <a href="#pageTwo">2</a>
       <a href="#pageThree">3</a>
+      <a href="#pageFour">Form</a>
     </div>
 
     <div class="fullPage" id="pageOne">
@@ -44,6 +46,20 @@ class HelloWorldController extends Controller {
         It's all quite tricky when you have a degree in <strong>Jazz Performance</strong>.<br>
         <br><a href="#pageOne"><i class="fas fa-caret-up"></i></a>
         <!-- check fontawesome.com -->
+      </p>
+    </div>
+    <div class"fullPage" id="pageFour">
+      <h1>Leave a note!</h1>
+      <p>
+        <form method="post" action="/helloworld/form">
+          Name: <br>
+          <input type="text" name="username" placeholder="Who are you?">
+          <br>
+          Comment: <br>
+          <textarea name="text" rows="5" cols="30" placeholder="Leave me a message!"></textarea>
+          <br><br>
+          <input type="submit" value="Send">
+        </form>
       </p>
     </div>
 
@@ -62,6 +78,50 @@ class HelloWorldController extends Controller {
 </html>
 `
     );
+  }
+
+  /**
+   * Controller for Kevin's form
+   */
+  form_action(req, res, next) {
+    const username = req.body.username;
+    const text = req.body.text;
+
+    // Don't worry too much about this line YET. I can explain how it works eventually.
+    const CommentModel = this.get('ConnectionManager').get('Comment')
+    const new_comment = CommentModel.build();
+
+    new_comment.username = username;
+    new_comment.text = text;
+
+    // Ooof...
+    // this syntax may look super gnarly. Don't worry too much about it yet!
+    return new_comment.save()
+      .then(() => {
+        return res.redirect('/helloworld');
+      }
+    );
+    // return res.send(
+    //   `
+    //   <html>
+    //     <head>
+    //       <title>Form</title>
+    //       <link rel="stylesheet" rel="text/css" href="/statics/css/helloworld.css">
+    //       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    //     </head>
+    //     <body>
+    //       <div class"fullPage" id="pageFour">
+    //         <h1>You left a note!</h1>
+    //         <p>
+    //           ${username} said: <br> "${text}" <br>
+    //           <br>
+    //           <a href="/helloworld"><i class="fas fa-arrow-circle-left"></i><a>
+    //         </p>
+    //       </div>
+    //     </body>
+    //   <html>
+    //   `
+    // );
   }
 
   /**

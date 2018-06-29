@@ -104,6 +104,9 @@ module.exports = service_container => {
     '/guestbook': {
       get: [ '@HelloWorldController', 'another_action' ],
     },
+    '/helloworld/form': {
+      post: [ '@HelloWorldController', 'form_action'],
+    },
     '/health': {
       get: [ '@HelloWorldController', 'health_check_action' ],
     },

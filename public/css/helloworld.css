@@ -22,9 +22,10 @@ p {
   position: relative;
   text-align: center;
   text-shadow: 1px 1px 10px rgba(255,255, 255, 0.5);
-
+  width: 100%;
   font-family: 'Roboto', sans-serif;
-  font-size: 2.5vw;
+  font-size: 4vw;
+  font-size: 4vh;
 }
 
 a {
@@ -56,6 +57,13 @@ div {
   display: flex;
   flex-wrap: wrap;
   /* thess two are crucial */
+}
+form {
+  font-family: 'Roboto', sans-serif;
+  margin: auto;
+  margin-top: 0;
+  font-size: 2.5vw;
+  font-size: 3vh;
 }
 
 .fullPage {
@@ -94,6 +102,13 @@ div {
   color: white;
 }
 
+#pageFour {
+  background-color: #83ba7a;
+  height: 100%;
+  width: 100%;
+}
+
   /* TANish: #ffe3ce; */
   /* BLUEish: #2b8bb8  */
   /* REDish: #b82b2b */
+  /* GREENish: #83ba7a */
