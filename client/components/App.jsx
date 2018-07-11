@@ -17,6 +17,7 @@ import AlertContainer from './Alert/AlertContainer.jsx';
 import GossipAppContainer from './Gossip/GossipAppContainer.jsx';
 import WorldClockContainer from './WorldClock/WorldClockContainer.jsx';
 import DiceAppContainer from './Dice/DiceAppContainer.jsx';
+import SIFAggregatorContainer from './SIFAggregator/SIFAggregatorContainer.jsx';
 
 /**
  * DO NOT Extend PureComponent
@@ -43,6 +44,7 @@ class App extends Component {
             <Route path="/gossip" component={GossipAppContainer} />
             <Route path="/clock" component={WorldClockContainer} />
             <Route path="/dice" component={DiceAppContainer} />
+            <Route path="/sifaggregator" component={SIFAggregatorContainer} />
           </Grid>
         </section>
       </div>
