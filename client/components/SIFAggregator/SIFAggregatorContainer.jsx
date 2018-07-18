@@ -20,18 +20,28 @@ class SIFAggregatorContainer extends Component {
           </p>
         </Jumbotron>
 
-        <Tabs>
+        <Tabs id="sif-tabs">
           <Tab eventKey={1} title="News">
             <Grid>
               <Row>
                 <Col xs={6}>
                   <Panel>
-                    Panel Content #1
+                    <Panel.Heading>
+                      <Panel.Title>Panel Title #1</Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Body>
+                      Panel Content #1
+                    </Panel.Body>
                   </Panel>
                 </Col>
                 <Col xs={6}>
                   <Panel>
-                    Panel Content #2
+                    <Panel.Heading>
+                      <Panel.Title>Panel Title #2</Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Body>
+                      Panel Content #2
+                    </Panel.Body>
                   </Panel>
                 </Col>
               </Row>
