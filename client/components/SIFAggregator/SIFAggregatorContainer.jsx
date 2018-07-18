@@ -27,24 +27,28 @@ class SIFAggregatorContainer extends Component {
               <Grid>
                 <Row>
                   <Col xs={12} md={6}>
-                    <Panel bsStyle="info">
+                    <Panel bsStyle="info" defaultExpanded>
                       <Panel.Heading>
-                        <Panel.Title>Love Live SIF Twitter</Panel.Title>
+                        <Panel.Title toggle>Love Live SIF Twitter</Panel.Title>
                       </Panel.Heading>
-                      <Panel.Body>
-                        <a className="twitter-timeline" data-width="450"
-                           href="https://twitter.com/LLUpdates?ref_src=twsrc%5Etfw">Tweets by LLUpdates</a>
-                      </Panel.Body>
+                      <Panel.Collapse>
+                        <Panel.Body>
+                          <a className="twitter-timeline" data-width="450"
+                             href="https://twitter.com/LLUpdates?ref_src=twsrc%5Etfw">Tweets by LLUpdates</a>
+                        </Panel.Body>
+                      </Panel.Collapse>
                     </Panel>
                   </Col>
                   <Col xs={12} md={6}>
-                    <Panel bsStyle="info">
+                    <Panel bsStyle="info" defaultExpanded>
                       <Panel.Heading>
-                        <Panel.Title>New Cards List (SchoolIdo.lu)</Panel.Title>
+                        <Panel.Title toggle>New Cards List (SchoolIdo.lu)</Panel.Title>
                       </Panel.Heading>
-                      <Panel.Body>
-                        Panel Content #2
-                      </Panel.Body>
+                      <Panel.Collapse>
+                        <Panel.Body>
+                          Panel Content #2
+                        </Panel.Body>
+                      </Panel.Collapse>
                     </Panel>
                   </Col>
                 </Row>
