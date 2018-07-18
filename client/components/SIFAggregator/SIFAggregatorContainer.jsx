@@ -14,9 +14,9 @@ class SIFAggregatorContainer extends Component {
       <div>
         <link rel="stylesheet" href="/statics/css/aggregator.css"/>
         <Jumbotron>
-          <h1>SIF Aggregator</h1>
+          <h1>SIF Info Aggregator</h1>
           <p>
-            This is a page under construction and built for tools to help LLSIF gamers.
+            Built for tools to help Love Live! School Idol Festival players.
           </p>
         </Jumbotron>
 
@@ -26,20 +26,21 @@ class SIFAggregatorContainer extends Component {
 
               <Grid>
                 <Row>
-                  <Col xs={6}>
-                    <Panel>
+                  <Col xs={12} md={6}>
+                    <Panel bsStyle="info">
                       <Panel.Heading>
-                        <Panel.Title>Panel Title #1</Panel.Title>
+                        <Panel.Title>Love Live SIF Twitter</Panel.Title>
                       </Panel.Heading>
                       <Panel.Body>
-                        Panel Content #1
+                        <a className="twitter-timeline" data-width="450"
+                           href="https://twitter.com/LLUpdates?ref_src=twsrc%5Etfw">Tweets by LLUpdates</a>
                       </Panel.Body>
                     </Panel>
                   </Col>
-                  <Col xs={6}>
-                    <Panel>
+                  <Col xs={12} md={6}>
+                    <Panel bsStyle="info">
                       <Panel.Heading>
-                        <Panel.Title>Panel Title #2</Panel.Title>
+                        <Panel.Title>New Cards List (SchoolIdo.lu)</Panel.Title>
                       </Panel.Heading>
                       <Panel.Body>
                         Panel Content #2
