@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Jumbotron, Tabs, Tab } from 'react-bootstrap';
+import { Jumbotron, Tabs, Tab, Grid, Row, Col, Panel } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
@@ -22,7 +22,20 @@ class SIFAggregatorContainer extends Component {
 
         <Tabs>
           <Tab eventKey={1} title="News">
-            Tab 1 Content
+            <Grid>
+              <Row>
+                <Col xs={6}>
+                  <Panel>
+                    Panel Content #1
+                  </Panel>
+                </Col>
+                <Col xs={6}>
+                  <Panel>
+                    Panel Content #2
+                  </Panel>
+                </Col>
+              </Row>
+            </Grid>
           </Tab>
           <Tab eventKey={2} title="Event Predictor">
             Tab 2 Content
