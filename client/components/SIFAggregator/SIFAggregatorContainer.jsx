@@ -12,7 +12,7 @@ class SIFAggregatorContainer extends Component {
   render () {
     return (
       <div>
-
+        <link rel="stylesheet" href="/statics/css/aggregator.css"/>
         <Jumbotron>
           <h1>SIF Aggregator</h1>
           <p>
@@ -22,30 +22,34 @@ class SIFAggregatorContainer extends Component {
 
         <Tabs id="sif-tabs">
           <Tab eventKey={1} title="News">
-            <Grid>
-              <Row>
-                <Col xs={6}>
-                  <Panel>
-                    <Panel.Heading>
-                      <Panel.Title>Panel Title #1</Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body>
-                      Panel Content #1
-                    </Panel.Body>
-                  </Panel>
-                </Col>
-                <Col xs={6}>
-                  <Panel>
-                    <Panel.Heading>
-                      <Panel.Title>Panel Title #2</Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body>
-                      Panel Content #2
-                    </Panel.Body>
-                  </Panel>
-                </Col>
-              </Row>
-            </Grid>
+            <div className="news-container">
+
+              <Grid>
+                <Row>
+                  <Col xs={6}>
+                    <Panel>
+                      <Panel.Heading>
+                        <Panel.Title>Panel Title #1</Panel.Title>
+                      </Panel.Heading>
+                      <Panel.Body>
+                        Panel Content #1
+                      </Panel.Body>
+                    </Panel>
+                  </Col>
+                  <Col xs={6}>
+                    <Panel>
+                      <Panel.Heading>
+                        <Panel.Title>Panel Title #2</Panel.Title>
+                      </Panel.Heading>
+                      <Panel.Body>
+                        Panel Content #2
+                      </Panel.Body>
+                    </Panel>
+                  </Col>
+                </Row>
+              </Grid>
+
+            </div>
           </Tab>
           <Tab eventKey={2} title="Event Predictor">
             Tab 2 Content
