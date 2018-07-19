@@ -10,3 +10,23 @@
     background-color: royalblue;
     color: white;
 }
+
+.panel-custom > .card-images {
+    padding: 0;
+}
+
+.panel-custom > .panel-footer {
+    background-color: royalblue;
+}
+
+.footer-link {
+    color: white;
+}
+
+.latest-card-unindolized {
+    width: 50%;
+}
+
+.latest-card-idolized {
+    width: 50%;
+}

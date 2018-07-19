@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Panel } from 'react-bootstrap';
+import { Grid, Row, Col, Panel } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
@@ -26,7 +26,20 @@ class SIFNewCardsContainer extends Component {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              Panel Content #2
+              {this.props.filtered_list.length > 0 ?
+                this.props.filtered_list.map(card =>
+                  <Panel bsStyle={null} className="panel-custom" key={card.id}>
+                    <Panel.Body className="card-images">
+                      {card.image_url ? <img className="latest-card-unindolized" src={'https:' + card.image_url} /> : ''}
+                      <img className="latest-card-idolized" src={'https:' + card.idolized_image_url} />
+                    </Panel.Body>
+                    <Panel.Footer>
+                      <a className="footer-link "href={card.website_url}>Click here for more details</a>
+                    </Panel.Footer>
+                  </Panel>
+                )
+                :
+                ""}
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
