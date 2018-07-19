@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col, Panel } from 'react-bootstrap';
+import { Col, Panel, OverlayTrigger, Popover } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
@@ -27,17 +27,35 @@ class SIFNewCardsContainer extends Component {
           <Panel.Collapse>
             <Panel.Body>
               {this.props.filtered_list.length > 0 ?
-                this.props.filtered_list.map(card =>
-                  <Panel bsStyle={null} className="panel-custom" key={card.id}>
-                    <Panel.Body className="card-images">
-                      {card.image_url ? <img className="latest-card-unindolized" src={'https:' + card.image_url} /> : ''}
-                      <img className="latest-card-idolized" src={'https:' + card.idolized_image_url} />
-                    </Panel.Body>
-                    <Panel.Footer>
-                      <a className="footer-link "href={card.website_url}>Click here for more details</a>
-                    </Panel.Footer>
-                  </Panel>
-                )
+                this.props.filtered_list.map(card => {
+                  const gachaInfoOverlay = (
+                    <Popover id="popover-trigger-click-root-close" title="Card Statistics">
+                      <strong>Name:</strong> {card.name} <br/>
+                      <strong>Collection:</strong> {card.translated_collection} <br/>
+                      <strong>Attribute:</strong> {card.attribute} <br/>
+                      <strong>Skill: [{card.skill}]</strong> {card.skill_details} <br/>
+                      <strong>Center Skill: [{card.center_skill}]</strong> {card.center_skill_details} <br/>
+                      <strong>Max Smile Points:</strong> {card.non_idolized_maximum_statistics_smile} ~ {card.idolized_maximum_statistics_smile} <br/>
+                      <strong>Max Pure Points:</strong> {card.non_idolized_maximum_statistics_pure} ~ {card.idolized_maximum_statistics_pure} <br/>
+                      <strong>Max Cool Points:</strong> {card.non_idolized_maximum_statistics_cool} ~ {card.idolized_maximum_statistics_cool} <br/>
+                    </Popover>
+                  );
+                  return (
+                    <Panel bsStyle={null} className="panel-custom" key={card.id}>
+                      <a href={card.website_url}>
+                        <Panel.Body className="card-images">
+                          {card.image_url ? <img className="latest-card-unindolized" src={'https:' + card.image_url}/> : ''}
+                          <img className="latest-card-idolized" src={'https:' + card.idolized_image_url}/>
+                        </Panel.Body>
+                      </a>
+                      <OverlayTrigger trigger="click" rootClose placement="top" overlay={gachaInfoOverlay}>
+                        <Panel.Footer className="footer-custom">
+                          Click here for statistics
+                        </Panel.Footer>
+                      </OverlayTrigger>
+                    </Panel>
+                  );
+                })
                 :
                 ""}
             </Panel.Body>

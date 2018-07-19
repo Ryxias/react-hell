@@ -11,7 +11,7 @@
     color: white;
 }
 
-.panel-custom > .card-images {
+.panel-custom > a > .card-images {
     padding: 0;
 }
 
@@ -19,7 +19,7 @@
     background-color: royalblue;
 }
 
-.footer-link {
+.footer-custom {
     color: white;
 }
 
