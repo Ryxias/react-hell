@@ -41,6 +41,13 @@ module.exports = service_container => {
             action: 'share_roll_action',
           }
         },
+        '/fetch': {
+          get: {
+            name: 'sif_api_fetch',
+            service_id: '@SifApiController',
+            action: 'fetch_list_action',
+          }
+        }
       },
       '/auth': {
         '/login': {

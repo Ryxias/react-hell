@@ -73,6 +73,13 @@ class SifApiController extends Controller {
       }));
   }
 
+  fetch_list_action(req, res, next) {
+    this._ll_client().getCards()
+      .then((cards) => {
+        res.send(cards);
+      });
+  }
+
   _ll_client() {
     return this.get('sif.client');
   }

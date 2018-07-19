@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Jumbotron, Tabs, Tab, Grid, Row, Col, Panel } from 'react-bootstrap';
 
+import SIFTwitterContainer from './SIFTwitterContainer.jsx';
+import SIFNewCardsContainer from './SIFNewCardsContainer.jsx';
+
 import { connect } from 'react-redux';
 
 class SIFAggregatorContainer extends Component {
@@ -23,37 +26,12 @@ class SIFAggregatorContainer extends Component {
         <Tabs id="sif-tabs">
           <Tab eventKey={1} title="News">
             <div className="news-container">
-
               <Grid>
                 <Row>
-                  <Col xs={12} md={6}>
-                    <Panel bsStyle="info" defaultExpanded>
-                      <Panel.Heading>
-                        <Panel.Title toggle>Love Live SIF Twitter</Panel.Title>
-                      </Panel.Heading>
-                      <Panel.Collapse>
-                        <Panel.Body>
-                          <a className="twitter-timeline" data-width="450"
-                             href="https://twitter.com/LLUpdates?ref_src=twsrc%5Etfw">Tweets by LLUpdates</a>
-                        </Panel.Body>
-                      </Panel.Collapse>
-                    </Panel>
-                  </Col>
-                  <Col xs={12} md={6}>
-                    <Panel bsStyle="info" defaultExpanded>
-                      <Panel.Heading>
-                        <Panel.Title toggle>New Cards List (SchoolIdo.lu)</Panel.Title>
-                      </Panel.Heading>
-                      <Panel.Collapse>
-                        <Panel.Body>
-                          Panel Content #2
-                        </Panel.Body>
-                      </Panel.Collapse>
-                    </Panel>
-                  </Col>
+                  <SIFTwitterContainer />
+                  <SIFNewCardsContainer />
                 </Row>
               </Grid>
-
             </div>
           </Tab>
           <Tab eventKey={2} title="Event Predictor">
