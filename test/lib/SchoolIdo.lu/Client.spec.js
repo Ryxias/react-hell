@@ -9,6 +9,7 @@ import { expect } from 'chai';
  */
 
 import Client from '../../../lib/SchoolIdo.lu/Client';
+import Cards from '../../../lib/SchoolIdo.lu/Cards';
 
 describe('SchoolIdo.lu Client', function() {
   const client = new Client();
@@ -46,7 +47,8 @@ describe('SchoolIdo.lu Client', function() {
 
   it('should be able to getCards', function() {
     return client.getCards().then((result) => {
-      expect(result.length).to.not.equal(0);
+      expect(result).to.be.an.instanceOf(Cards);
+      expect(result.cards_data.length).to.not.equal(0);
     });
   });
 });
