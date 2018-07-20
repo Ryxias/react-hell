@@ -7,10 +7,12 @@ import { connect } from 'react-redux';
 import { fetchList, filterCards } from '../../modules/aggregator';
 const aggregatorActions = { fetchList, filterCards };
 
-class SIFNewCardsContainer extends Component {
+export class SIFNewCardsContainer extends Component {
   constructor(props) {
     super(props);
+  }
 
+  componentWillMount() {
     this.props.fetchList()
       .then(() => {
         this.props.filterCards(this.props.cards.cards_data);

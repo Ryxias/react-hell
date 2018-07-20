@@ -17,7 +17,7 @@ export function fetchList() {
       loading: true,
     });
 
-    const axios = require('axios'); // FIXME (derek) refactor with the Api Client
+    const axios = require('axios');
     return axios.get("/api/sif/fetch")
       .then(received => {
         dispatch({
