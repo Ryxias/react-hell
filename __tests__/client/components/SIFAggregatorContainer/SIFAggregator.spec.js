@@ -178,33 +178,31 @@ describe('SIFAggregator --- ACTIONS', () => {
     cardsFiltered: {type: CARDS_FILTERED,
       "filtered_list": [
         {
-          "id": 1643,
-          "game_id": 1657,
-          "idol": {
-            "name": "Watanabe You",
-          },
-          "translated_collection": "Mermaids",
           "attribute": "Cool",
-          "release_date": "2018-07-15",
-          "minimum_statistics_smile": 1980,
-          "minimum_statistics_pure": 3200,
-          "minimum_statistics_cool": 3860,
-          "non_idolized_maximum_statistics_smile": 2810,
-          "non_idolized_maximum_statistics_pure": 4030,
-          "non_idolized_maximum_statistics_cool": 4690,
-          "idolized_maximum_statistics_smile": 3090,
-          "idolized_maximum_statistics_pure": 4310,
-          "idolized_maximum_statistics_cool": 4970,
-          "skill": "Perfect Lock",
-          "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+          "card_data": {},
           "center_skill": "Cool Heart",
           "center_skill_details": "Cool increases (+6%)",
-          "card_image": "//i.schoolido.lu/c/1643You.png",
-          "card_idolized_image": "//i.schoolido.lu/c/1643idolizedYou.png",
-          "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/",
-        },
+          "id": 1643,
+          "idolized_image_url": "//i.schoolido.lu/c/1643idolizedYou.png",
+          "idolized_maximum_statistics_cool": 4970,
+          "idolized_maximum_statistics_pure": 4310,
+          "idolized_maximum_statistics_smile": 3090,
+          "image_url": "//i.schoolido.lu/c/1643You.png",
+          "main_unit": "Aqours",
+          "name": "Watanabe You",
+          "non_idolized_maximum_statistics_cool": 4690,
+          "non_idolized_maximum_statistics_pure": 4030,
+          "non_idolized_maximum_statistics_smile": 2810,
+          "rarity": "SR",
+          "release_date": "2018-07-15",
+          "skill": "Perfect Lock",
+          "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+          "sub_unit": "CYaRon!",
+          "translated_collection": "Mermaids",
+          "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/"
+        }
       ],
-      "loading": false},
+    },
   };
 
   describe('fetchList', () => {
@@ -342,106 +340,102 @@ describe('SIFAggregator --- ACTIONS', () => {
     });
   });
 
-  // describe('filterList', () => {
-  //
-  //   const stateDefault = {
-  //     aggregator: {
-  //       cards: {
-  //         "results": [
-  //           {
-  //             "id": 1643,
-  //             "game_id": 1657,
-  //             "idol": {
-  //               "name": "Watanabe You",
-  //             },
-  //             "translated_collection": "Mermaids",
-  //             "attribute": "Cool",
-  //             "release_date": "2018-07-15",
-  //             "minimum_statistics_smile": 1980,
-  //             "minimum_statistics_pure": 3200,
-  //             "minimum_statistics_cool": 3860,
-  //             "non_idolized_maximum_statistics_smile": 2810,
-  //             "non_idolized_maximum_statistics_pure": 4030,
-  //             "non_idolized_maximum_statistics_cool": 4690,
-  //             "idolized_maximum_statistics_smile": 3090,
-  //             "idolized_maximum_statistics_pure": 4310,
-  //             "idolized_maximum_statistics_cool": 4970,
-  //             "skill": "Perfect Lock",
-  //             "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
-  //             "center_skill": "Cool Heart",
-  //             "center_skill_details": "Cool increases (+6%)",
-  //             "card_image": "//i.schoolido.lu/c/1643You.png",
-  //             "card_idolized_image": "//i.schoolido.lu/c/1643idolizedYou.png",
-  //             "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/",
-  //           },
-  //           {
-  //             "id": 1579,
-  //             "game_id": 1593,
-  //             "idol": {
-  //               "name": "Kunikida Hanamaru",
-  //             },
-  //             "translated_collection": "Fairy tale",
-  //             "attribute": "Pure",
-  //             "release_date": "2018-05-15",
-  //             "minimum_statistics_smile": 3150,
-  //             "minimum_statistics_pure": 3850,
-  //             "minimum_statistics_cool": 2050,
-  //             "non_idolized_maximum_statistics_smile": 3980,
-  //             "non_idolized_maximum_statistics_pure": 4680,
-  //             "non_idolized_maximum_statistics_cool": 2880,
-  //             "idolized_maximum_statistics_smile": 4260,
-  //             "idolized_maximum_statistics_pure": 4960,
-  //             "idolized_maximum_statistics_cool": 3160,
-  //             "skill": "Healer",
-  //             "skill_details": "For every 21 notes, there is a 23% chance of recovering players HP by 4. (Level 1)",
-  //             "center_skill": "Pure Heart",
-  //             "center_skill_details": "Pure increases (+6%)",
-  //             "card_image": "//i.schoolido.lu/c/1579Hanamaru.png",
-  //             "card_idolized_image": "//i.schoolido.lu/c/1579idolizedHanamaru.png",
-  //             "website_url": "http://schoolido.lu/cards/1579/SR-Kunikida-Hanamaru-Fairy-tale-Pure/",
-  //           },
-  //           {
-  //             "id": 1580,
-  //             "game_id": 1594,
-  //             "idol": {
-  //               "name": "Ohara Mari",
-  //             },
-  //             "translated_collection": "Fairy tale",
-  //             "attribute": "Smile",
-  //             "release_date": "2018-04-15",
-  //             "minimum_statistics_smile": 3860,
-  //             "minimum_statistics_pure": 1950,
-  //             "minimum_statistics_cool": 3230,
-  //             "non_idolized_maximum_statistics_smile": 4690,
-  //             "non_idolized_maximum_statistics_pure": 2780,
-  //             "non_idolized_maximum_statistics_cool": 4060,
-  //             "idolized_maximum_statistics_smile": 4970,
-  //             "idolized_maximum_statistics_pure": 3060,
-  //             "idolized_maximum_statistics_cool": 4340,
-  //             "skill": "Perfect Lock",
-  //             "skill_details": "For every 32 notes, there is a 44% chance of turning all goods and greats in the next 4 seconds into perfects. (Level 1)",
-  //             "center_skill": "Smile Heart",
-  //             "center_skill_details": "Smile increases (+6%)",
-  //             "card_image": "//i.schoolido.lu/c/1580Mari.png",
-  //             "card_idolized_image": "//i.schoolido.lu/c/1580idolizedMari.png",
-  //             "website_url": "http://schoolido.lu/cards/1580/SR-Ohara-Mari-Fairy-tale-Smile/",
-  //           }],
-  //       },
-  //       filtered_list: [],
-  //       loading: false,
-  //     },
-  //   };
-  //
-  //   beforeEach(() => {
-  //     store = mockStore(stateDefault);
-  //   });
-  //
-  //   it('should filter down to one card', () => {
-  //     store.dispatch(filterCards(stateDefault.aggregator.cards.results));
-  //     const expectedActions = store.getActions();
-  //     expect(expectedActions).toContainEqual(mockActions.cardsFiltered);
-  //   });
-  // });
+  describe('filterList', () => {
+
+    const stateDefault = {
+      aggregator: {
+        cards: {
+          "list": [
+            {
+              "id": 1643,
+              "name": "Watanabe You",
+              "card_data": {},
+              "translated_collection": "Mermaids",
+              "rarity": "SR",
+              "attribute": "Cool",
+              "main_unit": "Aqours",
+              "sub_unit": "CYaRon!",
+              "release_date": "2018-07-15",
+              "non_idolized_maximum_statistics_smile": 2810,
+              "non_idolized_maximum_statistics_pure": 4030,
+              "non_idolized_maximum_statistics_cool": 4690,
+              "idolized_maximum_statistics_smile": 3090,
+              "idolized_maximum_statistics_pure": 4310,
+              "idolized_maximum_statistics_cool": 4970,
+              "skill": "Perfect Lock",
+              "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+              "center_skill": "Cool Heart",
+              "center_skill_details": "Cool increases (+6%)",
+              "image_url": "//i.schoolido.lu/c/1643You.png",
+              "idolized_image_url": "//i.schoolido.lu/c/1643idolizedYou.png",
+              "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/",
+            },
+            {
+              "id": 1579,
+              "game_id": 1593,
+              "name": "Kunikida Hanamaru",
+              "card_data": {},
+              "translated_collection": "Fairy tale",
+              "rarity": "SR",
+              "attribute": "Pure",
+              "main_unit": "Aqours",
+              "sub_unit": "AZALEA",
+              "release_date": "2018-05-15",
+              "non_idolized_maximum_statistics_smile": 3980,
+              "non_idolized_maximum_statistics_pure": 4680,
+              "non_idolized_maximum_statistics_cool": 2880,
+              "idolized_maximum_statistics_smile": 4260,
+              "idolized_maximum_statistics_pure": 4960,
+              "idolized_maximum_statistics_cool": 3160,
+              "skill": "Healer",
+              "skill_details": "For every 21 notes, there is a 23% chance of recovering players HP by 4. (Level 1)",
+              "center_skill": "Pure Heart",
+              "center_skill_details": "Pure increases (+6%)",
+              "image_url": "//i.schoolido.lu/c/1579Hanamaru.png",
+              "idolized_image_url": "//i.schoolido.lu/c/1579idolizedHanamaru.png",
+              "website_url": "http://schoolido.lu/cards/1579/SR-Kunikida-Hanamaru-Fairy-tale-Pure/",
+            },
+            {
+              "id": 1580,
+              "game_id": 1594,
+              "name": "Ohara Mari",
+              "card_data": {},
+              "translated_collection": "Fairy tale",
+              "rarity": "SR",
+              "attribute": "Smile",
+              "main_unit": "Aqours",
+              "sub_unit": "Guilty Kiss",
+              "release_date": "2018-04-15",
+              "non_idolized_maximum_statistics_smile": 4690,
+              "non_idolized_maximum_statistics_pure": 2780,
+              "non_idolized_maximum_statistics_cool": 4060,
+              "idolized_maximum_statistics_smile": 4970,
+              "idolized_maximum_statistics_pure": 3060,
+              "idolized_maximum_statistics_cool": 4340,
+              "skill": "Perfect Lock",
+              "skill_details": "For every 32 notes, there is a 44% chance of turning all goods and greats in the next 4 seconds into perfects. (Level 1)",
+              "center_skill": "Smile Heart",
+              "center_skill_details": "Smile increases (+6%)",
+              "image_url": "//i.schoolido.lu/c/1580Mari.png",
+              "idolized_image_url": "//i.schoolido.lu/c/1580idolizedMari.png",
+              "website_url": "http://schoolido.lu/cards/1580/SR-Ohara-Mari-Fairy-tale-Smile/",
+            }],
+        },
+        filtered_list: [],
+        loading: false,
+      },
+    };
+
+    beforeEach(() => {
+      store = mockStore(stateDefault);
+    });
+
+    it('should filter down to one card', () => {
+      store.dispatch(filterCards(stateDefault.aggregator.cards.list));
+      const expectedActions = store.getActions();
+      expect(expectedActions).toContainEqual(mockActions.cardsFiltered);
+    });
+  });
 
 });
 

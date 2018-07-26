@@ -15,7 +15,7 @@ export class SIFNewCardsContainer extends PureComponent {
   componentWillMount() {
     this.props.fetchList()
       .then(() => {
-        this.props.filterCards(this.props.cards.cards_data);
+        this.props.filterCards(this.props.cards.list);
       });
   }
 

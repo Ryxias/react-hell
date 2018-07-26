@@ -1,7 +1,6 @@
 'use strict';
 
 import { alert } from './alert';
-import Card from '../../lib/SchoolIdo.lu/Card';
 
 /**
  * ACTIONS
@@ -25,10 +24,10 @@ export function fetchList() {
           cards: received.data,
           loading: false,
         });
+      })
+      .catch(err => {
+        dispatch(alert('OOPS! Something went wrong with fetchList. Please check your code: ' + err.response.data.message, 'warning'));
       });
-      // .catch(err => {
-      //   dispatch(alert('OOPS! Something went wrong with fetchList. Please check your code: ' + err.response.data.message, 'warning'));
-      // });
   };
 }
 
@@ -39,18 +38,13 @@ export function fetchList() {
  */
 export function filterCards(list) {
   const now = new Date();
-  const filtered_list = [];
-  const latest = list.filter(card => {
+  const filtered_list = list.filter(card => {
     const dateVals = card.release_date.split('-');
     const releaseYear = Number(dateVals[0]);
     const releaseMonth = Number(dateVals[1]) - 1;
     const releaseDay = Number(dateVals[2]);
     const releaseUnixTime = new Date(releaseYear, releaseMonth, releaseDay);
     return now.getTime() - releaseUnixTime.getTime() <= 1209600000 ;  // 2 weeks
-  });
-  latest.forEach(json_data => {
-    let card = new Card(json_data);
-    filtered_list.push(card);
   });
   return (dispatch) => {
     dispatch({
