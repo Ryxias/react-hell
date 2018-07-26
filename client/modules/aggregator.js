@@ -25,10 +25,10 @@ export function fetchList() {
           cards: received.data,
           loading: false,
         });
-      })
-      .catch(err => {
-        dispatch(alert('OOPS! Something went wrong with fetchList. Please check your code: ' + err.response.data.message, 'warning'));
       });
+      // .catch(err => {
+      //   dispatch(alert('OOPS! Something went wrong with fetchList. Please check your code: ' + err.response.data.message, 'warning'));
+      // });
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Panel, OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { fetchList, filterCards } from '../../modules/aggregator';
 const aggregatorActions = { fetchList, filterCards };
 
-export class SIFNewCardsContainer extends Component {
+export class SIFNewCardsContainer extends PureComponent {
   constructor(props) {
     super(props);
   }

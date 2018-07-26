@@ -314,7 +314,7 @@ describe('Gacha --- ACTIONS', () => {
     },
   };
 
-  const middleware = [ thunk ];
+                const middleware = [ thunk ];
   const mockStore = configureStore(middleware);
   let store;
 
