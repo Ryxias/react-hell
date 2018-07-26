@@ -1,0 +1,32 @@
+.news-container {
+    padding: 20px 0px 20px 0px;
+}
+
+.panel-custom {
+    border-color: royalblue;
+}
+
+.panel-custom > .panel-heading {
+    background-color: royalblue;
+    color: white;
+}
+
+.panel-custom > a > .card-images {
+    padding: 0;
+}
+
+.panel-custom > .panel-footer {
+    background-color: royalblue;
+}
+
+.footer-custom {
+    color: white;
+}
+
+.latest-card-unindolized {
+    width: 50%;
+}
+
+.latest-card-idolized {
+    width: 50%;
+}

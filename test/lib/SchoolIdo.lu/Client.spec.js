@@ -9,6 +9,7 @@ import { expect } from 'chai';
  */
 
 import Client from '../../../lib/SchoolIdo.lu/Client';
+import Cards from '../../../lib/SchoolIdo.lu/Cards';
 
 describe('SchoolIdo.lu Client', function() {
   const client = new Client();
@@ -20,15 +21,15 @@ describe('SchoolIdo.lu Client', function() {
       expect(card.getId()).to.equal(1220);
       expect(card.getRarity()).to.equal('UR');
       expect(card.getName()).to.equal('Watanabe You');
-      expect(card.getCollection()).to.equal('Time Travel');
+      expect(card.getCollection()).to.equal('Time Travel / Cyber');
       expect(card.getMainUnit()).to.equal('Aqours');
       expect(card.getSubUnit()).to.equal('CYaRon!');
-      expect(card.getWebsiteUrl()).to.equal('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel-Smile/');
+      expect(card.getWebsiteUrl()).to.equal('http://schoolido.lu/cards/1220/UR-Watanabe-You-Time-Travel---Cyber-Smile/');
       expect(card.getImageUrl()).to.equal('https://i.schoolido.lu/c/1220You.png');
       expect(card.getIdolizedImageUrl()).to.equal('https://i.schoolido.lu/c/1220idolizedYou.png');
       expect(card.getCardStats()).to.deep.equal({
         name: 'Watanabe You',
-        collection: 'Time Travel',
+        collection: 'Time Travel / Cyber',
         attribute: 'Smile',
         skill: 'Score Up',
         skill_details: 'For every 24 perfects, there is a 32% chance of increasing players score by 700 points. (Level 1)',
@@ -41,6 +42,13 @@ describe('SchoolIdo.lu Client', function() {
         idolized_maximum_statistics_pure: 4650,
         idolized_maximum_statistics_cool: 3920,
       });
+    });
+  });
+
+  it('should be able to getCards', function() {
+    return client.getCards().then((result) => {
+      expect(result).to.be.an.instanceOf(Cards);
+      expect(result.cards_data.length).to.not.equal(0);
     });
   });
 });

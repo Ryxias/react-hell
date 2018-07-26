@@ -53,10 +53,15 @@ const NavTop = (props) => {
                 <div className="nav-link">Dice</div>
               </NavItem>
             </LinkContainer>
+            <LinkContainer to="/sifaggregator">
+              <NavItem eventKey={5}>
+                <div className="nav-link">SIF Aggregator</div>
+              </NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
             <LinkContainer to="/user">
-              <NavItem eventKey={5}>
+              <NavItem eventKey={6}>
                 <div className="nav-link">{userAppText}</div>
               </NavItem>
             </LinkContainer>
