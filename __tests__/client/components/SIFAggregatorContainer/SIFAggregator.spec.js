@@ -28,11 +28,6 @@ import aggregatorReducers, {
  */
 
 import jsdomGlobal from 'jsdom-global';
-import {SHARE_SUCCESS} from "../../../../client/modules/gacha";
-import {RECEIVE_GACHA_ROLL} from "../../../../client/modules/gacha";
-import {SHARE_STARTED} from "../../../../client/modules/gacha";
-import {RESET_GACHA} from "../../../../client/modules/gacha";
-import {START_GACHA_ROLL} from "../../../../client/modules/gacha";
 jsdomGlobal();
 
 configure({ adapter: new Adapter() }); // Enzyme expects an adapter to be configured,
@@ -439,92 +434,199 @@ describe('SIFAggregator --- ACTIONS', () => {
 
 });
 
+describe('SIFAggregator --- REDUCERS', () => {
+  const stateDefault= {
+    aggregator: {
+      cards: {},
+      filtered_list: [],
+      loading: false,
+    },
+  };
+
+  const json_data = {
+
+  };
+
+  describe('FETCH_STARTED', () => {
+    let state = stateDefault.aggregator;
+    const action = {
+      type: FETCH_STARTED,
+      loading: true,
+    };
+
+    state = aggregatorReducers(state, action);
+
+    it('should clear the cards list', () => {
+      expect(state.cards).toEqual({});
+    });
+
+    it('should set loading to true', () => {
+      expect(state.loading).toEqual(true);
+    });
+  });
+
+  describe('FETCH_SUCCESS', () => {
+    let state = stateDefault.aggregator;
+    const action = {
+      type: FETCH_SUCCESS,
+      cards: {
+        "id": 1643,
+        "game_id": 1657,
+        "idol": {
+          "note": "To get the full idol object, use the parameter \"expand_idol\"",
+          "school": "Uranohoshi Girls' High School",
+          "name": "Watanabe You",
+          "year": "Second",
+          "chibi": "//i.schoolido.lu/chibi/iriel.png",
+          "main_unit": "Aqours",
+          "japanese_name": "渡辺 曜",
+          "chibi_small": "//i.schoolido.lu/chibi/small_You_Summer.png",
+          "sub_unit": "CYaRon!"
+        },
+        "japanese_collection": "マーメイド編",
+        "translated_collection": "Mermaids",
+        "rarity": "SR",
+        "attribute": "Cool",
+        "japanese_attribute": "クール",
+        "is_promo": false,
+        "promo_item": null,
+        "promo_link": null,
+        "release_date": "2018-07-15",
+        "japan_only": true,
+        "event": null,
+        "other_event": null,
+        "is_special": false,
+        "hp": 3,
+        "minimum_statistics_smile": 1980,
+        "minimum_statistics_pure": 3200,
+        "minimum_statistics_cool": 3860,
+        "non_idolized_maximum_statistics_smile": 2810,
+        "non_idolized_maximum_statistics_pure": 4030,
+        "non_idolized_maximum_statistics_cool": 4690,
+        "idolized_maximum_statistics_smile": 3090,
+        "idolized_maximum_statistics_pure": 4310,
+        "idolized_maximum_statistics_cool": 4970,
+        "skill": "Perfect Lock",
+        "japanese_skill": "海のロマン",
+        "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+        "japanese_skill_details": null,
+        "center_skill": "Cool Heart",
+        "center_skill_extra_type": null,
+        "center_skill_details": "Cool increases (+6%)",
+        "japanese_center_skill": "クール ハート",
+        "japanese_center_skill_details": "クールPがUPする(+6%)",
+        "card_image": "//i.schoolido.lu/c/1643You.png",
+        "card_idolized_image": "//i.schoolido.lu/c/1643idolizedYou.png",
+        "english_card_image": null,
+        "english_card_idolized_image": null,
+        "round_card_image": "//i.schoolido.lu/c/1643RoundYou.png",
+        "round_card_idolized_image": "//i.schoolido.lu/c/1643RoundIdolizedYou.png",
+        "english_round_card_image": null,
+        "english_round_card_idolized_image": null,
+        "video_story": null,
+        "japanese_video_story": null,
+        "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/",
+        "non_idolized_max_level": 60,
+        "idolized_max_level": 80,
+        "transparent_image": "//i.schoolido.lu/cards/transparent/1643Transparent.png",
+        "transparent_idolized_image": "//i.schoolido.lu/cards/transparent/1643idolizedTransparent.png",
+        "clean_ur": null,
+        "clean_ur_idolized": null,
+        "skill_up_cards": [],
+        "ur_pair": null,
+        "total_owners": 61,
+        "total_wishlist": 71,
+        "ranking_attribute": 26,
+        "ranking_rarity": 3,
+        "ranking_special": null
+      },
+      loading: false,
+    };
+
+    state = aggregatorReducers(state, action);
+
+    it('should populate the cards list', () => {
+      expect(state.cards).toEqual(action.cards);
+    });
+
+    it('should set loading to false', () => {
+      expect(state.loading).toEqual(false);
+    });
+  });
+
+  describe('CARDS_FILTERED', () => {
+    let state = stateDefault.aggregator;
+    const action = {
+      type: CARDS_FILTERED,
+      filtered_list: [
+        {
+          "attribute": "Cool",
+          "card_data": {},
+          "center_skill": "Cool Heart",
+          "center_skill_details": "Cool increases (+6%)",
+          "id": 1643,
+          "idolized_image_url": "//i.schoolido.lu/c/1643idolizedYou.png",
+          "idolized_maximum_statistics_cool": 4970,
+          "idolized_maximum_statistics_pure": 4310,
+          "idolized_maximum_statistics_smile": 3090,
+          "image_url": "//i.schoolido.lu/c/1643You.png",
+          "main_unit": "Aqours",
+          "name": "Watanabe You",
+          "non_idolized_maximum_statistics_cool": 4690,
+          "non_idolized_maximum_statistics_pure": 4030,
+          "non_idolized_maximum_statistics_smile": 2810,
+          "rarity": "SR",
+          "release_date": "2018-07-15",
+          "skill": "Perfect Lock",
+          "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+          "sub_unit": "CYaRon!",
+          "translated_collection": "Mermaids",
+          "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/"
+        }
+      ],
+    };
+
+    state = aggregatorReducers(state, action);
+
+    it('should yield a filtered cards list', () => {
+      expect(state.filtered_list).toEqual(action.filtered_list);
+    });
+  });
+
+
+});
+
 describe('SIFNewCardsContainer component (initial state)', () => {
   const stateDefault = {
     aggregator: {
-      cards: {
-        "results": [
-          {
-            "id": 1643,
-            "game_id": 1657,
-            "idol": {
-              "name": "Watanabe You",
-            },
-            "translated_collection": "Mermaids",
-            "attribute": "Cool",
-            "release_date": "2018-07-15",
-            "minimum_statistics_smile": 1980,
-            "minimum_statistics_pure": 3200,
-            "minimum_statistics_cool": 3860,
-            "non_idolized_maximum_statistics_smile": 2810,
-            "non_idolized_maximum_statistics_pure": 4030,
-            "non_idolized_maximum_statistics_cool": 4690,
-            "idolized_maximum_statistics_smile": 3090,
-            "idolized_maximum_statistics_pure": 4310,
-            "idolized_maximum_statistics_cool": 4970,
-            "skill": "Perfect Lock",
-            "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
-            "center_skill": "Cool Heart",
-            "center_skill_details": "Cool increases (+6%)",
-            "card_image": "//i.schoolido.lu/c/1643You.png",
-            "card_idolized_image": "//i.schoolido.lu/c/1643idolizedYou.png",
-            "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/",
-          },
-          {
-            "id": 1579,
-            "game_id": 1593,
-            "idol": {
-              "name": "Kunikida Hanamaru",
-            },
-            "translated_collection": "Fairy tale",
-            "attribute": "Pure",
-            "release_date": "2018-05-15",
-            "minimum_statistics_smile": 3150,
-            "minimum_statistics_pure": 3850,
-            "minimum_statistics_cool": 2050,
-            "non_idolized_maximum_statistics_smile": 3980,
-            "non_idolized_maximum_statistics_pure": 4680,
-            "non_idolized_maximum_statistics_cool": 2880,
-            "idolized_maximum_statistics_smile": 4260,
-            "idolized_maximum_statistics_pure": 4960,
-            "idolized_maximum_statistics_cool": 3160,
-            "skill": "Healer",
-            "skill_details": "For every 21 notes, there is a 23% chance of recovering players HP by 4. (Level 1)",
-            "center_skill": "Pure Heart",
-            "center_skill_details": "Pure increases (+6%)",
-            "card_image": "//i.schoolido.lu/c/1579Hanamaru.png",
-            "card_idolized_image": "//i.schoolido.lu/c/1579idolizedHanamaru.png",
-            "website_url": "http://schoolido.lu/cards/1579/SR-Kunikida-Hanamaru-Fairy-tale-Pure/",
-          },
-          {
-            "id": 1580,
-            "game_id": 1594,
-            "idol": {
-              "name": "Ohara Mari",
-            },
-            "translated_collection": "Fairy tale",
-            "attribute": "Smile",
-            "release_date": "2018-05-15",
-            "minimum_statistics_smile": 3860,
-            "minimum_statistics_pure": 1950,
-            "minimum_statistics_cool": 3230,
-            "non_idolized_maximum_statistics_smile": 4690,
-            "non_idolized_maximum_statistics_pure": 2780,
-            "non_idolized_maximum_statistics_cool": 4060,
-            "idolized_maximum_statistics_smile": 4970,
-            "idolized_maximum_statistics_pure": 3060,
-            "idolized_maximum_statistics_cool": 4340,
-            "skill": "Perfect Lock",
-            "skill_details": "For every 32 notes, there is a 44% chance of turning all goods and greats in the next 4 seconds into perfects. (Level 1)",
-            "center_skill": "Smile Heart",
-            "center_skill_details": "Smile increases (+6%)",
-            "card_image": "//i.schoolido.lu/c/1580Mari.png",
-            "card_idolized_image": "//i.schoolido.lu/c/1580idolizedMari.png",
-            "website_url": "http://schoolido.lu/cards/1580/SR-Ohara-Mari-Fairy-tale-Smile/",
-          }],
+      cards: {},
+      filtered_list: [
+        {
+          "attribute": "Cool",
+          "card_data": {},
+          "center_skill": "Cool Heart",
+          "center_skill_details": "Cool increases (+6%)",
+          "id": 1643,
+          "idolized_image_url": "//i.schoolido.lu/c/1643idolizedYou.png",
+          "idolized_maximum_statistics_cool": 4970,
+          "idolized_maximum_statistics_pure": 4310,
+          "idolized_maximum_statistics_smile": 3090,
+          "image_url": "//i.schoolido.lu/c/1643You.png",
+          "main_unit": "Aqours",
+          "name": "Watanabe You",
+          "non_idolized_maximum_statistics_cool": 4690,
+          "non_idolized_maximum_statistics_pure": 4030,
+          "non_idolized_maximum_statistics_smile": 2810,
+          "rarity": "SR",
+          "release_date": "2018-07-15",
+          "skill": "Perfect Lock",
+          "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+          "sub_unit": "CYaRon!",
+          "translated_collection": "Mermaids",
+          "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/"
         },
-      filtered_list: [],
-      loading: false,
+      ],
+      loading: true,
     },
   };
   const mockStore = configureStore();
@@ -547,4 +649,70 @@ describe('SIFNewCardsContainer component (initial state)', () => {
   it('should render the SIFNewCardsContainer component', () => {
     expect(container.length).toEqual(1);
   });
+
+  it('should not have panel contents loaded', () => {
+    expect(container.find('.panel-contents').exists()).toEqual(false);
+  });
+
+});
+
+
+describe('SIFNewCardsContainer component (loaded state)', () => {
+  const stateDefault = {
+    aggregator: {
+      cards: {},
+      filtered_list: [
+        {
+          "attribute": "Cool",
+          "card_data": {},
+          "center_skill": "Cool Heart",
+          "center_skill_details": "Cool increases (+6%)",
+          "id": 1643,
+          "idolized_image_url": "//i.schoolido.lu/c/1643idolizedYou.png",
+          "idolized_maximum_statistics_cool": 4970,
+          "idolized_maximum_statistics_pure": 4310,
+          "idolized_maximum_statistics_smile": 3090,
+          "image_url": "//i.schoolido.lu/c/1643You.png",
+          "main_unit": "Aqours",
+          "name": "Watanabe You",
+          "non_idolized_maximum_statistics_cool": 4690,
+          "non_idolized_maximum_statistics_pure": 4030,
+          "non_idolized_maximum_statistics_smile": 2810,
+          "rarity": "SR",
+          "release_date": "2018-07-15",
+          "skill": "Perfect Lock",
+          "skill_details": "For every 30 notes, there is a 55% chance of turning all goods and greats in the next 3 seconds into perfects. (Level 1)",
+          "sub_unit": "CYaRon!",
+          "translated_collection": "Mermaids",
+          "website_url": "http://schoolido.lu/cards/1643/SR-Watanabe-You-Mermaids-Cool/"
+        },
+      ],
+      loading: false,
+    },
+  };
+  const mockStore = configureStore();
+  let store, container;
+
+  beforeEach(() => {
+    store = mockStore(stateDefault);
+    // Mock API requests
+    const mockFetchList = jest.fn(() => Promise.resolve(stateDefault.aggregator.cards));
+    container = mount(<Provider store={store}>
+      <SIFNewCardsContainer
+        fetchList={mockFetchList}
+        filterCards={filterCards}
+        cards={stateDefault.aggregator.cards}
+        filtered_list={stateDefault.aggregator.filtered_list}
+        loading={stateDefault.aggregator.loading} />
+    </Provider>);
+  });
+
+  it('should render the SIFNewCardsContainer component', () => {
+    expect(container.length).toEqual(1);
+  });
+
+  it('should have panel contents loaded', () => {
+    expect(container.find('.panel-contents').exists()).toEqual(true);
+  });
+
 });

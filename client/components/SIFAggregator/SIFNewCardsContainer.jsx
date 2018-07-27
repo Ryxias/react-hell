@@ -28,7 +28,7 @@ export class SIFNewCardsContainer extends PureComponent {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              {this.props.filtered_list.length > 0 ?
+              {!this.props.loading ?
                 this.props.filtered_list.map(card => {
                   const gachaInfoOverlay = (
                     <Popover id="popover-trigger-click-root-close" title="Card Statistics">
@@ -43,7 +43,7 @@ export class SIFNewCardsContainer extends PureComponent {
                     </Popover>
                   );
                   return (
-                    <Panel bsStyle={null} className="panel-custom" key={card.id}>
+                    <Panel bsStyle={null} className="panel-custom panel-contents" key={card.id}>
                       <a href={card.website_url}>
                         <Panel.Body className="card-images">
                           {card.image_url ? <img className="latest-card-unindolized" src={'https:' + card.image_url}/> : ''}
