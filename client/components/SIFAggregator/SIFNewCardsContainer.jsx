@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Panel, OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { fetchList, filterCards } from '../../modules/aggregator';
 const aggregatorActions = { fetchList, filterCards };
 
-export class SIFNewCardsContainer extends Component {
+export class SIFNewCardsContainer extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -15,7 +15,7 @@ export class SIFNewCardsContainer extends Component {
   componentWillMount() {
     this.props.fetchList()
       .then(() => {
-        this.props.filterCards(this.props.cards.cards_data);
+        this.props.filterCards(this.props.cards.list);
       });
   }
 
@@ -28,7 +28,7 @@ export class SIFNewCardsContainer extends Component {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              {this.props.filtered_list.length > 0 ?
+              {!this.props.loading ?
                 this.props.filtered_list.map(card => {
                   const gachaInfoOverlay = (
                     <Popover id="popover-trigger-click-root-close" title="Card Statistics">
@@ -43,7 +43,7 @@ export class SIFNewCardsContainer extends Component {
                     </Popover>
                   );
                   return (
-                    <Panel bsStyle={null} className="panel-custom" key={card.id}>
+                    <Panel bsStyle={null} className="panel-custom panel-contents" key={card.id}>
                       <a href={card.website_url}>
                         <Panel.Body className="card-images">
                           {card.image_url ? <img className="latest-card-unindolized" src={'https:' + card.image_url}/> : ''}
