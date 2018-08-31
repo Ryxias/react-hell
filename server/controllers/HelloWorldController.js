@@ -100,10 +100,18 @@ class HelloWorldController extends Controller {
   post_form_action(req, res, next) {
     const name = req.body.name;
     const comment = req.body.comment;
+
+    const CommentModel = this.get('ConnectionManager').get('Comment')
+    const new_comment = CommentModel.build();
+
     return res.send(
       //string interpolation ${}
       `
       Hi ${name}. You said ${comment}
+      <br>
+      CommentModel : ${CommentModel}
+      <br>
+      new_comment : ${new_comment}
       `
     );
   }
