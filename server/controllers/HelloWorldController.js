@@ -5,6 +5,15 @@ const { Controller } = require('express-route-registry');
 class HelloWorldController extends Controller {
 
   /*
+   *  Derek wrote "Service Container", which names the 'service' after the CLASS.
+   *  class - you're creating a definition or prototype in javascript.
+   *  "new" keyword - how you create an instance of a class.
+
+   *  ServiceContainer is creating an instance for you.
+   *  when you use new, you're calling the constructor method.
+   */
+
+  /*
    * FIXME (thekevinwang) fill me in!
    */
   index_action(req, res, next) {
@@ -30,6 +39,7 @@ class HelloWorldController extends Controller {
       <a href="#pageOne">1</a>
       <a href="#pageTwo">2</a>
       <a href="#pageThree">3</a>
+      <a href="#pageFour">4</a>
     </div>
 
     <div class="fullPage" id="pageOne">
@@ -46,6 +56,9 @@ class HelloWorldController extends Controller {
         <!-- check fontawesome.com -->
       </p>
     </div>
+    <div class="fullPage" id="pageFour">
+
+    </div>
 
     <script>
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -61,6 +74,37 @@ class HelloWorldController extends Controller {
   </body>
 </html>
 `
+    );
+  }
+
+  get_form_action(req, res, next) { //sending the browser some HTTP that renders a formbox. a get-verb and the form-route
+
+    return res.send(
+
+      //method value == HTTP verb
+      //browser is the method, and figures out where to send the action
+      `
+      <html>
+        <body>
+          <form method="POST" action="/form">
+            <input type="text" name="name" />
+            <input type="text" name="comment" />
+            <input type="submit" value="Submit" />
+          </form>
+        </body>
+      </html>
+      `
+    );
+  }
+
+  post_form_action(req, res, next) {
+    const name = req.body.name;
+    const comment = req.body.comment;
+    return res.send(
+      //string interpolation ${}
+      `
+      Hi ${name}. You said ${comment}
+      `
     );
   }
 

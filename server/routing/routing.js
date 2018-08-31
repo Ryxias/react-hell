@@ -105,8 +105,16 @@ module.exports = service_container => {
   });
 
   json_loader.load({
+    '/form': {
+      get: [ '@HelloWorldController', 'get_form_action' ],
+      post: [ '@HelloWorldController', 'post_form_action']
+    },
+
     '/helloworld': {
       get: [ '@HelloWorldController', 'index_action' ],
+      //get: an http verb - get or post, etc.
+      //post: unlike get, the brower tells the server "I want to give you this data". Server figures out what to do with posted data.
+      //
     },
     '/guestbook': {
       get: [ '@HelloWorldController', 'another_action' ],
